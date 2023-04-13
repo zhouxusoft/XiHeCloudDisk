@@ -17,6 +17,7 @@ body {
 .borderbox {
     position: relative;
     top: -60px;
+    min-height: 323px;
 }
 
 hr {
