@@ -13,6 +13,9 @@ const app = express()
 //将cors注册为全局中间件
 app.use(cors())
 
+//配置解析表单数据的中间件
+app.use(express.urlencoded({ extended: false }))
+
 //在所有路由之前封装一个res.cc()函数
 app.use((req, res, next) => {
     //status默认值为1，表示失败
