@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-weight: lighter;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    background-color: white;
+}
+
+.borderbox {
+    position: relative;
+    top: -60px;
+}
+
+hr {
+    margin: 10px 6px;
+}
+
+.top {
+    margin: auto;
+    padding: 5px;
+    font-size: 24px;
+    width: 300px;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #20252c;
+}
+
+.top a {   
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    padding: 8px;   
+    transition: 0.5s;
+    color: black;
+}
+
+.top a:after {
+    position: absolute;
+    right: -15px;
+    content: '»';
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.top:hover a {
+    padding-right: 30px;
+}
+
+.top:hover a:after {
+    opacity: 1;
+    right: 0;
+}
+
+.box {
+    position: relative;
+    width: 300px;
+}
+
+.box .inputBox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    border: 1px solid #20252c;
+}
+
+.box .nameBox {
+    font-size: 16px;
+    flex: 1;
+    outline: none;
+    border: none;
+    padding: 5px;
+}
+
+.box .passwordBox {
+    font-size: 16px;
+    flex: 1;
+    outline: none;
+    border: none;
+    padding: 5px;
+}
+
+.box .logoButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box .logoButton::before {
+    content: "\f06e";
+    font-size: 16px;
+    font-family: fontAwesome;
+}
+
+.box .hide::before {
+    content: "\f070";
+    font-family: fontAwesome;
+}
+
+.btnbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {   
+    border-radius: 6px;
+    font-size: 16px;
+    border: 1px solid #20252c;
+    width: 120px;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    padding: 8px;   
+    transition: 0.5s;
+    background-color: white;
+}
+
+.btn:after {
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+    content: '»';
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.btn:hover {
+    padding-right: 15px;
+}
+
+.btn:hover:after {
+    opacity: 1;
+    right: 14px;
+}
+
+.godxu {
+    width: 300px;
+    border: 1px solid #20252c;
+    border-radius: 6px;
+    padding: 5px;
+    color: #20252c;
+}
+
+.msg {
+    user-select: text;
+}
+
+.from {
+    text-align: right;
+    user-select: text;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    margin: auto;
+}
+
+.bottom .about {
+    display: inline-block;
+    border-radius: 10px;
+    transition: 0.3s;
+    margin-bottom: 10px;
+    border: 1px solid white;
+}
+
+.bottom .about .icon {
+    margin: 0 10px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+    padding: 1px;
+}
+
+.bottom .about .code {
+    border-radius: 10px;
+    padding-top: 5px;
+    transition: 0.3s;
+}
+
+.bottom .about:hover {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.bottom .about .code img {
+    width: 0px;
+    transition: 0.3s;
+}
+
+.bottom .about:hover .code img {
+    width: 100px;
+}
+
+.bottom .about:hover .icon {
+    margin: 0 35px;
+}
+
+.yqlj {
+    color: black;
+    text-decoration-line: none;
+}
+
+.yqlj:hover {
+    text-decoration-line: underline;
+}
+/*用于消除edge密码框的默认小眼睛*/
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+input[type="password"]::-ms-clear {
+    display: none;
+}
+input[type="password"]::-o-clear {
+    display: none;
+}
