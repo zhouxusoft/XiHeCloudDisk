@@ -158,6 +158,7 @@ hr {
 }
 
 .msg {
+    min-height: 42px;
     user-select: text;
 }
 
