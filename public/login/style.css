@@ -222,6 +222,11 @@ hr {
 .yqlj:hover {
     text-decoration-line: underline;
 }
+
+.hidden {
+    display: none;
+}
+
 /*用于消除edge密码框的默认小眼睛*/
 input[type="password"]::-ms-reveal {
     display: none;

@@ -62,3 +62,16 @@ loginForm.addEventListener('submit', function (e) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.send(formData)
 })
+
+let bottom = document.getElementsByClassName("bottom")[0]
+
+window.addEventListener('resize', function () {
+    var heightDifference = window.innerHeight - document.body.clientHeight;
+    if (heightDifference > 0) {
+        bottom.classList.add("hidden")
+        console.log(555)
+    } else if (heightDifference < 0) {
+        bottom.classList.remove("hidden")
+        console.log(666)
+    }
+})
