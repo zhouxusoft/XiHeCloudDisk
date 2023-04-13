@@ -63,15 +63,14 @@ loginForm.addEventListener('submit', function (e) {
     xhr.send(formData)
 })
 
-let bottom = document.getElementsByClassName("bottom")[0]
+let borderbox = document.getElementsByClassName("borderbox")[0]
+let inputbox = document.getElementsByTagName("input")
 
-window.addEventListener('resize', function () {
-    var heightDifference = window.innerHeight - document.body.clientHeight;
-    if (heightDifference > 0) {
-        bottom.classList.add("hidden")
-        console.log(555)
-    } else if (heightDifference < 0) {
-        bottom.classList.remove("hidden")
-        console.log(666)
-    }
-})
+for (let i = 0; i < inputbox.length; i++) {
+    inputbox[i].addEventListener('focus', function() {
+        borderbox.classList.add("hidden")
+    });
+    inputbox[i].addEventListener('blur', function() {
+        borderbox.classList.remove("hidden")
+    });
+}
