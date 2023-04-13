@@ -18,18 +18,19 @@ let from = document.getElementsByClassName("from")[0]
 
 // 获取每日一言
 let xhr = new XMLHttpRequest()
-xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        let resData = JSON.parse(this.response)
-        let datamsg = resData.hitokoto
-        let datafrom = '—— 「 ' + resData.from + ' 」'
-        // 修改每日一言内容
-        msg.textContent = datamsg
-        from.textContent = datafrom
-    }
-}
-xhr.open('POST', 'https://v1.hitokoto.cn/', true)
+// xhr.onreadystatechange = function () {
+//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        
+//     }
+// }
+xhr.open('POST', 'https://v1.hitokoto.cn/', false)
 xhr.send()
+let resData = JSON.parse(xhr.responseText)
+let datamsg = resData.hitokoto
+let datafrom = '—— 「 ' + resData.from + ' 」'
+// 修改每日一言内容
+msg.textContent = datamsg
+from.textContent = datafrom
 
 const loginForm = document.getElementById("loginForm")
 
