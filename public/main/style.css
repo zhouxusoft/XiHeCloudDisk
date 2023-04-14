@@ -31,10 +31,14 @@ body {
     display: none;
 }
 
+.rowborder {
+    height: 450px;
+}
+
 .rowbox {
     margin: 0 !important;
     overflow: auto;
-    height: 450px;
+    max-height: 450px;
 }
 
 .databox {
