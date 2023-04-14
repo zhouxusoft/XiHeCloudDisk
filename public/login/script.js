@@ -52,7 +52,7 @@ loginForm.addEventListener('submit', function (e) {
             if (resData.status == 0) {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(resData.token))
-                window.location = 'https://godxu.top'
+                window.location = 'http://localhost:30019/main/'
             } else {
                 alert(resData.message)
             }
