@@ -83,6 +83,8 @@ hr {
     outline: none;
     border: none;
     padding: 5px;
+    font-weight: normal;
+    color: #333;
 }
 
 .box .passwordBox {
@@ -91,6 +93,8 @@ hr {
     outline: none;
     border: none;
     padding: 5px;
+    font-weight: normal;
+    color: #333;
 }
 
 .box .logoButton {
