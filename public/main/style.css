@@ -50,3 +50,7 @@ body {
 .btns {
     padding: 8px 4px 0;
 }
+
+.btn {
+    box-shadow: none;
+}
