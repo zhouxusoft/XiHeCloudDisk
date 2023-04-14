@@ -52,13 +52,13 @@ loginForm.addEventListener('submit', function (e) {
             if (resData.status == 0) {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(resData.token))
-                window.location = 'http://localhost:30019/main/'
+                window.location = '../main/'
             } else {
                 alert(resData.message)
             }
         } 
     }
-    xhr.open('POST', 'http://localhost:30019/api/login', true)
+    xhr.open('POST', '/api/login', true)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.send(formData)
 })

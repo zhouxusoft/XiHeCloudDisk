@@ -116,7 +116,7 @@ registerForm.addEventListener('submit', function (e) {
             }
         }
     }
-    xhr.open('POST', 'http://localhost:30019/api/register', true)
+    xhr.open('POST', '/api/register', true)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.send(formData)
 })
