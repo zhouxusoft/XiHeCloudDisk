@@ -52,5 +52,5 @@ body {
 }
 
 .btn {
-    box-shadow: none;
+    box-shadow: none !important;
 }
