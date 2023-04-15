@@ -18,8 +18,10 @@
 
 <body>
     <div class="container mx-3 borderbox">
-        <div class="top">Godxu 云盘</div>
-        <div class="exitbtn"></div>
+        <div class="top">Godxu 云盘
+            <div class="exitbtn"></div>
+        </div>
+        
         <div class="topmenu"></div>
         <div class="position">
             <div class="positionbtn">主目录</div>
@@ -241,6 +243,10 @@
                     <button type="button" class="btn btn-outline-secondary secondbtn">建文件夹</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn">获取分享</button>
                 </div>
+                <div class="btn-group bottombtngroup">
+                    <button type="button" class="btn btn-outline-secondary secondbtn d-none d-sm-block">上一级</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn d-none d-sm-block">下一级</button>
+                </div>
                 <button class="navbar-toggler navbtn" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavbar">
                     <div class="bottommenu"></div>
@@ -249,7 +255,7 @@
                     <div class="whitebox me-auto"></div>
                     <div class="searchbox">
                         <form class="d-flex">
-                            <input class="form-control me-2 searchinput" type="text">
+                            <input class="form-control me-2 searchinput" type="text" placeholder="搜索文件">
                             <button class="btn btn-outline-secondary searchbtn" type="button">搜索</button>
                         </form>
                     </div>

@@ -24,6 +24,7 @@ body {
     display: inline-block;
     margin-left: 10px;
     cursor: pointer;
+    
 }
 
 .exitbtn::before {
