@@ -20,6 +20,20 @@ body {
     display: inline-block;
 }
 
+.exitbtn {
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.exitbtn::before {
+    content: "\f08b";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #333;
+}
+
 .topmenu {
     display: flex;
     float: right;
@@ -28,7 +42,7 @@ body {
 }
 
 .topmenu::before {
-    content: "\f08b";
+    content: "\f177";
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
     font-size: 1.5rem;
@@ -189,10 +203,10 @@ body {
 }
 
 .bottommenu::before {
-    content: "\f0c9";
+    content: "\f002";
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: black;
 }
 
@@ -204,22 +218,12 @@ body {
     margin-right: 10px;
 }
 
-.searchinput {
-    max-width: 200px;
-    height: 32px;
-}
-
 .searchbtn {
-    height: 32px;
-    width: 59px;
+    width: 70px;
     padding: 0 10px !important;
 }
 
-.searchbox {
-    margin: 4px 0;
-}
-
 .secondbtn {
-    width: 89px;
-    padding: 6px 11px !important;
+    width: 80px;
+    padding: 6px !important;
 }
