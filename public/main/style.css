@@ -121,7 +121,20 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
 
+.dirmenu {
+    display: flex;
+    float: right;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.dirmenu::before {
+    content: "\f0c9";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 .filemsg {
