@@ -3,7 +3,6 @@
     padding: 0;
     user-select: none;
     box-sizing: border-box;
-    font-weight: lighter;
 }     
 
 body {
@@ -17,7 +16,6 @@ body {
 .position {
     padding: 2px 4px;
     font-size: 0.75rem;
-    font-weight: bold;
     color: #666;
 }
 
