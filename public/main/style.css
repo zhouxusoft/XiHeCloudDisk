@@ -33,6 +33,11 @@ body {
     display: inline-block;
 }
 
+.positionwhite::before {
+    content: "\f105";
+    font-family: FontAwesome;
+}
+
 .hr1 {
     margin: 0 4px 8px;
     border: none;
