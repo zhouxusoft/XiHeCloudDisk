@@ -92,6 +92,7 @@ body {
     content: "\f07b";
     font-family: "Font Awesome 6 Free";
     font-size: 2rem;
+    color: #333;
 }
 
 .filefont {  
@@ -105,6 +106,7 @@ body {
     content: "\f15b";
     font-family: "Font Awesome 6 Free";
     font-size: 2rem;
+    color: #333;
 }
 
 .fileinfo {
