@@ -126,7 +126,7 @@ body {
 .dirmenu {
     display: flex;
     float: right;
-    padding: 6px 10px;
+    padding: 9px 12px;
     cursor: pointer;
 }
 
@@ -134,7 +134,21 @@ body {
     content: "\f0c9";
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.filemenu {
+    display: flex;
+    float: right;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.filemenu::before {
+    content: "\f0c9";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.25rem;
 }
 
 .filemsg {
