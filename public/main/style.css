@@ -34,7 +34,8 @@ body {
 
 .positionwhite::before {
     content: "\f105";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 6 Free";
+    font-weight: bold;
 }
 
 .hr1 {
@@ -78,12 +79,46 @@ body {
 .filedata {
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
     border-radius: 3px;
+    padding: 0 8px !important;
+}
+
+.dirfont {
+    display: inline-block;
+    vertical-align: middle;
+    width: 36px;
+    text-align: center;
+}
+
+.dirfont::before {
+    content: "\f07b";
+    font-family: "Font Awesome 6 Free";
+    font-size: 2rem;
+}
+
+.filefont {  
+    display: inline-block;
+    vertical-align: middle;
+    width: 36px;
 }
 
 .filefont::before {
-    content: "\f07b";
-    font-family: 'FontAwesome';
-    font-weight: lighter;
+    content: "\f15b";
+    font-family: "Font Awesome 6 Free";
+    font-size: 2rem;
+}
+
+.fileinfo {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle
+}
+
+.filename {
+    
+}
+
+.filemsg {
+    font-size: 0.5rem;
 }
 
 .btns {
