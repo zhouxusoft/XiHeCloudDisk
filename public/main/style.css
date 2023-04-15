@@ -20,11 +20,14 @@ body {
     display: inline-block;
 }
 
-.exitbtn {
+.top:hover .exitbtn{
     display: inline-block;
+}
+
+.exitbtn {
     margin-left: 10px;
     cursor: pointer;
-    
+    display: none;
 }
 
 .exitbtn::before {
