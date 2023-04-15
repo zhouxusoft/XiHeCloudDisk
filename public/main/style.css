@@ -14,7 +14,31 @@ body {
     background-color: white;
 }
 
-.hr {
+.position {
+    padding: 2px 4px;
+    font-size: 0.5rem;
+}
+
+.positionbtn {
+    display: inline-block;
+}
+
+.positionbtn:hover {
+    text-decoration: underline;
+}
+
+.positionwhite {
+    display: inline-block;
+}
+
+.hr1 {
+    margin: 0 4px 8px;
+    border: none;
+    border-top: 1px solid;
+    transform: scaleY(0.5);
+}
+
+.hr2 {
     margin: 8px 4px 0;
     border: none;
     border-top: 1px solid;
