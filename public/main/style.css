@@ -211,9 +211,15 @@ body {
 
 .searchbtn {
     height: 32px;
-    padding: 0 12px !important;
+    width: 59px;
+    padding: 0 10px !important;
 }
 
 .searchbox {
     margin: 4px 0;
+}
+
+.secondbtn {
+    width: 89px;
+    padding: 6px 11px !important;
 }
