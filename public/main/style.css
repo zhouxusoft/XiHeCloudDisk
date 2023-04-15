@@ -137,7 +137,7 @@ body {
 }
 
 .filename {
-    max-width: 250px;
+    max-width: 220px;
     font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
