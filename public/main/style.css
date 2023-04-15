@@ -17,6 +17,22 @@ body {
 .top {
     padding: 2px 4px 0;
     font-size: 1.5rem;
+    display: inline-block;
+}
+
+.topmenu {
+    display: flex;
+    float: right;
+    margin: 12px;
+    cursor: pointer;
+}
+
+.topmenu::before {
+    content: "\f08b";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #333;
 }
 
 .position {
@@ -60,7 +76,7 @@ body {
 .borderbox {
     border: 1px solid black;
     border-radius: 6px;
-    padding: 0 4px 8px !important;
+    padding: 0 4px !important;
 }
 
 .borderbox::-webkit-scrollbar {
@@ -161,9 +177,43 @@ body {
 }
 
 .btns {
-    padding: 8px 4px 0;
+    padding: 0 4px;
 }
 
 .btn {
     box-shadow: none !important;
+}
+
+.ulgap {
+    margin: 0 0 8px;
+}
+
+.bottommenu::before {
+    content: "\f0c9";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: black;
+}
+
+.navbtn {
+    padding: 10px !important;
+}
+
+.bottombtngroup {
+    margin-right: 10px;
+}
+
+.searchinput {
+    max-width: 200px;
+    height: 32px;
+}
+
+.searchbtn {
+    height: 32px;
+    padding: 0 12px !important;
+}
+
+.searchbox {
+    margin: 4px 0;
 }
