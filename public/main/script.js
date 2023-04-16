@@ -25,7 +25,7 @@ var next = document.getElementById("next")
 var selected = null
 
 function selectedClick(event) {
-    console.log(event.target)
+    // console.log(event.target)
     // console.log(this)
     // 点击菜单不触发事件
     if (!event.target.classList.contains("filemenu") && !event.target.classList.contains("dirmenu")) {
