@@ -5,10 +5,23 @@ function handleClick(event) {
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
         selected.removeEventListener('click', handleClick)
+        selected = null
+        // 判断下一级按钮是否可以被点击
+        resetnext()
+    }
+}
+
+function resetnext() {
+    if (selected != null) {
+        next.classList.remove("disabled")
+    } else {
+        next.classList.add("disabled")
     }
 }
 
 var filedata = document.getElementsByClassName("filedata")
+var back = document.getElementById("back")
+var next = document.getElementById("next")
 var selected = null
 
 function selectedClick(event) {
@@ -33,6 +46,8 @@ function selectedClick(event) {
             }
         }
     }
+    // 判断下一级按钮是否可以被点击
+    resetnext()
 }
 
 // 给所有 filedata 元素绑定点击事件监听器
