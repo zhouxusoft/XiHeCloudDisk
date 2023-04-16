@@ -43,6 +43,13 @@ body {
     float: right;
     margin: 12px;
     cursor: pointer;
+    padding: 0 6px;
+    transition: 0.3s;
+}
+
+.topmenu:hover {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
 }
 
 .topmenu::before {
@@ -120,6 +127,18 @@ body {
     border-radius: 3px;
 }
 
+.filedata:hover {
+    background-color: #eee;
+}
+
+.selected {
+    background-color: #ddd;
+}
+
+.selected:hover {
+    background-color: #ccc;
+}
+
 .dirfont {
     display: inline-block;
     vertical-align: middle;
@@ -165,8 +184,15 @@ body {
 .dirmenu {
     display: flex;
     float: right;
-    padding: 9px 12px;
+    margin: 9px 6px;
+    padding: 0 6px;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.dirmenu:hover {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
 }
 
 .dirmenu::before {
@@ -179,8 +205,15 @@ body {
 .filemenu {
     display: flex;
     float: right;
-    padding: 9px 12px;
+    margin: 9px 6px;
+    padding: 0 6px;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.filemenu:hover {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
 }
 
 .filemenu::before {
