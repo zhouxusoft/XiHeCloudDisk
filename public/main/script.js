@@ -1,6 +1,6 @@
 function handleClick(event) {
     //点击菜单不触发事件
-    if (!event.target.classList.contains("btn-sm")) {
+    if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
         alert(666)
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
