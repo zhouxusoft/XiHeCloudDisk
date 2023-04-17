@@ -207,6 +207,7 @@ body {
     z-index: 9999;
     background-color: #f9f9f9;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 0.2rem;
     overflow: hidden;
     transition: 0.3s;
 }
@@ -244,6 +245,7 @@ body {
     z-index: 9999;
     background-color: #f9f9f9;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 0.2rem;
     overflow: hidden;
     transition: 0.3s;
 }
