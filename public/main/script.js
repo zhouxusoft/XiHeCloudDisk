@@ -55,4 +55,21 @@ for (var i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick);
 }
 
+var filemenus = document.getElementsByClassName("filemenu")
+var dirmenus = document.getElementsByClassName("dirmenu")
 var dirpop = document.getElementById("dirpop")
+
+for (let i = 0; i < dirmenus.length; i++) {
+    dirmenus[i].addEventListener('click', function() {
+        if (dirpop.offsetParent === null) {
+            dirpop.style.display = "block"
+            console.log(777)
+        }
+        console.log(666)
+        // 设置弹出的 div 元素的位置
+        var buttonOffset = dirmenus[i].getBoundingClientRect();
+        dirpop.style.top = buttonOffset.top + dirmenus[i].offsetHeight + "px";
+        dirpop.left = buttonOffset.left + "px";
+    })
+    
+}
