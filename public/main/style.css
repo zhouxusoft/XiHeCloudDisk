@@ -18,20 +18,25 @@ body {
     padding: 2px 4px 0;
     font-size: 1.5rem;
     display: inline-block;
+    cursor: pointer;
+    width: 180px;
+    word-wrap: nowrap;
 }
 
 .top:hover .exitbtn{
-    display: inline-block;
+    opacity: 1;
+    margin-left: 0;
 }
 
 .exitbtn {
-    margin-left: 10px;
-    cursor: pointer;
-    display: none;
+    opacity: 0;
+    display: inline-block;
+    transition: 0.3s;
+    margin-left: 20px;
 }
 
 .exitbtn::before {
-    content: "\f08b";
+    content: "\f100";
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
     font-size: 1.25rem;
