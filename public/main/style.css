@@ -148,7 +148,7 @@ body {
 }
 
 .dirfont::before {
-    content: "\f07b";
+    content: "\e185";
     font-family: "Font Awesome 6 Free";
     font-size: 2rem;
     color: #333;
