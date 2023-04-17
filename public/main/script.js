@@ -54,3 +54,5 @@ function selectedClick(event) {
 for (var i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick);
 }
+
+var dirpop = document.getElementById("dirpop")
