@@ -1,6 +1,6 @@
 function handleClick(event) {
     //点击菜单不触发事件
-    if (!event.target.classList.contains("filemenu") && !event.target.classList.contains("dirmenu")) {
+    if (!event.target.classList.contains("btn-sm")) {
         alert(666)
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
@@ -28,7 +28,7 @@ function selectedClick(event) {
     // console.log(event.target)
     // console.log(this)
     // 点击菜单不触发事件
-    if (!event.target.classList.contains("filemenu") && !event.target.classList.contains("dirmenu")) {
+    if (!event.target.classList.contains("btn-sm")) {
         // 遍历所有 filedata 元素，判断当前点击的元素是否是 filedata 元素
         for (var i = 0; i < filedata.length; i++) {
             if (this === filedata[i]) {
@@ -59,10 +59,3 @@ var filemenus = document.getElementsByClassName("filemenu")
 var filepops = document.getElementsByClassName("filepop")
 var dirmenus = document.getElementsByClassName("dirmenu")
 var dirpops = document.getElementsByClassName("dirpop")
-
-// for (let i = 0; i < dirmenus.length; i++) {
-//     // 设置弹出的 div 元素的位置
-//     var buttonOffset = dirmenus[i].getBoundingClientRect();
-//     dirpops[i].style.top = buttonOffset.top + dirmenus[i].offsetHeight - 30 + "px";
-//     dirpops[i].style.left = buttonOffset.left - 62 + "px";
-// }
