@@ -20,12 +20,12 @@ body {
     display: inline-block;
     cursor: pointer;
     width: 180px;
-    word-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .top:hover .exitbtn{
     opacity: 1;
-    margin-left: 0;
+    margin-left: 2px;
 }
 
 .exitbtn {
@@ -39,7 +39,7 @@ body {
     content: "\f100";
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: #333;
 }
 
