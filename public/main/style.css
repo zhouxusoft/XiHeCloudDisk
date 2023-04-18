@@ -215,7 +215,7 @@ body {
     padding-right: 2px;
     height: 0; 
     position: absolute;
-    top: 30px;
+    top: -141px;
     left: -58px;
     z-index: 9999;
     border-radius: 0.2rem;
@@ -232,12 +232,7 @@ body {
     border-radius: 4px;
 }
 
-.dirmenu:hover .dirpopdown {
-    height: 171px;
-}
-
-.dirmenu:hover .dirpopup {
-    top: -138px;
+.dirmenu:hover .dirpop {
     height: 171px;
 }
 
@@ -273,7 +268,7 @@ body {
     padding-right: 2px;
     height: 0; 
     position: absolute;
-    top: 30px;
+    top: -141px;
     left: -58px;
     z-index: 9999;
     border-radius: 0.2rem;
@@ -286,12 +281,7 @@ body {
     border-radius: 4px;
 }
 
-.filemenu:hover .filepopdown {
-    height: 171px;
-}
-
-.filemenu:hover .filepopup {
-    top: -138px;
+.filemenu:hover .filepop {
     height: 171px;
 }
 
