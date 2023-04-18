@@ -208,7 +208,7 @@ body {
     z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .dirpopup {
@@ -220,7 +220,7 @@ body {
     z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .btn-group-vertical .btn {
@@ -261,7 +261,7 @@ body {
     z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .filepopup {
@@ -273,7 +273,7 @@ body {
     z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .filemenu:hover {
