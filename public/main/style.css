@@ -200,7 +200,7 @@ body {
     transition: 0.3s;
 }
 
-.dirpop {
+.dirpopdown {
     padding-right: 2px;
     height: 0; 
     position: absolute;
@@ -232,7 +232,7 @@ body {
     border-radius: 4px;
 }
 
-.dirmenu:hover .dirpop {
+.dirmenu:hover .dirpopdown {
     height: 171px;
 }
 
@@ -258,7 +258,7 @@ body {
     transition: 0.3s;
 }
 
-.filepop {
+.filepopdown {
     padding-right: 2px;
     height: 0; 
     position: absolute;
@@ -286,7 +286,7 @@ body {
     border-radius: 4px;
 }
 
-.filemenu:hover .filepop {
+.filemenu:hover .filepopdown {
     height: 171px;
 }
 
