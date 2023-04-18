@@ -19,10 +19,10 @@ function resetnext() {
     }
 }
 
-var filedata = document.getElementsByClassName("filedata")
-var back = document.getElementById("back")
-var next = document.getElementById("next")
-var selected = null
+const filedata = document.getElementsByClassName("filedata")
+const back = document.getElementById("back")
+const next = document.getElementById("next")
+const selected = null
 
 function selectedClick(event) {
     // console.log(event.target)
@@ -55,13 +55,13 @@ for (var i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick)
 }
 
-var filemenus = document.getElementsByClassName("filemenu")
-var filepops = document.getElementsByClassName("filepop")
-var dirmenus = document.getElementsByClassName("dirmenu")
-var dirpops = document.getElementsByClassName("dirpop")
-var rowborder = document.getElementsByClassName("rowborder")[0]
+const filemenus = document.getElementsByClassName("filemenu")
+const filepops = document.getElementsByClassName("filepop")
+const dirmenus = document.getElementsByClassName("dirmenu")
+const dirpops = document.getElementsByClassName("dirpop")
+const rowborder = document.getElementsByClassName("rowborder")[0]
 
-for (let i = 0; i < dirmenus.length; i++) {
+for (var i = 0; i < dirmenus.length; i++) {
     dirmenus[i].addEventListener('mouseenter', function () {
         const rowborderP = rowborder.getBoundingClientRect()
         const dirmenuP = dirmenus[i].getBoundingClientRect()
@@ -76,7 +76,7 @@ for (let i = 0; i < dirmenus.length; i++) {
     })
 }
 
-for (let i = 0; i < filemenus.length; i++) {
+for (var i = 0; i < filemenus.length; i++) {
     filemenus[i].addEventListener('mouseenter', function () {
         const rowborderP = rowborder.getBoundingClientRect()
         const filemenuP = filemenus[i].getBoundingClientRect()
