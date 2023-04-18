@@ -234,6 +234,7 @@ body {
 
 .dirmenu:hover .dirpop {
     height: 171px;
+    transition-delay: 0.2s;
 }
 
 .dirmenu::before {
@@ -283,6 +284,7 @@ body {
 
 .filemenu:hover .filepop {
     height: 171px;
+    transition-delay: 0.2s;
 }
 
 .filemenu::before {
