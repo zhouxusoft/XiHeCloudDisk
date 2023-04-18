@@ -66,7 +66,7 @@ for (let i = 0; i < dirmenus.length; i++) {
         const rowborderP = rowborder.getBoundingClientRect()
         const dirmenuP = dirmenus[i].getBoundingClientRect()
 
-        if (rowborderP.top + rowborderP.height / 2 < dirmenuP.top) {
+        if (rowborderP.top + rowborderP.height / 5 * 3 < dirmenuP.top) {
             dirpops[i].classList.remove("dirpopdown")
             dirpops[i].classList.add("dirpopup")
         } else {
@@ -81,7 +81,7 @@ for (let i = 0; i < filemenus.length; i++) {
         const rowborderP = rowborder.getBoundingClientRect()
         const filemenuP = filemenus[i].getBoundingClientRect()
 
-        if (rowborderP.top + rowborderP.height / 2 < filemenuP.top) {
+        if (rowborderP.top + rowborderP.height / 5 * 3 < filemenuP.top) {
             filepops[i].classList.remove("filepopdown")
             filepops[i].classList.add("filepopup")
         } else {
