@@ -19,10 +19,10 @@ function resetnext() {
     }
 }
 
-const filedata = document.getElementsByClassName("filedata")
-const back = document.getElementById("back")
-const next = document.getElementById("next")
-const selected = null
+var filedata = document.getElementsByClassName("filedata")
+var back = document.getElementById("back")
+var next = document.getElementById("next")
+var selected = null
 
 function selectedClick(event) {
     // console.log(event.target)
@@ -30,7 +30,7 @@ function selectedClick(event) {
     // 点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm")) {
         // 遍历所有 filedata 元素，判断当前点击的元素是否是 filedata 元素
-        for (var i = 0; i < filedata.length; i++) {
+        for (let i = 0; i < filedata.length; i++) {
             if (this === filedata[i]) {
                 // 把之前被选中的元素的 selected 类名和事件监听器移除
                 if (selected !== null && selected != this) {
@@ -51,17 +51,17 @@ function selectedClick(event) {
 }
 
 // 给所有 filedata 元素绑定点击事件监听器
-for (var i = 0; i < filedata.length; i++) {
+for (let i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick)
 }
 
-const filemenus = document.getElementsByClassName("filemenu")
-const filepops = document.getElementsByClassName("filepop")
-const dirmenus = document.getElementsByClassName("dirmenu")
-const dirpops = document.getElementsByClassName("dirpop")
-const rowborder = document.getElementsByClassName("rowborder")[0]
+var filemenus = document.getElementsByClassName("filemenu")
+var filepops = document.getElementsByClassName("filepop")
+var dirmenus = document.getElementsByClassName("dirmenu")
+var dirpops = document.getElementsByClassName("dirpop")
+var rowborder = document.getElementsByClassName("rowborder")[0]
 
-for (var i = 0; i < dirmenus.length; i++) {
+for (let i = 0; i < dirmenus.length; i++) {
     dirmenus[i].addEventListener('mouseenter', function () {
         const rowborderP = rowborder.getBoundingClientRect()
         const dirmenuP = dirmenus[i].getBoundingClientRect()
@@ -76,7 +76,7 @@ for (var i = 0; i < dirmenus.length; i++) {
     })
 }
 
-for (var i = 0; i < filemenus.length; i++) {
+for (let i = 0; i < filemenus.length; i++) {
     filemenus[i].addEventListener('mouseenter', function () {
         const rowborderP = rowborder.getBoundingClientRect()
         const filemenuP = filemenus[i].getBoundingClientRect()
