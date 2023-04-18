@@ -119,11 +119,11 @@ body {
 
 .rowborder {
     height: 450px;
+    overflow: auto;
 }
 
 .rowbox {
-    margin: 0 !important;
-    overflow: auto;
+    margin: 0 !important; 
     max-height: 450px;
 }
 
@@ -201,15 +201,30 @@ body {
 }
 
 .dirpop {
+    padding-right: 2px;
     height: 0; 
     position: absolute;
     left: -58px;
     z-index: 9999;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     border-radius: 0.2rem;
     overflow: hidden;
     transition: 0.3s;
+}
+
+.dirpopup {
+    padding-right: 2px;
+    height: 0; 
+    position: absolute;
+    top: 30px;
+    left: -58px;
+    z-index: 9999;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.btn-group-vertical .btn {
+    background-color: #f9f9f9;
 }
 
 .dirmenu:hover {
@@ -218,6 +233,11 @@ body {
 }
 
 .dirmenu:hover .dirpop {
+    height: 171px;
+}
+
+.dirmenu:hover .dirpopup {
+    top: -138px;
     height: 171px;
 }
 
@@ -239,12 +259,23 @@ body {
 }
 
 .filepop {
+    padding-right: 2px;
     height: 0; 
     position: absolute;
     left: -58px;
     z-index: 9999;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 0.2rem;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.filepopup {
+    padding-right: 2px;
+    height: 0; 
+    position: absolute;
+    top: 30px;
+    left: -58px;
+    z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
     transition: 0.3s;
@@ -256,6 +287,11 @@ body {
 }
 
 .filemenu:hover .filepop {
+    height: 171px;
+}
+
+.filemenu:hover .filepopup {
+    top: -138px;
     height: 171px;
 }
 

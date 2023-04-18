@@ -59,3 +59,9 @@ var filemenus = document.getElementsByClassName("filemenu")
 var filepops = document.getElementsByClassName("filepop")
 var dirmenus = document.getElementsByClassName("dirmenu")
 var dirpops = document.getElementsByClassName("dirpop")
+
+for (let i = 0; i < dirmenus.length; i++) {
+    dirmenus[i].addEventListener('mouseenter', function () {
+        console.log(666)
+    })
+}
