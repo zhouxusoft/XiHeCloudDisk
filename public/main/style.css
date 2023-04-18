@@ -208,7 +208,7 @@ body {
     z-index: 9999;
     border-radius: 0.2rem;
     overflow: hidden;
-    transition: 0.15s;   
+    transition: 0.15s;  
 }
 
 .dirpopup {
