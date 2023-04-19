@@ -55,6 +55,7 @@ for (let i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick)
 }
 
+// 获取文件操作菜单按钮和文件操作菜单
 var filemenus = document.getElementsByClassName("filemenu")
 var filepops = document.getElementsByClassName("filepop")
 var dirmenus = document.getElementsByClassName("dirmenu")
@@ -62,10 +63,12 @@ var dirpops = document.getElementsByClassName("dirpop")
 var rowborder = document.getElementsByClassName("rowborder")[0]
 
 for (let i = 0; i < dirmenus.length; i++) {
+    // 添加鼠标进入的监听事件，用于判断菜单弹出的位置
     dirmenus[i].addEventListener('mouseenter', function () {
+        // 获取文件框的位置和文件菜单按钮的位置
         const rowborderP = rowborder.getBoundingClientRect()
         const dirmenuP = dirmenus[i].getBoundingClientRect()
-
+        // 判断距离，根据位置调整菜单位置
         if (rowborderP.top + rowborderP.height / 5 * 3 < dirmenuP.top) {
             dirpops[i].classList.remove("dirpopdown")
             dirpops[i].classList.add("dirpopup")
