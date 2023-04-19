@@ -1,3 +1,10 @@
+//拿到登录的token
+//判断值是否为空
+let token = JSON.parse(localStorage.getItem("token"))
+if (!token) {
+    window.location = '../login/'
+}
+
 function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
