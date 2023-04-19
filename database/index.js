@@ -20,4 +20,4 @@ const dbpan = mysql.createPool({
 
 //向外共享数据库连接对象
 module.exports = db
-module.exports = dbp
+module.exports = dbpan
