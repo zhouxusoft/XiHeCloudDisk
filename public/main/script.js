@@ -116,5 +116,7 @@ function clearRowbox() {
 
 // 客户端连接成功时触发
 socket.on('connect', () => {
-    socket.emit('login')
+    socket.emit('login', JSON.stringify(token))
+
+    
 })

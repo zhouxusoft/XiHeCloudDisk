@@ -18,7 +18,18 @@ app.use(express.static(__dirname + "/public/"));
 app.use(express.static(__dirname + "/public/main/"));
 
 io.on('connection', (socket) => {
-    
+    // 客户端登录时触发
+    socket.on('login', (token) => {
+        token = JSON.parse(token)
+
+        // 定义数据库查询语句语句 查询该属于用户的所有文件
+        const sql = `SELECT * FROM filedata WHERE createrid = ?`
+
+        dbpan.query(sql, token.id, (err, results) => {
+            if (err) return err
+            console.log(results)
+        })
+    })
 });
 
 //启动服务器
