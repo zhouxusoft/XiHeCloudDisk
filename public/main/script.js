@@ -19,6 +19,7 @@ function handleClick(event) {
 }
 
 function resetnext() {
+    // 判断下一级菜单是否可点击
     if (selected != null) {
         next.classList.remove("disabled")
     } else {
@@ -100,3 +101,4 @@ for (let i = 0; i < filemenus.length; i++) {
         }
     })
 }
+
