@@ -14,11 +14,11 @@ function handleClick(event) {
         selected.removeEventListener('click', handleClick)
         selected = null
         // 判断下一级按钮是否可以被点击
-        resetnext()
+        resetNext()
     }
 }
 
-function resetnext() {
+function resetNext() {
     // 判断下一级菜单是否可点击
     if (selected != null) {
         next.classList.remove("disabled")
@@ -55,7 +55,7 @@ function selectedClick(event) {
         }
     }
     // 判断下一级按钮是否可以被点击
-    resetnext()
+    resetNext()
 }
 
 // 给所有 filedata 元素绑定点击事件监听器
@@ -102,3 +102,15 @@ for (let i = 0; i < filemenus.length; i++) {
     })
 }
 
+function clearRowbox() {
+    while (rowbox.firstChild) {
+        rowbox.removeChild(rowbox.firstChild)
+    }
+}
+
+const rowbox = document.getElementsByClassName("rowbox")[0]
+
+// 客户端连接成功时触发
+socket.on('connect', () => {
+
+})
