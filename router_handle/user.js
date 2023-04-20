@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const { validationResult } = require('express-validator')
 
 //导入数据库操作模块
-const db = require('../database/index')
+const { db, dbpan } = require('../database/index')
 
 //注册新用户
 exports.regUser = (req, res) => {

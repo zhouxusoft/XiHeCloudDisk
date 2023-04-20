@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 //导入数据库操作模块
-const db = require('./database/index')
+const { db, dbpan } = require('./database/index')
 
 //默认加载页面
 app.get('/', (req, res) => {
