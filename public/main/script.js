@@ -5,6 +5,9 @@ if (!token) {
     window.location = '../login/'
 }
 
+// 定义socket对象
+const socket = io('http://127.0.0.1:30020')
+
 function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
@@ -102,15 +105,16 @@ for (let i = 0; i < filemenus.length; i++) {
     })
 }
 
+// 获取到文件项的容器
+const rowbox = document.getElementsByClassName("rowbox")[0]
+
 function clearRowbox() {
     while (rowbox.firstChild) {
         rowbox.removeChild(rowbox.firstChild)
     }
 }
 
-const rowbox = document.getElementsByClassName("rowbox")[0]
-
 // 客户端连接成功时触发
 socket.on('connect', () => {
-
+    socket.emit('login')
 })
