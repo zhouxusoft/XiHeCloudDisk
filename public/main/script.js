@@ -66,43 +66,46 @@ for (let i = 0; i < filedata.length; i++) {
     filedata[i].addEventListener("click", selectedClick)
 }
 
-// 获取文件操作菜单按钮和文件操作菜单
-var filemenus = document.getElementsByClassName("filemenu")
-var filepops = document.getElementsByClassName("filepop")
-var dirmenus = document.getElementsByClassName("dirmenu")
-var dirpops = document.getElementsByClassName("dirpop")
-var rowborder = document.getElementsByClassName("rowborder")[0]
+// 用于在页面元素变化时，确定每个元素菜单弹出的位置
+function resetPageFun() {
+    // 获取文件操作菜单按钮和文件操作菜单
+    var filemenus = document.getElementsByClassName("filemenu")
+    var filepops = document.getElementsByClassName("filepop")
+    var dirmenus = document.getElementsByClassName("dirmenu")
+    var dirpops = document.getElementsByClassName("dirpop")
+    var rowborder = document.getElementsByClassName("rowborder")[0]
 
-for (let i = 0; i < dirmenus.length; i++) {
-    // 添加鼠标进入的监听事件，用于判断菜单弹出的位置
-    dirmenus[i].addEventListener('mouseenter', function () {
-        // 获取文件框的位置和文件菜单按钮的位置
-        const rowborderP = rowborder.getBoundingClientRect()
-        const dirmenuP = dirmenus[i].getBoundingClientRect()
-        // 判断距离，根据位置调整菜单位置
-        if (rowborderP.top + rowborderP.height / 5 * 3 < dirmenuP.top) {
-            dirpops[i].classList.remove("dirpopdown")
-            dirpops[i].classList.add("dirpopup")
-        } else {
-            dirpops[i].classList.remove("dirpopup")
-            dirpops[i].classList.add("dirpopdown")
-        }
-    })
-}
+    for (let i = 0; i < dirmenus.length; i++) {
+        // 添加鼠标进入的监听事件，用于判断菜单弹出的位置
+        dirmenus[i].addEventListener('mouseenter', function () {
+            // 获取文件框的位置和文件菜单按钮的位置
+            const rowborderP = rowborder.getBoundingClientRect()
+            const dirmenuP = dirmenus[i].getBoundingClientRect()
+            // 判断距离，根据位置调整菜单位置
+            if (rowborderP.top + rowborderP.height / 5 * 3 < dirmenuP.top) {
+                dirpops[i].classList.remove("dirpopdown")
+                dirpops[i].classList.add("dirpopup")
+            } else {
+                dirpops[i].classList.remove("dirpopup")
+                dirpops[i].classList.add("dirpopdown")
+            }
+        })
+    }
 
-for (let i = 0; i < filemenus.length; i++) {
-    filemenus[i].addEventListener('mouseenter', function () {
-        const rowborderP = rowborder.getBoundingClientRect()
-        const filemenuP = filemenus[i].getBoundingClientRect()
+    for (let i = 0; i < filemenus.length; i++) {
+        filemenus[i].addEventListener('mouseenter', function () {
+            const rowborderP = rowborder.getBoundingClientRect()
+            const filemenuP = filemenus[i].getBoundingClientRect()
 
-        if (rowborderP.top + rowborderP.height / 5 * 3 < filemenuP.top) {
-            filepops[i].classList.remove("filepopdown")
-            filepops[i].classList.add("filepopup")
-        } else {
-            filepops[i].classList.remove("filepopup")
-            filepops[i].classList.add("filepopdown")
-        }
-    })
+            if (rowborderP.top + rowborderP.height / 5 * 3 < filemenuP.top) {
+                filepops[i].classList.remove("filepopdown")
+                filepops[i].classList.add("filepopup")
+            } else {
+                filepops[i].classList.remove("filepopup")
+                filepops[i].classList.add("filepopdown")
+            }
+        })
+    }
 }
 
 // 获取到文件项的容器
@@ -114,14 +117,14 @@ function clearRowbox() {
     }
 }
 
-function getdate(datetime) {
+function getDate(datetime) {
     // console.log(datetime)
     let date = datetime.slice(0, 10)
     date = date.replace(/-/g, '/')
     return date
 }
 
-function formatFileSize(bytes) {
+function getFileSize(bytes) {
     if (bytes < 1024) {
         return bytes + " Bytes";
     } else if (bytes < 1048576) {
@@ -138,9 +141,10 @@ function resetFilePage(filelist) {
         for (let i = 0; i < filelist.length; i++) {
             // console.log(filelist[i].update.slice(0, 10))
             const filename = filelist[i].name
-            const updatetime = getdate(filelist[i].update)
+            const updatetime = getDate(filelist[i].update)
             // console.log(updatetime)
-            if (filedata[i].isfile == 0) {
+            if (filelist[i].isfile == 0) {
+                const dirson = filelist[i].subitem + ' 项'
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
                         <div class="filedata">
@@ -150,7 +154,7 @@ function resetFilePage(filelist) {
                                     ${filename}
                                 </div>
                                 <div class="filemsg">
-                                    2.6M | ${updatetime}
+                                    ${dirson} | ${updatetime}
                                 </div>
                             </div>
                             <div class="dirmenu">
@@ -168,16 +172,17 @@ function resetFilePage(filelist) {
                         </div>
                     </div>`
             } else {
+                const filesize = getFileSize(filelist[i].size)
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
                         <div class="filedata">
                             <div class="filefont"></div>
                             <div class="fileinfo">
                                 <div class="filename">
-                                    awdwad达瓦娃.doc
+                                    ${filename}
                                 </div>
                                 <div class="filemsg">
-                                    2.4M | 2023/4/15
+                                    ${filesize} | ${updatetime}
                                 </div>
                             </div>
                             <div class="filemenu">
@@ -199,6 +204,7 @@ function resetFilePage(filelist) {
     } else {
 
     }
+    resetPageFun()
 }
 
 // 客户端连接成功时触发
