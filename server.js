@@ -27,7 +27,8 @@ io.on('connection', (socket) => {
 
         dbpan.query(sql, token.id, (err, results) => {
             if (err) return err
-            console.log(results)
+            // console.log(results)
+            socket.emit('updatepage', results)
         })
     })
 });

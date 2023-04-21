@@ -52,7 +52,7 @@ loginForm.addEventListener('submit', function (e) {
             if (resData.status == 0) {
                 localStorage.clear()
                 localStorage.setItem("token", JSON.stringify(resData.token))
-                window.location = '../main/'
+                window.location = 'http://127.0.0.1:30020'
             } else {
                 alert(resData.message)
             }

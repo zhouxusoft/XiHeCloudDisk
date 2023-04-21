@@ -2,7 +2,7 @@
 //判断值是否为空
 let token = JSON.parse(localStorage.getItem("token"))
 if (!token) {
-    window.location = '../login/'
+    window.location = 'http://127.0.0.1:30019'
 }
 
 // 定义socket对象
@@ -114,9 +114,20 @@ function clearRowbox() {
     }
 }
 
+function resetFilePage(filelist) {
+    if (filelist) {
+        console.log(5959)
+    } else {
+
+    }
+}
+
 // 客户端连接成功时触发
 socket.on('connect', () => {
     socket.emit('login', JSON.stringify(token))
+})
 
-    
+// 更新文件列表页面时触发
+socket.on('updatepage', (filelist) => {
+    resetFilePage(filelist)
 })
