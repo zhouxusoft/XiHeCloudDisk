@@ -138,6 +138,7 @@ function getFileSize(bytes) {
 
 function resetFilePage(filelist) {
     if (filelist.length > 0) {
+        // 文件夹在前 文件在后
         for (let i = 0; i < filelist.length; i++) {
             if (filelist[i].isfile == 0) {
                 const filename = filelist[i].name
