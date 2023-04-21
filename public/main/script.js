@@ -139,11 +139,9 @@ function getFileSize(bytes) {
 function resetFilePage(filelist) {
     if (filelist.length > 0) {
         for (let i = 0; i < filelist.length; i++) {
-            // console.log(filelist[i].update.slice(0, 10))
-            const filename = filelist[i].name
-            const updatetime = getDate(filelist[i].update)
-            // console.log(updatetime)
             if (filelist[i].isfile == 0) {
+                const filename = filelist[i].name
+                const updatetime = getDate(filelist[i].update)
                 const dirson = filelist[i].subitem + ' 项'
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
@@ -171,7 +169,12 @@ function resetFilePage(filelist) {
                             </div>
                         </div>
                     </div>`
-            } else {
+            }
+        }
+        for (let i = 0; i < filelist.length; i++) {
+            if (filelist[i].isfile == 1) {
+                const filename = filelist[i].name
+                const updatetime = getDate(filelist[i].update)
                 const filesize = getFileSize(filelist[i].size)
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
