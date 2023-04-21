@@ -35,6 +35,13 @@ var back = document.getElementById("back")
 var next = document.getElementById("next")
 var selected = null
 
+// 获取文件操作菜单按钮和文件操作菜单
+var filemenus = document.getElementsByClassName("filemenu")
+var filepops = document.getElementsByClassName("filepop")
+var dirmenus = document.getElementsByClassName("dirmenu")
+var dirpops = document.getElementsByClassName("dirpop")
+var rowborder = document.getElementsByClassName("rowborder")[0]
+
 function selectedClick(event) {
     // console.log(event.target)
     // console.log(this)
@@ -61,19 +68,13 @@ function selectedClick(event) {
     resetNext()
 }
 
-// 给所有 filedata 元素绑定点击事件监听器
-for (let i = 0; i < filedata.length; i++) {
-    filedata[i].addEventListener("click", selectedClick)
-}
-
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
-    // 获取文件操作菜单按钮和文件操作菜单
-    var filemenus = document.getElementsByClassName("filemenu")
-    var filepops = document.getElementsByClassName("filepop")
-    var dirmenus = document.getElementsByClassName("dirmenu")
-    var dirpops = document.getElementsByClassName("dirpop")
-    var rowborder = document.getElementsByClassName("rowborder")[0]
+
+    // 给所有 filedata 元素绑定点击事件监听器
+    for (let i = 0; i < filedata.length; i++) {
+        filedata[i].addEventListener("click", selectedClick)
+    }
 
     for (let i = 0; i < dirmenus.length; i++) {
         // 添加鼠标进入的监听事件，用于判断菜单弹出的位置
