@@ -114,9 +114,76 @@ function clearRowbox() {
     }
 }
 
+function getdate(datetime) {
+    // console.log(datetime)
+    let date = datetime.slice(0, 10)
+    date = date.replace(/-/g, '/')
+    return date
+}
+
 function resetFilePage(filelist) {
-    if (filelist) {
-        console.log(filelist)
+    if (filelist.length > 0) {
+        for (let i = 0; i < filelist.length; i++) {
+            // console.log(filelist[i].update.slice(0, 10))
+            const filename = filelist[i].name
+            const updatetime = getdate(filelist[i].update)
+            // console.log(updatetime)
+            if (filedata[i].isfile == 0) {
+                rowbox.innerHTML += `
+                    <div class="col-md-6 col-xl-4 databox mb-2">
+                        <div class="filedata">
+                            <div class="dirfont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    ${filename}
+                                </div>
+                                <div class="filemsg">
+                                    2.6M | ${updatetime}
+                                </div>
+                            </div>
+                            <div class="dirmenu">
+                                <div class="dirpop dirpopdown">
+                                    <div class="btn-group-vertical">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">复制</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">移动</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary secondbtn">重命名</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            } else {
+                rowbox.innerHTML += `
+                    <div class="col-md-6 col-xl-4 databox mb-2">
+                        <div class="filedata">
+                            <div class="filefont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    awdwad达瓦娃.doc
+                                </div>
+                                <div class="filemsg">
+                                    2.4M | 2023/4/15
+                                </div>
+                            </div>
+                            <div class="filemenu">
+                                <div class="filepop filepopdown">
+                                    <div class="btn-group-vertical">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">复制</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">移动</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                        <button type="button"
+                                            class="btn btn-sm btn-outline-secondary secondbtn">重命名</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            }
+        }
     } else {
 
     }
