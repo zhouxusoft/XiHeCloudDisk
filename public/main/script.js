@@ -70,7 +70,6 @@ function selectedClick(event) {
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
-
     // 给所有 filedata 元素绑定点击事件监听器
     for (let i = 0; i < filedata.length; i++) {
         filedata[i].addEventListener("click", selectedClick)
@@ -219,6 +218,6 @@ socket.on('connect', () => {
 
 // 更新文件列表页面时触发
 socket.on('updatepage', (filelist) => {
-    console.log(filelist)
+    // console.log(filelist)
     resetFilePage(filelist)
 })
