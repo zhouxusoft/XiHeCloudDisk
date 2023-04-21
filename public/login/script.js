@@ -58,7 +58,7 @@ loginForm.addEventListener('submit', function (e) {
             }
         } 
     }
-    xhr.open('POST', '/api/login', true)
+    xhr.open('POST', 'http://127.0.0.1:30019/api/login', true)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.send(formData)
 })
