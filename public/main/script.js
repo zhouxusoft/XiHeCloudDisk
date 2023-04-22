@@ -131,6 +131,14 @@ topmenu.addEventListener('click', function () {
     }
 })
 
+// 获取所有菜单元素
+const copy = document.querySelectorAll(".copy")
+const move = document.querySelectorAll(".move")
+const share = document.querySelectorAll(".share")
+const rename = document.querySelectorAll(".rename")
+const remove = document.querySelectorAll(".remove")
+const menubtngroup = document.querySelectorAll(".menubtngroup")
+
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
     // 给所有 filedata 元素绑定点击事件监听器
@@ -169,6 +177,11 @@ function resetPageFun() {
             }
         })
     }
+
+    // 给所有菜单添加点击监听事件
+    menubtngroup.addEventListener('click', function () {
+        
+    })
 }
 
 // 获取到文件项的容器
@@ -253,13 +266,13 @@ function resetFilePage(parentid) {
                             </div>
                             <div class="dirmenu">
                                 <div class="dirpop dirpopdown">
-                                    <div class="btn-group-vertical">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">复制</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">移动</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                    <div class="btn-group-vertical menubtngroup">
+                                        <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
+                                        <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
+                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
                                         <button type="button"
-                                            class="btn btn-sm btn-outline-secondary secondbtn">重命名</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">删除</button>
+                                            class="rename btn btn-sm btn-outline-secondary secondbtn">重命名</button>
+                                        <button type="button" class="remove btn btn-sm btn-outline-secondary secondbtn">删除</button>
                                     </div>
                                 </div>
                             </div>
@@ -285,14 +298,14 @@ function resetFilePage(parentid) {
                                 </div>
                             </div>
                             <div class="filemenu">
-                                <div class="filepop filepopdown">
-                                    <div class="btn-group-vertical">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">复制</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">移动</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                <div class="dirpop dirpopdown">
+                                    <div class="btn-group-vertical menubtngroup">
+                                        <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
+                                        <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
+                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
                                         <button type="button"
-                                            class="btn btn-sm btn-outline-secondary secondbtn">重命名</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary secondbtn">删除</button>
+                                            class="rename btn btn-sm btn-outline-secondary secondbtn">重命名</button>
+                                        <button type="button" class="remove btn btn-sm btn-outline-secondary secondbtn">删除</button>
                                     </div>
                                 </div>
                             </div>
