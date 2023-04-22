@@ -102,7 +102,15 @@ next.addEventListener('click', function () {
 })
 
 back.addEventListener('click', function () {
-    
+    // console.log(dirlist)
+    if (dirlist.length > 1) {
+        resetFilePage(dirlist[dirlist.length - 2])
+        resetDirNavBar(dirlist[dirlist.length - 2])
+    } else {
+        resetFilePage(0)
+        resetDirNavBar(0)
+    }
+    resetNext()
 })
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
