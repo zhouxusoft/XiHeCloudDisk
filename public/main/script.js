@@ -254,13 +254,14 @@ function resetFilePage(parentid) {
 // 用于存放目录列表的数组
 let dirlist = []
 const position = document.getElementsByClassName("position")[0]
+const positionbtns = document.getElementsByClassName("positionbtn")
 
 // 清除文件夹导航栏的元素
 function clearPosition() {
     while (position.firstChild) {
         position.removeChild(position.firstChild)
     }
-    position.innerHTML += `<div class="positionbtn">主目录</div>`
+    position.innerHTML += `<div class="positionbtn" id="0">主目录</div>`
 }
 
 // 获取文件夹导航栏元素
@@ -280,10 +281,10 @@ function getDirList(id) {
 }
 
 // 向文件夹导航栏添加子元素
-function addDirNavBar(name) {
+function addDirNavBar(name, id) {
     position.innerHTML += `
         <div class="positionwhite"></div>
-        <div class="positionbtn">${name}</div>`
+        <div class="positionbtn" id="${id}">${name}</div>`
     
 }
 
@@ -295,9 +296,15 @@ function resetDirNavBar(id) {
     for (let i = 0; i < dirnavbarlist.length; i++) {
         for (let j = 0; j < globalfilelist.length; j++) {
             if (globalfilelist[j].id == dirnavbarlist[i]) {
-                addDirNavBar(globalfilelist[j].name)
+                addDirNavBar(globalfilelist[j].name, globalfilelist[j].id)
             }
         }
+    }
+    for (let i = 0; i < dirnavbarlist.length; i++) {
+        positionbtns[i].addEventListener('click', function () {
+            resetFilePage(positionbtns[i].id)
+            resetDirNavBar(positionbtns[i].id)
+        })
     }
 }
 
