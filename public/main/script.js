@@ -64,6 +64,7 @@ var dirmenus = document.getElementsByClassName("dirmenu")
 var dirpops = document.getElementsByClassName("dirpop")
 var rowborder = document.getElementsByClassName("rowborder")[0]
 
+// 选中后再次点击
 function selectedClick(event) {
     // console.log(event.target)
     // console.log(this)
@@ -96,6 +97,7 @@ function selectedClick(event) {
     resetNext()
 }
 
+// 下一级按钮
 next.addEventListener('click', function () {
     resetFilePage(selected.id)
     resetDirNavBar(selected.id)
@@ -115,7 +117,7 @@ back.addEventListener('click', function () {
     resetNext()
 })
 
-// 顶部放回按钮
+// 顶部返回按钮
 topmenu.addEventListener('click', function () {
     if (dirlist.length > 0) {
         if (dirlist.length > 1) {
@@ -375,4 +377,6 @@ socket.on('updatepage', (filelist) => {
     globalfilelist = filelist
     // console.log(globalfilelist)
     resetFilePage(0)
+    resetDirNavBar(0)
+    resetNext()
 })
