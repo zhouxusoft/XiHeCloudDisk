@@ -11,16 +11,26 @@ const socket = io('http://127.0.0.1:30020')
 function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
-        // alert(666)
-        // console.log(event.currentTarget.id)
-        // 进入下一级菜单 刷新页面元素
-        resetFilePage(event.currentTarget.id)
-        resetDirNavBar(event.currentTarget.id)
-        // console.log('6', getDirList(event.currentTarget.id))
+        let isfile
+        for (let i = 0; i < globalfilelist.length; i++) {
+            if (globalfilelist[i].id == event.currentTarget.id) {
+                isfile = globalfilelist[i].isfile
+            }
+        }
+        if (isfile == 0) { 
+            // console.log(event.currentTarget.id)
+            // 进入下一级菜单 刷新页面元素
+            resetFilePage(event.currentTarget.id)
+            resetDirNavBar(event.currentTarget.id)
+            // console.log('6', getDirList(event.currentTarget.id))
+        } else {
+            alert(666)
+        }
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
         selected.removeEventListener('click', handleClick)
         selected = null
+        dirselected = 0
         // 判断下一级按钮是否可以被点击
         resetNext()
     }
@@ -28,7 +38,7 @@ function handleClick(event) {
 
 function resetNext() {
     // 判断下一级菜单是否可点击
-    if (selected != null) {
+    if (dirselected != 0) {
         next.classList.remove("disabled")
     } else {
         next.classList.add("disabled")
@@ -39,6 +49,7 @@ var filedata = document.getElementsByClassName("filedata")
 var back = document.getElementById("back")
 var next = document.getElementById("next")
 var selected = null
+var dirselected = 0
 
 // 获取文件操作菜单按钮和文件操作菜单
 var filemenus = document.getElementsByClassName("filemenu")
@@ -63,6 +74,11 @@ function selectedClick(event) {
                 // 给当前被点击的元素添加 selected 类名，并存储
                 this.classList.add("selected")
                 selected = this;
+                if (this.classList.contains("dir")) {
+                    dirselected = 1
+                } else {
+                    dirselected = 0
+                }
                 // console.log(selected.id)
                 // 给当前被点击的元素绑定事件监听器
                 this.addEventListener("click", handleClick)
@@ -76,6 +92,8 @@ function selectedClick(event) {
 
 next.addEventListener('click', function () {
     resetFilePage(selected.id)
+    resetDirNavBar(selected.id)
+    resetNext()
 })
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
@@ -175,6 +193,8 @@ function getDirSonData(filelist, id) {
 function resetFilePage(parentid) {
     // 删除元素在添加 以刷新
     clearRowbox()
+    // 清除选中文件夹
+    dirselected = 0
     let filelist = getDirSonData(globalfilelist, parentid)
     // console.log(filelist)
     if (filelist.length > 0) {
@@ -186,7 +206,7 @@ function resetFilePage(parentid) {
                 const dirson = getDirSonNum(globalfilelist, filelist[i].id) + ' 项'
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
-                        <div class="filedata" id="${filelist[i].id}">
+                        <div class="filedata dir" id="${filelist[i].id}">
                             <div class="dirfont"></div>
                             <div class="fileinfo">
                                 <div class="filename">
@@ -219,7 +239,7 @@ function resetFilePage(parentid) {
                 const filesize = getFileSize(filelist[i].size)
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
-                        <div class="filedata" id="${filelist[i].id}">
+                        <div class="filedata file" id="${filelist[i].id}">
                             <div class="filefont"></div>
                             <div class="fileinfo">
                                 <div class="filename">
@@ -304,6 +324,7 @@ function resetDirNavBar(id) {
         positionbtns[i].addEventListener('click', function () {
             resetFilePage(positionbtns[i].id)
             resetDirNavBar(positionbtns[i].id)
+            resetNext()
         })
     }
 }
