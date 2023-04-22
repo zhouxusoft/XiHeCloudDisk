@@ -301,7 +301,10 @@ function resetFilePage(parentid) {
             }
         }
     } else {
-
+        rowbox.innerHTML += `
+            <div class="col-md-6 col-xl-4 databox mb-2">
+                空文件夹
+            </div>`
     }
     resetPageFun()
 }
@@ -373,7 +376,7 @@ socket.on('connect', () => {
 })
 
 // 更新文件列表页面时触发
-socket.on('filstpage', (filelist) => {
+socket.on('firstpage', (filelist) => {
     globalfilelist = filelist
     // console.log(globalfilelist)
     resetFilePage(0)
