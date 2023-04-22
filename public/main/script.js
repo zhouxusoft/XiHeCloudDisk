@@ -12,9 +12,11 @@ function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
         // alert(666)
-        console.log(event.currentTarget.id)
+        // console.log(event.currentTarget.id)
         // 进入下一级菜单 刷新页面元素
         resetFilePage(event.currentTarget.id)
+        resetDirNavBar(event.currentTarget.id)
+        // console.log('6', getDirList(event.currentTarget.id))
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
         selected.removeEventListener('click', handleClick)
@@ -119,12 +121,14 @@ function resetPageFun() {
 // 获取到文件项的容器
 const rowbox = document.getElementsByClassName("rowbox")[0]
 
+// 清除文件列表的所有元素
 function clearRowbox() {
     while (rowbox.firstChild) {
         rowbox.removeChild(rowbox.firstChild)
     }
 }
 
+// 格式化时间字符串
 function getDate(datetime) {
     // console.log(datetime)
     let date = datetime.slice(0, 10)
@@ -132,6 +136,7 @@ function getDate(datetime) {
     return date
 }
 
+// 格式化文件大小
 function getFileSize(bytes) {
     if (bytes < 1024) {
         return bytes + " Bytes";
@@ -144,6 +149,7 @@ function getFileSize(bytes) {
     }
 }
 
+// 获取文件夹的子文件数量
 function getDirSonNum(filelist, id) {
     let count = 0
     for (let i = 0; i < filelist.length; i++) {
@@ -154,6 +160,7 @@ function getDirSonNum(filelist, id) {
     return count
 }
 
+// 获取文件夹的一级子文件对象
 function getDirSonData(filelist, id) {
     let sonlist = []
     for (let i = 0; i < filelist.length; i++) {
@@ -164,11 +171,12 @@ function getDirSonData(filelist, id) {
     return sonlist
 }
 
+// 刷新文件列表
 function resetFilePage(parentid) {
     // 删除元素在添加 以刷新
     clearRowbox()
     let filelist = getDirSonData(globalfilelist, parentid)
-    console.log(filelist)
+    // console.log(filelist)
     if (filelist.length > 0) {
         // 文件夹在前 文件在后
         for (let i = 0; i < filelist.length; i++) {
@@ -244,7 +252,54 @@ function resetFilePage(parentid) {
 }
 
 // 用于存放目录列表的数组
-let dirlist = [0]
+let dirlist = []
+const position = document.getElementsByClassName("position")[0]
+
+// 清除文件夹导航栏的元素
+function clearPosition() {
+    while (position.firstChild) {
+        position.removeChild(position.firstChild)
+    }
+    position.innerHTML += `<div class="positionbtn">主目录</div>`
+}
+
+// 获取文件夹导航栏元素
+function getDirList(id) {
+    if (id == 0) {
+        return dirlist
+    } else {
+        dirlist.unshift(id)
+        for (let i = 0; i < globalfilelist.length; i++) {
+            if (globalfilelist[i].id == id) {
+                id = globalfilelist[i].parentid
+                break
+            }
+        }
+        return getDirList(id)
+    }
+}
+
+// 向文件夹导航栏添加子元素
+function addDirNavBar(name) {
+    position.innerHTML += `
+        <div class="positionwhite"></div>
+        <div class="positionbtn">${name}</div>`
+    
+}
+
+// 刷新文件夹导航栏
+function resetDirNavBar(id) {
+    clearPosition()
+    dirlist = []
+    let dirnavbarlist = getDirList(id)
+    for (let i = 0; i < dirnavbarlist.length; i++) {
+        for (let j = 0; j < globalfilelist.length; j++) {
+            if (globalfilelist[j].id == dirnavbarlist[i]) {
+                addDirNavBar(globalfilelist[j].name)
+            }
+        }
+    }
+}
 
 // 用于存放后端拿到的文件列表
 let globalfilelist
@@ -257,6 +312,6 @@ socket.on('connect', () => {
 // 更新文件列表页面时触发
 socket.on('updatepage', (filelist) => {
     globalfilelist = filelist
-    console.log(globalfilelist)
+    // console.log(globalfilelist)
     resetFilePage(0)
 })
