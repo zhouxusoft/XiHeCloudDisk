@@ -11,7 +11,10 @@ const socket = io('http://127.0.0.1:30020')
 function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
-        alert(666)
+        // alert(666)
+        console.log(event.currentTarget.id)
+        // 进入下一级菜单 刷新页面元素
+        resetFilePage(event.currentTarget.id)
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
         selected.removeEventListener('click', handleClick)
@@ -58,6 +61,7 @@ function selectedClick(event) {
                 // 给当前被点击的元素添加 selected 类名，并存储
                 this.classList.add("selected")
                 selected = this;
+                // console.log(selected.id)
                 // 给当前被点击的元素绑定事件监听器
                 this.addEventListener("click", handleClick)
                 break;
@@ -67,6 +71,10 @@ function selectedClick(event) {
     // 判断下一级按钮是否可以被点击
     resetNext()
 }
+
+next.addEventListener('click', function () {
+    resetFilePage(selected.id)
+})
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
@@ -136,17 +144,41 @@ function getFileSize(bytes) {
     }
 }
 
-function resetFilePage(filelist) {
+function getDirSonNum(filelist, id) {
+    let count = 0
+    for (let i = 0; i < filelist.length; i++) {
+        if (filelist[i].parentid == id) {
+            count++
+        }
+    }
+    return count
+}
+
+function getDirSonData(filelist, id) {
+    let sonlist = []
+    for (let i = 0; i < filelist.length; i++) {
+        if (filelist[i].parentid == id) {
+            sonlist.push(filelist[i])
+        }
+    }
+    return sonlist
+}
+
+function resetFilePage(parentid) {
+    // 删除元素在添加 以刷新
+    clearRowbox()
+    let filelist = getDirSonData(globalfilelist, parentid)
+    console.log(filelist)
     if (filelist.length > 0) {
         // 文件夹在前 文件在后
         for (let i = 0; i < filelist.length; i++) {
             if (filelist[i].isfile == 0) {
                 const filename = filelist[i].name
                 const updatetime = getDate(filelist[i].update)
-                const dirson = filelist[i].subitem + ' 项'
+                const dirson = getDirSonNum(globalfilelist, filelist[i].id) + ' 项'
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
-                        <div class="filedata">
+                        <div class="filedata" id="${filelist[i].id}">
                             <div class="dirfont"></div>
                             <div class="fileinfo">
                                 <div class="filename">
@@ -179,7 +211,7 @@ function resetFilePage(filelist) {
                 const filesize = getFileSize(filelist[i].size)
                 rowbox.innerHTML += `
                     <div class="col-md-6 col-xl-4 databox mb-2">
-                        <div class="filedata">
+                        <div class="filedata" id="${filelist[i].id}">
                             <div class="filefont"></div>
                             <div class="fileinfo">
                                 <div class="filename">
@@ -211,6 +243,12 @@ function resetFilePage(filelist) {
     resetPageFun()
 }
 
+// 用于存放目录列表的数组
+let dirlist = [0]
+
+// 用于存放后端拿到的文件列表
+let globalfilelist
+
 // 客户端连接成功时触发
 socket.on('connect', () => {
     socket.emit('login', JSON.stringify(token))
@@ -218,6 +256,7 @@ socket.on('connect', () => {
 
 // 更新文件列表页面时触发
 socket.on('updatepage', (filelist) => {
-    // console.log(filelist)
-    resetFilePage(filelist)
+    globalfilelist = filelist
+    console.log(globalfilelist)
+    resetFilePage(0)
 })

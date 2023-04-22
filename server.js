@@ -31,6 +31,9 @@ io.on('connection', (socket) => {
             socket.emit('updatepage', results)
         })
     })
+
+    //切换文件目录时触发
+    socket.on
 });
 
 //启动服务器
