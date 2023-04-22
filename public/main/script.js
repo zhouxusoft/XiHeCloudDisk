@@ -375,11 +375,25 @@ socket.on('connect', () => {
     socket.emit('login', JSON.stringify(token))
 })
 
-// 更新文件列表页面时触发
+// 首次加载文件列表页面时触发
 socket.on('firstpage', (filelist) => {
     globalfilelist = filelist
     // console.log(globalfilelist)
     resetFilePage(0)
     resetDirNavBar(0)
+    resetNext()
+})
+
+// 文件变动时触发
+socket.on('updatepage', (filelist) => {
+    globalfilelist = filelist
+    if(dirlist.length > 0) {
+        const id = dirlist[dirlist.length - 1]
+        resetFilePage(id)
+        resetDirNavBar(id)
+    } else {
+        resetFilePage(0)
+        resetDirNavBar(0)
+    }
     resetNext()
 })
