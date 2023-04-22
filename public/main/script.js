@@ -373,7 +373,7 @@ socket.on('connect', () => {
 })
 
 // 更新文件列表页面时触发
-socket.on('updatepage', (filelist) => {
+socket.on('filstpage', (filelist) => {
     globalfilelist = filelist
     // console.log(globalfilelist)
     resetFilePage(0)
