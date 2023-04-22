@@ -43,6 +43,11 @@ function resetNext() {
     } else {
         next.classList.add("disabled")
     }
+    if (dirlist.length > 0) {
+        back.classList.remove("disabled")
+    } else {
+        back.classList.add("disabled")
+    }
 }
 
 var filedata = document.getElementsByClassName("filedata")
@@ -94,6 +99,10 @@ next.addEventListener('click', function () {
     resetFilePage(selected.id)
     resetDirNavBar(selected.id)
     resetNext()
+})
+
+back.addEventListener('click', function () {
+    
 })
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
