@@ -53,6 +53,7 @@ function resetNext() {
 var filedata = document.getElementsByClassName("filedata")
 var back = document.getElementById("back")
 var next = document.getElementById("next")
+var topmenu = document.getElementsByClassName("topmenu")[0]
 var selected = null
 var dirselected = 0
 
@@ -111,6 +112,19 @@ back.addEventListener('click', function () {
         resetDirNavBar(0)
     }
     resetNext()
+})
+
+topmenu.addEventListener('click', function () {
+    if (dirlist.length > 0) {
+        if (dirlist.length > 1) {
+            resetFilePage(dirlist[dirlist.length - 2])
+            resetDirNavBar(dirlist[dirlist.length - 2])
+        } else {
+            resetFilePage(0)
+            resetDirNavBar(0)
+        }
+        resetNext()
+    }
 })
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
