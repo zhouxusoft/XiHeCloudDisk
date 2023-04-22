@@ -132,12 +132,12 @@ topmenu.addEventListener('click', function () {
 })
 
 // 获取所有菜单元素
-const copy = document.querySelectorAll(".copy")
-const move = document.querySelectorAll(".move")
-const share = document.querySelectorAll(".share")
-const rename = document.querySelectorAll(".rename")
-const remove = document.querySelectorAll(".remove")
-const menubtngroup = document.querySelectorAll(".menubtngroup")
+const copy = document.getElementsByClassName("copy")
+const move = document.getElementsByClassName("move")
+const share = document.getElementsByClassName("share")
+const rename = document.getElementsByClassName("rename")
+const remove = document.getElementsByClassName("remove")
+const menubtngroup = document.getElementsByClassName("menubtngroup")
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
@@ -179,9 +179,11 @@ function resetPageFun() {
     }
 
     // 给所有菜单添加点击监听事件
-    menubtngroup.addEventListener('click', function () {
-        
-    })
+    for (let i = 0; i < menubtngroup.length; i++) {
+        menubtngroup[i].addEventListener('click', function (event) {
+            console.log(event.target)
+        })   
+    }
 }
 
 // 获取到文件项的容器
@@ -298,7 +300,7 @@ function resetFilePage(parentid) {
                                 </div>
                             </div>
                             <div class="filemenu">
-                                <div class="dirpop dirpopdown">
+                                <div class="filepop filepopdown">
                                     <div class="btn-group-vertical menubtngroup">
                                         <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
                                         <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
