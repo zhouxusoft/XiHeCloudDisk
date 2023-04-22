@@ -102,6 +102,7 @@ next.addEventListener('click', function () {
     resetNext()
 })
 
+// 上一级按钮
 back.addEventListener('click', function () {
     // console.log(dirlist)
     if (dirlist.length > 1) {
@@ -114,6 +115,7 @@ back.addEventListener('click', function () {
     resetNext()
 })
 
+// 顶部放回按钮
 topmenu.addEventListener('click', function () {
     if (dirlist.length > 0) {
         if (dirlist.length > 1) {
