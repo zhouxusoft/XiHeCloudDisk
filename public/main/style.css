@@ -137,15 +137,15 @@ body {
 }
 
 .filedata:hover {
-    background-color: #eee;
+    background-color: #E7ECF0;
 }
 
 .selected {
-    background-color: #ddd;
+    background-color: #D4DAE2;
 }
 
 .selected:hover {
-    background-color: #ddd;
+    background-color: #D4DAE2;
 }
 
 .dirfont {
