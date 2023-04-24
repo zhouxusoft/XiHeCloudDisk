@@ -523,8 +523,15 @@ uploadfile.addEventListener('click', function () {
         <div class="uploading">
             <div class="uploadingspan">正在上传：</div>
             <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                上传进度功能开发中
+                <div class="uploadingdatainfo">
+                    <span class="spinner-border spinner-border-sm"></span>
+                    <span class="badge bg-danger">!</span>
+                    <span class="badge bg-success">√</span>
+                    上传进度功能开发中
+                </div>
+                <div class="uploadingdatadel">
+                    \uf00d
+                </div>
             </div>
             
         </div>

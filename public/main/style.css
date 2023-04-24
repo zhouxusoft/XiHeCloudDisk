@@ -430,15 +430,38 @@ body {
 }
 
 .uploadingspan {
-    padding: 5px 10px;
+    padding: 5px 10px 0;
 }
 
 .uploadingdata {
-    padding: 0 10px 5px;
-    max-width: 280px;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.uploadingdata:hover {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+}
+
+.uploadingdatainfo {
+    max-width: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding: 0 5px;
+}
+
+.uploadingdatadel {
+    width: 20px;
+    font-size: 1rem;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 600;
+    color: #444;
+    text-align: center;
+    cursor: pointer;
 }
 
 .pop2 {
