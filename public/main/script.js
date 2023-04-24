@@ -526,7 +526,7 @@ uploadfile.addEventListener('click', function () {
             <div class="uploadingdatabox">
                 <div class="uploadingdata">
                     <div class="uploadingdatainfo">
-                        <span class="spinner-border spinner-border-sm"></span>
+                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
                         上传进度功能开发中
                     </div>
                     <div class="uploadingdatadel">
@@ -535,8 +535,8 @@ uploadfile.addEventListener('click', function () {
                 </div>
                 <div class="uploadingdata">
                     <div class="uploadingdatainfo">     
-                        <span class="badge bg-danger">!</span>
-                        上传进度功能开发中
+                        <span class="badge bg-danger" title="上传失败">!</span>
+                        上传进度功能开发中上传进度功能开发中
                     </div>
                     <div class="uploadingdatadel">
                         \uf00d
@@ -544,7 +544,7 @@ uploadfile.addEventListener('click', function () {
                 </div>
                 <div class="uploadingdata">
                     <div class="uploadingdatainfo">
-                        <span class="badge bg-success">√</span>
+                        <span class="badge bg-success" title="上传成功">√</span>
                         上传进度功能开发中
                     </div>
                     <div class="uploadingdatadel">
