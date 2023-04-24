@@ -435,7 +435,7 @@ body {
 
 .uploadingdata {
     padding: 0 10px 5px;
-    max-width: 200px;
+    max-width: 280px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
