@@ -412,3 +412,75 @@ socket.on('updatepage', (filelist) => {
     }
     resetNext()
 })
+
+const pop = document.getElementsByClassName("pop")[0]
+const overlay = document.getElementsByClassName("overlay")[0]
+
+function showpop () {
+    pop.style.display = "block";
+    overlay.style.height = "100%";
+    overlay.style.transition = "none"
+
+    //添加并获取关闭按钮 注册监听事件
+    pop.innerHTML += `<div class="closebtn"></div>`;
+    pop.addEventListener("click", function (event) {
+        if (event.target.classList.contains("closebtn")) {
+            hidePop();
+        }
+    });
+}
+
+function hidePop() {
+    pop.style.display = "none";
+    overlay.style.height = "0";
+    overlay.style.transition = "0.5s ease-out"
+}
+
+const uploadfile = document.getElementById("uploadfile")
+const newdir = document.getElementById("newdir")
+const getshare = document.getElementById("getshare")
+
+uploadfile.addEventListener('click', function () {
+    showpop()
+    pop.innerHTML += `
+        <div class="uploading">
+            <div class="uploadingspan">正在上传：</div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorld.mp4
+            </div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorld.mp4
+            </div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorldadwadawdawdwad.mp4
+            </div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorld.mp4
+            </div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorld.mp4
+            </div>
+            <div class="uploadingdata">
+                <span class="spinner-border spinner-border-sm"></span>
+                HelloWorld.mp4
+            </div>
+        </div>
+        <div class="uploadapi">
+            <span class="fileapispan">将文件拖拽于此或</span>
+            <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile">点击上传</button>
+        </div>
+    `
+})
+
+newdir.addEventListener('click', function () {
+    showpop()
+})
+
+getshare.addEventListener('click', function () {
+    showpop()
+})

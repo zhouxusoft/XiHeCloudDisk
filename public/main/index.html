@@ -35,9 +35,9 @@
         <div class="btns">
             <nav class="navbar navbar-expand-md bg-white navbar-dark">
                 <div class="btn-group bottombtngroup">
-                    <button type="button" class="btn btn-outline-secondary secondbtn">上传文件</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn">建文件夹</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn">获取分享</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile">上传文件</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="newdir">建文件夹</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="getshare">获取分享</button>
                 </div>
                 <div class="btn-group bottombtngroup">
                     <button type="button" class="btn btn-outline-secondary secondbtn d-none d-sm-block disabled"
@@ -61,6 +61,8 @@
             </nav>
         </div>
     </div>
+    <div class="overlay"></div>
+    <div class="pop"></div>
     <script src="./script.js"></script>
 </body>
 
