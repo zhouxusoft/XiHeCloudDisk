@@ -501,6 +501,8 @@ function upLoadFile(file) {
                 if (toSend.message) {
                     socket.emit('message', JSON.stringify(toSend))
                 }
+            } else {
+                console.log('上传失败')
             }
         };
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
