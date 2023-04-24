@@ -462,6 +462,55 @@ function hidePop2() {
     pop2.style.display = "none";
 }
 
+function upLoadFile(file) {
+    //选择好文件后进入预览，选择是否上传
+    showPop2()
+    pop2.innerHTML += `
+        <div class="makesuresend">
+            <div class="makesuresendimage">是否确认上传</div>
+            <div class="filebox">
+                <div class="filelogois">\uf15b</div>
+                <div class="filenameis">${file.name}</div>
+            </div>
+            <div class="makesure">
+                <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
+            </div>
+        </div>`
+
+    let yesbtn = document.getElementById("yesbtn");
+    let nobtn = document.getElementById("nobtn");
+    //点击确认上传
+    yesbtn.addEventListener("click", function () {
+        hidePop2()
+        let formData = new FormData()
+        // 将文件对象添加到formData对象中
+        formData.append('file', file)
+        formData.append('name', file.name)
+        formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
+        formData.append('puid', '198665227')
+
+        // console.log(formData.get("file"))
+
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                let resData = JSON.parse(this.response)
+                let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
+                let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
+                if (toSend.message) {
+                    socket.emit('message', JSON.stringify(toSend))
+                }
+            }
+        };
+        xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
+        xhr.send(formData)
+    });
+    nobtn.addEventListener("click", function () {
+        hidePop2()
+    });
+}
+
 const uploadfile = document.getElementById("uploadfile")
 const newdir = document.getElementById("newdir")
 const getshare = document.getElementById("getshare")
@@ -528,51 +577,7 @@ uploadfile.addEventListener('click', function () {
                 });
             } else {
                 //选择好文件后进入预览，选择是否上传
-                showPop2()
-                pop2.innerHTML += `
-                    <div class="makesuresend">
-                        <div class="makesuresendimage">是否确认上传</div>
-                        <div class="filebox">
-                            <div class="filelogois">\uf15b</div>
-                            <div class="filenameis">${file.name}</div>
-                        </div>
-                        <div class="makesure">
-                            <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
-                            <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
-                        </div>
-                    </div>`
-
-                let yesbtn = document.getElementById("yesbtn");
-                let nobtn = document.getElementById("nobtn");
-                //点击确认上传
-                yesbtn.addEventListener("click", function () {
-                    hidePop2()
-                    let formData = new FormData()
-                    // 将文件对象添加到formData对象中
-                    formData.append('file', file)
-                    formData.append('name', file.name)
-                    formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
-                    formData.append('puid', '198665227')
-
-                    // console.log(formData.get("file"))
-
-                    let xhr = new XMLHttpRequest()
-                    xhr.onreadystatechange = function () {
-                        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                            let resData = JSON.parse(this.response)
-                            let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                            let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
-                            if (toSend.message) {
-                                socket.emit('message', JSON.stringify(toSend))
-                            }
-                        }
-                    };
-                    xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
-                    xhr.send(formData)
-                });
-                nobtn.addEventListener("click", function () {
-                    hidePop2()
-                });
+                upLoadFile(file)
             }
         }
         
@@ -582,7 +587,7 @@ uploadfile.addEventListener('click', function () {
     const uploadfileclick = document.getElementById("uploadfileclick")
 
     uploadfileclick.addEventListener('click', function () {
-        console.log('uploadfile')
+        // console.log('uploadfile')
         const fileInput = document.createElement('input')
 
         fileInput.type = 'file'
@@ -596,51 +601,7 @@ uploadfile.addEventListener('click', function () {
             // console.log(file.lastModified)
 
             //选择好文件后进入预览，选择是否上传
-            showPop2()
-            pop2.innerHTML += `
-                <div class="makesuresend">
-                    <div class="makesuresendimage">是否确认上传</div>
-                    <div class="filebox">
-                        <div class="filelogois">\uf15b</div>
-                        <div class="filenameis">${file.name}</div>
-                    </div>
-                    <div class="makesure">
-                        <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
-                        <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
-                    </div>
-                </div>`
-
-            let yesbtn = document.getElementById("yesbtn");
-            let nobtn = document.getElementById("nobtn");
-            //点击确认上传
-            yesbtn.addEventListener("click", function () {
-                hidePop2()
-                let formData = new FormData()
-                // 将文件对象添加到formData对象中
-                formData.append('file', file)
-                formData.append('name', file.name)
-                formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
-                formData.append('puid', '198665227')
-
-                // console.log(formData.get("file"))
-
-                let xhr = new XMLHttpRequest()
-                xhr.onreadystatechange = function () {
-                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                        let resData = JSON.parse(this.response)
-                        let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                        let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
-                        if (toSend.message) {
-                            socket.emit('message', JSON.stringify(toSend))
-                        }
-                    }
-                };
-                xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
-                xhr.send(formData)
-            });
-            nobtn.addEventListener("click", function () {
-                hidePop2()
-            });
+            upLoadFile(file)
         };
         //自动触发input的点击事件
         fileInput.click();
