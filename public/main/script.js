@@ -522,45 +522,47 @@ uploadfile.addEventListener('click', function () {
     pop.innerHTML += `
         <div class="uploading">
             <div class="uploadingspan">上传列表：</div>
-            <div class="uploadingdata">
-                <div class="uploadingdatainfo">
-                    <span class="spinner-border spinner-border-sm"></span>
-                    上传进度功能开发中
+            <div class="hr3"></div>
+            <div class="uploadingdatabox">
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="spinner-border spinner-border-sm"></span>
+                        上传进度功能开发中
+                    </div>
+                    <div class="uploadingdatadel">
+                        \uf00d
+                    </div>
                 </div>
-                <div class="uploadingdatadel">
-                    \uf00d
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">     
+                        <span class="badge bg-danger">!</span>
+                        上传进度功能开发中
+                    </div>
+                    <div class="uploadingdatadel">
+                        \uf00d
+                    </div>
+                </div>
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="badge bg-success">√</span>
+                        上传进度功能开发中
+                    </div>
+                    <div class="uploadingdatadel">
+                        \uf00d
+                    </div>
+                </div>
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                        <span class="badge bg-danger" title="上传失败">!</span>
+                        <span class="badge bg-success" title="上传成功">√</span>
+                        上传进度功能开发中
+                    </div>
+                    <div class="uploadingdatadel" title="从列表中删除">
+                        \uf00d
+                    </div>
                 </div>
             </div>
-            <div class="uploadingdata">
-                <div class="uploadingdatainfo">     
-                    <span class="badge bg-danger">!</span>
-                    上传进度功能开发中
-                </div>
-                <div class="uploadingdatadel">
-                    \uf00d
-                </div>
-            </div>
-            <div class="uploadingdata">
-                <div class="uploadingdatainfo">
-                    <span class="badge bg-success">√</span>
-                    上传进度功能开发中
-                </div>
-                <div class="uploadingdatadel">
-                    \uf00d
-                </div>
-            </div>
-            <div class="uploadingdata">
-                <div class="uploadingdatainfo">
-                    <span class="spinner-border spinner-border-sm" title="正在上传"></span>
-                    <span class="badge bg-danger" title="上传失败">!</span>
-                    <span class="badge bg-success" title="上传成功">√</span>
-                    上传进度功能开发中
-                </div>
-                <div class="uploadingdatadel" title="从列表中删除">
-                    \uf00d
-                </div>
-            </div>
-            
         </div>
         <div class="uploadapi" id="drop-zone">
             <span class="fileapispan">将文件拖拽于此或</span>
