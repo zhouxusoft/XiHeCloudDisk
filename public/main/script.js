@@ -17,7 +17,7 @@ function handleClick(event) {
                 isfile = globalfilelist[i].isfile
             }
         }
-        if (isfile == 0) { 
+        if (isfile == 0) {
             // console.log(event.currentTarget.id)
             // 进入下一级菜单 刷新页面元素
             resetFilePage(event.currentTarget.id)
@@ -182,7 +182,7 @@ function resetPageFun() {
     for (let i = 0; i < menubtngroup.length; i++) {
         menubtngroup[i].addEventListener('click', function (event) {
             console.log(event.target)
-        })   
+        })
     }
 }
 
@@ -358,7 +358,7 @@ function addDirNavBar(name, id) {
     position.innerHTML += `
         <div class="positionwhite"></div>
         <div class="positionbtn" id="${id}">${name}</div>`
-    
+
 }
 
 // 刷新文件夹导航栏
@@ -402,7 +402,7 @@ socket.on('firstpage', (filelist) => {
 // 文件变动时触发
 socket.on('updatepage', (filelist) => {
     globalfilelist = filelist
-    if(dirlist.length > 0) {
+    if (dirlist.length > 0) {
         const id = dirlist[dirlist.length - 1]
         resetFilePage(id)
         resetDirNavBar(id)
@@ -414,9 +414,10 @@ socket.on('updatepage', (filelist) => {
 })
 
 const pop = document.getElementsByClassName("pop")[0]
+const pop2 = document.getElementsByClassName("pop2")[0]
 const overlay = document.getElementsByClassName("overlay")[0]
 
-function showpop () {
+function showPop() {
     pop.style.display = "block";
     overlay.style.height = "100%";
     overlay.style.transition = "none"
@@ -431,9 +432,24 @@ function showpop () {
 }
 
 function hidePop() {
-    pop.style.display = "none";
-    overlay.style.height = "0";
+    pop.style.display = "none"
+    overlay.style.height = "0"
     overlay.style.transition = "0.5s ease-out"
+}
+
+function showPop2() {
+    pop2.style.display = "block"
+    //添加并获取关闭按钮 注册监听事件
+    pop2.innerHTML += `<div class="closebtn"></div>`
+    pop2.addEventListener("click", function (event) {
+        if (event.target.classList.contains("closebtn")) {
+            hidePop2();
+        }
+    });
+}
+
+function hidePop2() {
+    pop2.style.display = "none";
 }
 
 const uploadfile = document.getElementById("uploadfile")
@@ -441,7 +457,7 @@ const newdir = document.getElementById("newdir")
 const getshare = document.getElementById("getshare")
 
 uploadfile.addEventListener('click', function () {
-    showpop()
+    showPop()
     pop.innerHTML += `
         <div class="uploading">
             <div class="uploadingspan">正在上传：</div>
@@ -465,22 +481,116 @@ uploadfile.addEventListener('click', function () {
                 <span class="spinner-border spinner-border-sm"></span>
                 HelloWorld.mp4
             </div>
-            <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                HelloWorld.mp4
-            </div>
         </div>
-        <div class="uploadapi">
+        <div class="uploadapi" id="drop-zone">
             <span class="fileapispan">将文件拖拽于此或</span>
-            <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile">点击上传</button>
+            <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfileclick">点击上传</button>
         </div>
     `
+
+    /* 拖拽上传文件 */
+    const dropZone = document.getElementById('drop-zone');
+
+    // 防止浏览器默认打开文件
+    dropZone.addEventListener('dragover', function (event) {
+        event.preventDefault();
+    });
+
+    // 当文件被拖放到区域内时触发
+    dropZone.addEventListener('drop', function (event) {
+        event.preventDefault();
+
+        var files = event.dataTransfer.files;
+        var formData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file[]', files[i]);
+        }
+
+        // 发送 AJAX 请求
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'upload.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log('上传成功');
+            } else {
+                console.log('上传失败');
+            }
+        };
+        xhr.send(formData);
+    });
+
+    /* 点击上传文件 */
+    const uploadfileclick = document.getElementById("uploadfileclick")
+
+    uploadfileclick.addEventListener('click', function () {
+        console.log('uploadfile')
+        const fileInput = document.createElement('input')
+
+        fileInput.type = 'file'
+        fileInput.name = 'file'
+
+        fileInput.onchange = function () {
+            let file = this.files[0];
+            // console.log(file.name)
+            // console.log(file.size)
+            // console.log(file.type)
+            // console.log(file.lastModified)
+
+            //选择好图片后进入预览，选择是否发送
+            showPop2()
+            pop2.innerHTML += `
+                <div class="makesuresendimage">是否确认发送</div>
+                <div class="filebox">
+                    <div class="filelogo">\uf15b</div>
+                    <div class="filename">${file.name}</div>
+                </div>
+                <div class="makesure">
+                    <div class="makesurebtn" id="yesbtn">确认</div>
+                    <div class="makesurebtn" id="nobtn">取消</div>
+                </div>`;
+
+            let yesbtn = document.getElementById("yesbtn");
+            let nobtn = document.getElementById("nobtn");
+            //点击确认发送
+            yesbtn.addEventListener("click", function () {
+                hidePop2()
+                let formData = new FormData()
+                // 将文件对象添加到formData对象中
+                formData.append('file', file)
+                formData.append('name', file.name)
+                formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
+                formData.append('puid', '198665227')
+
+                // console.log(formData.get("file"))
+
+                let xhr = new XMLHttpRequest()
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        let resData = JSON.parse(this.response)
+                        let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
+                        let toSend = { userid: token.id, nickname: token.nickname, message: filemessage, time: date, room: token.room }
+                        if (toSend.message) {
+                            socket.emit('message', JSON.stringify(toSend))
+                        }
+                    }
+                };
+                xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
+                xhr.send(formData)
+            });
+            nobtn.addEventListener("click", function () {
+                hidePop()
+            });
+        };
+        //自动触发input的点击事件
+        fileInput.click();
+    })
 })
 
 newdir.addEventListener('click', function () {
-    showpop()
+    showPop()
 })
 
 getshare.addEventListener('click', function () {
-    showpop()
+    showPop()
 })
