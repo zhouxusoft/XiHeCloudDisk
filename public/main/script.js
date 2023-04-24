@@ -418,6 +418,11 @@ const pop2 = document.getElementsByClassName("pop2")[0]
 const overlay = document.getElementsByClassName("overlay")[0]
 
 function showPop() {
+    //每打开一次 其内部的元素都应该重新加载一遍
+    while (pop.firstChild) {
+        pop.removeChild(pop.firstChild);
+    }
+
     pop.style.display = "block";
     overlay.style.height = "100%";
     overlay.style.transition = "none"
@@ -438,6 +443,11 @@ function hidePop() {
 }
 
 function showPop2() {
+    //每打开一次 其内部的元素都应该重新加载一遍
+    while (pop2.firstChild) {
+        pop2.removeChild(pop2.firstChild);
+    }
+
     pop2.style.display = "block"
     //添加并获取关闭按钮 注册监听事件
     pop2.innerHTML += `<div class="closebtn"></div>`
@@ -463,24 +473,9 @@ uploadfile.addEventListener('click', function () {
             <div class="uploadingspan">正在上传：</div>
             <div class="uploadingdata">
                 <span class="spinner-border spinner-border-sm"></span>
-                HelloWorld.mp4
+                上传进度功能开发中
             </div>
-            <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                HelloWorld.mp4
-            </div>
-            <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                HelloWorldadwadawdawdwad.mp4
-            </div>
-            <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                HelloWorld.mp4
-            </div>
-            <div class="uploadingdata">
-                <span class="spinner-border spinner-border-sm"></span>
-                HelloWorld.mp4
-            </div>
+            
         </div>
         <div class="uploadapi" id="drop-zone">
             <span class="fileapispan">将文件拖拽于此或</span>
@@ -499,25 +494,88 @@ uploadfile.addEventListener('click', function () {
     // 当文件被拖放到区域内时触发
     dropZone.addEventListener('drop', function (event) {
         event.preventDefault();
+        // console.log("dropfile")
+        let items = event.dataTransfer.items;
+        let files = event.dataTransfer.files;
+        let file = files[0];
+        // console.log(file.name)
+        // console.log(file.size)
+        // console.log(file.type)
+        // console.log(file.lastModified)
+        let item = items[0].webkitGetAsEntry();
+        if (item) {
+            // 判断是否为文件夹
+            if (item.isDirectory) {
+                showPop2()
+                pop2.innerHTML += `
+                    <div class="makesuresend">
+                        <div class="makesuresendimage">功能待完善中</div>
+                        <div class="makesuresendimage">当前只支持单文件上传</div>
+                        <br>
+                        <div class="makesure">
+                            <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                            <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
+                        </div>
+                    </div>`
 
-        var files = event.dataTransfer.files;
-        var formData = new FormData();
-
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file[]', files[i]);
-        }
-
-        // 发送 AJAX 请求
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'upload.php', true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('上传成功');
+                let yesbtn = document.getElementById("yesbtn")
+                let nobtn = document.getElementById("nobtn")
+                yesbtn.addEventListener("click", function () {
+                    hidePop2()
+                });
+                nobtn.addEventListener("click", function () {
+                    hidePop2()
+                });
             } else {
-                console.log('上传失败');
+                //选择好文件后进入预览，选择是否上传
+                showPop2()
+                pop2.innerHTML += `
+                    <div class="makesuresend">
+                        <div class="makesuresendimage">是否确认上传</div>
+                        <div class="filebox">
+                            <div class="filelogois">\uf15b</div>
+                            <div class="filenameis">${file.name}</div>
+                        </div>
+                        <div class="makesure">
+                            <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                            <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
+                        </div>
+                    </div>`
+
+                let yesbtn = document.getElementById("yesbtn");
+                let nobtn = document.getElementById("nobtn");
+                //点击确认上传
+                yesbtn.addEventListener("click", function () {
+                    hidePop2()
+                    let formData = new FormData()
+                    // 将文件对象添加到formData对象中
+                    formData.append('file', file)
+                    formData.append('name', file.name)
+                    formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
+                    formData.append('puid', '198665227')
+
+                    // console.log(formData.get("file"))
+
+                    let xhr = new XMLHttpRequest()
+                    xhr.onreadystatechange = function () {
+                        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                            let resData = JSON.parse(this.response)
+                            let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
+                            let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
+                            if (toSend.message) {
+                                socket.emit('message', JSON.stringify(toSend))
+                            }
+                        }
+                    };
+                    xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
+                    xhr.send(formData)
+                });
+                nobtn.addEventListener("click", function () {
+                    hidePop2()
+                });
             }
-        };
-        xhr.send(formData);
+        }
+        
     });
 
     /* 点击上传文件 */
@@ -537,22 +595,24 @@ uploadfile.addEventListener('click', function () {
             // console.log(file.type)
             // console.log(file.lastModified)
 
-            //选择好图片后进入预览，选择是否发送
+            //选择好文件后进入预览，选择是否上传
             showPop2()
             pop2.innerHTML += `
-                <div class="makesuresendimage">是否确认发送</div>
-                <div class="filebox">
-                    <div class="filelogo">\uf15b</div>
-                    <div class="filename">${file.name}</div>
-                </div>
-                <div class="makesure">
-                    <div class="makesurebtn" id="yesbtn">确认</div>
-                    <div class="makesurebtn" id="nobtn">取消</div>
-                </div>`;
+                <div class="makesuresend">
+                    <div class="makesuresendimage">是否确认上传</div>
+                    <div class="filebox">
+                        <div class="filelogois">\uf15b</div>
+                        <div class="filenameis">${file.name}</div>
+                    </div>
+                    <div class="makesure">
+                        <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                        <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
+                    </div>
+                </div>`
 
             let yesbtn = document.getElementById("yesbtn");
             let nobtn = document.getElementById("nobtn");
-            //点击确认发送
+            //点击确认上传
             yesbtn.addEventListener("click", function () {
                 hidePop2()
                 let formData = new FormData()
@@ -569,7 +629,7 @@ uploadfile.addEventListener('click', function () {
                     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                         let resData = JSON.parse(this.response)
                         let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                        let toSend = { userid: token.id, nickname: token.nickname, message: filemessage, time: date, room: token.room }
+                        let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
                         if (toSend.message) {
                             socket.emit('message', JSON.stringify(toSend))
                         }
@@ -579,7 +639,7 @@ uploadfile.addEventListener('click', function () {
                 xhr.send(formData)
             });
             nobtn.addEventListener("click", function () {
-                hidePop()
+                hidePop2()
             });
         };
         //自动触发input的点击事件
