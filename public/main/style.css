@@ -497,6 +497,7 @@ body {
     word-wrap: break-word;
     white-space: pre-wrap;
     width: fit-content;
+    margin-bottom: 5px;
 }
 
 .filelogois {
