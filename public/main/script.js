@@ -678,17 +678,35 @@ function upLoadFile(file) {
 
         let xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
-            
             if (this.readyState === XMLHttpRequest.DONE) {
                 let resmsg = JSON.parse(this.response)
-                console.log(resmsg.msg)
+                // console.log(resmsg.msg)
                 if (this.status === 200) {
+                    // 上传成功
+                    for (let i = 0; i < globaluploadlist.length; i++) {
+                        if (globaluploadlist[i].id == uploadtask.id) {
+                            globaluploadlist[i].status = 1
+                            resetUploadList()
+                            progressbar.style.width = '100%'
+                            uploadinfototle.textContent = getFileSize(file.size) + '/' + getFileSize(file.size)
+                            break
+                        }
+                    }
                     let resData = JSON.parse(this.response)
                     // console.log(resData.data.objectId)
                     let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
                     let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
                     if (toSend.message) {
                         socket.emit('message', JSON.stringify(toSend))
+                    }
+                } else {
+                    // 上传失败
+                    for (let i = 0; i < globaluploadlist.length; i++) {
+                        if (globaluploadlist[i].id == uploadtask.id) {
+                            globaluploadlist[i].status = 2
+                            resetUploadList()
+                            break
+                        }
                     }
                 }
             }
