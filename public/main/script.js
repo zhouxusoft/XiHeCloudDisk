@@ -414,14 +414,77 @@ socket.on('updatepage', (filelist) => {
 })
 
 const uploadapibox = document.getElementById("uploadapibox")
+const uploadingdatabox = document.getElementById("uploadingdatabox")
 
 // 用于存放上传文件的列表
-let globalfileuploadlist
+let globaluploadlist = []
+let uploadid = 1
+
+function resetUploadList () {
+    while (uploadingdatabox.firstChild) {
+        uploadingdatabox.removeChild(uploadingdatabox.firstChild)
+    }
+    for (let i = globaluploadlist.length - 1; i < 0; i--) {
+        let delid = uploadingdatadel + globaluploadlist[i].id
+        if (globaluploadlist[i].status == 0) {
+            uploadingdatabox.innerHTML += `
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                        ${globaluploadlist[i].name}
+                    </div>
+                    <div class="uploadingdatadel" id="uploadingdatadel${delid}">
+                        \uf00d
+                    </div>
+                </div>`
+            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+
+            uploadingdatadel.addEventListener('click', function () {
+                globaluploadlist[i].status == -1
+            })
+        }
+        else if (globaluploadlist[i].status == 1) {
+            uploadingdatabox.innerHTML += `
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="badge bg-success" title="上传成功">√</span>
+                        ${globaluploadlist[i].name}
+                    </div>
+                    <div class="uploadingdatadel">
+                        \uf00d
+                    </div>
+                </div>`
+            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+
+            uploadingdatadel.addEventListener('click', function () {
+                globaluploadlist[i].status == -1
+            })
+        }
+        else if (globaluploadlist[i].status == 2) {
+            uploadingdatabox.innerHTML += `
+                <div class="uploadingdata">
+                    <div class="uploadingdatainfo">
+                        <span class="badge bg-danger" title="上传失败">!</span>
+                        ${globaluploadlist[i].name}
+                    </div>
+                    <div class="uploadingdatadel">
+                        \uf00d
+                    </div>
+                </div>`
+            
+            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+
+            uploadingdatadel.addEventListener('click', function () {
+                globaluploadlist[i].status == -1
+            })
+        }
+    }
+}
 
 /* 显示文件拖拽上传页面 */
 function showUpLoadApi() {
     while (uploadapibox.firstChild) {
-        uploadapibox.removeChild(uploadapibox.firstChild);
+        uploadapibox.removeChild(uploadapibox.firstChild)
     }
     uploadapibox.innerHTML += `
         <div class="uploadapi" id="drop-zone">
@@ -442,7 +505,7 @@ function showUpLoadApi() {
         fileInput.name = 'file'
 
         fileInput.onchange = function () {
-            let file = this.files[0];
+            let file = this.files[0]
             // console.log(file.name)
             // console.log(file.size)
             // console.log(file.type)
@@ -451,31 +514,31 @@ function showUpLoadApi() {
             //选择好文件后进入预览，选择是否上传
             showMakeSureUpLoadApi(file.name, file.size)
             upLoadFile(file)
-        };
+        }
         //自动触发input的点击事件
-        fileInput.click();
+        fileInput.click()
     })
 
     /* 拖拽上传文件 */
-    const dropZone = document.getElementById('drop-zone');
+    const dropZone = document.getElementById('drop-zone')
 
     // 防止浏览器默认打开文件
     dropZone.addEventListener('dragover', function (event) {
-        event.preventDefault();
+        event.preventDefault()
     });
 
     // 当文件被拖放到区域内时触发
     dropZone.addEventListener('drop', function (event) {
-        event.preventDefault();
+        event.preventDefault()
         // console.log("dropfile")
-        let items = event.dataTransfer.items;
-        let files = event.dataTransfer.files;
-        let file = files[0];
+        let items = event.dataTransfer.items
+        let files = event.dataTransfer.files
+        let file = files[0]
         // console.log(file.name)
         // console.log(file.size)
         // console.log(file.type)
         // console.log(file.lastModified)
-        let item = items[0].webkitGetAsEntry();
+        let item = items[0].webkitGetAsEntry()
         if (item) {
             // 判断是否为文件夹
             if (item.isDirectory) {
@@ -487,13 +550,13 @@ function showUpLoadApi() {
             }
         }
         
-    });
+    })
 }
 
 /* 显示确认上传的文件详情页面 */
 function showMakeSureUpLoadApi(filename, filesize) {
     while (uploadapibox.firstChild) {
-        uploadapibox.removeChild(uploadapibox.firstChild);
+        uploadapibox.removeChild(uploadapibox.firstChild)
     }
     uploadapibox.innerHTML += `
         <div class="uploadapi">
@@ -543,6 +606,15 @@ function upLoadFile(file) {
     let nobtn = document.getElementById("nobtn")
     //点击确认上传
     yesbtn.addEventListener("click", function () {
+        // 将文件加值上传列表
+
+        let uploadtask = {
+            id: uploadid++,
+            filename: file.name,
+            status: 0
+        }
+        globaluploadlist.unshift(uploadtask)
+
         showUpLoadApi()
 
         let formData = new FormData()
