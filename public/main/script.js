@@ -422,9 +422,9 @@ let globaluploadlist = []
 let uploadid = 1
 
 function resetUploadListen (uploadingdatadel) {
-    
     if (uploadingdatadel.id) {
         for (let j = 0; j < globaluploadlist.length; j++) {
+            // console.log('j', j)
             if (globaluploadlist[j].id == uploadingdatadel.id) {
                 globaluploadlist[j].status = -1
                 let dataid = 'uploadingdata' + globaluploadlist[j].id
@@ -434,6 +434,7 @@ function resetUploadListen (uploadingdatadel) {
                     uploadingdatabox.removeChild(resetuploaddata)
                 }
                 resetUploadList()
+                // console.log(5554123)
                 break
             }
         }
@@ -450,7 +451,9 @@ function resetUploadList () {
     }
     if (length > 0) {
         if (uploadingdatanull.length > 0) {
-            uploadingdatabox.removeChild(uploadingdatanull[0])
+            for (let i = 0; i < uploadingdatanull.length; i++) {
+                uploadingdatabox.removeChild(uploadingdatanull[i])   
+            }            
         }
         // console.log(globaluploadlist)
         for (let i = 0; i < globaluploadlist.length ; i++) {
@@ -548,16 +551,18 @@ function resetUploadList () {
         }
         const uploadingdatadel = document.getElementsByClassName("uploaddelicon")
         for (let i = 0; i < uploadingdatadel.length; i++) {
-            uploadingdatadel[i].removeEventListener("click", () => resetUploadListen())
+            uploadingdatadel[i].removeEventListener("click", resetUploadListen)
             uploadingdatadel[i].addEventListener('click', function(event) {
                 resetUploadListen(event.target)
             })       
         }
     } else {
-        uploadingdatabox.innerHTML += `
+        if (uploadingdatanull.length == 0) {
+            uploadingdatabox.innerHTML += `
             <div class="uploadingdatanull">
                 暂无下载记录
             </div>`
+        }
     }
 }
 
