@@ -426,7 +426,7 @@ function resetUploadList () {
     }
     if (globaluploadlist.length > 0) {
         console.log(globaluploadlist)
-        for (let i = globaluploadlist.length - 1; i > -1; i--) {
+        for (let i = 0; i < globaluploadlist.length ; i++) {
             
             let delid = 'uploadingdatadel' + globaluploadlist[i].id
             if (globaluploadlist[i].status == 0) {
@@ -470,10 +470,10 @@ function resetUploadList () {
                                 ${globaluploadlist[i].filename}
                             </div>
                             <div class="progress uploadprogress">
-                                <div class="progress-bar" style="width:0%"></div>
+                                <div class="progress-bar" style="width:100%"></div>
                             </div>
                             <div class="uploadinfopro">
-                                <div class="uploadinfototle"></div>
+                                <div class="uploadinfototle">${getFileSize(globaluploadlist[i].filesize)}/${getFileSize(globaluploadlist[i].filesize)}</div>
                                 <div class="uploadinfospeed"></div>
                             </div>
                         </div>
@@ -504,7 +504,7 @@ function resetUploadList () {
                                 <div class="progress-bar" style="width:0%"></div>
                             </div>
                             <div class="uploadinfopro">
-                                <div class="uploadinfototle"></div>
+                                <div class="uploadinfototle">0/${getFileSize(globaluploadlist[i].filesize)}</div>
                                 <div class="uploadinfospeed"></div>
                             </div>
                         </div>
@@ -660,6 +660,7 @@ function upLoadFile(file) {
         let uploadtask = {
             id: uploadid++,
             filename: file.name,
+            filesize: file.size,
             status: 0
         }
         globaluploadlist.unshift(uploadtask)
