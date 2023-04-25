@@ -425,13 +425,14 @@ function resetUploadList () {
         uploadingdatabox.removeChild(uploadingdatabox.firstChild)
     }
     if (globaluploadlist.length > 0) {
-        console.log(globaluploadlist)
+        // console.log(globaluploadlist)
         for (let i = 0; i < globaluploadlist.length ; i++) {
             
-            let delid = 'uploadingdatadel' + globaluploadlist[i].id
+            let dataid = 'uploadingdata' + globaluploadlist[i].id
+            let delid = globaluploadlist[i].id
             if (globaluploadlist[i].status == 0) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata" id="${delid}">
+                    <div class="uploadingdata" id="${dataid}">
                         <div class="uploadicon">
                             <span class="spinner-border spinner-border-sm" title="正在上传"></span>
                         </div>
@@ -448,20 +449,13 @@ function resetUploadList () {
                             </div>
                         </div>
                         <div class="uploadingdatadel">
-                            <div class="uploaddelicon">\uf00d</div>
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
-                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
-                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
-
-                uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status = -1
-                    resetUploadList()
-                })
             }
             else if (globaluploadlist[i].status == 1) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata" id="${delid}">
+                    <div class="uploadingdata" id="${dataid}">
                         <div class="uploadicon">
                         <span class="badge bg-success" title="上传成功">\uf00c</span>
                         </div>
@@ -478,21 +472,13 @@ function resetUploadList () {
                             </div>
                         </div>
                         <div class="uploadingdatadel">
-                            <div class="uploaddelicon">\uf00d</div>
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
-
-                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
-                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
-                
-                uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status = -1
-                    resetUploadList()
-                })
             }
             else if (globaluploadlist[i].status == 2) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata" id="${delid}">
+                    <div class="uploadingdata" id="${dataid}">
                         <div class="uploadicon">
                         <span class="badge bg-danger" title="上传失败">\u0021</span>
                         </div>
@@ -509,18 +495,22 @@ function resetUploadList () {
                             </div>
                         </div>
                         <div class="uploadingdatadel">
-                            <div class="uploaddelicon">\uf00d</div>
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
-                
-                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
-                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
-    
-                uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status = -1
-                    resetUploadList()
-                })
             }
+        }
+        const uploadingdatadel = document.getElementsByClassName("uploaddelicon")
+        for (let i = 0; i < uploadingdatadel.length; i++) {
+            uploadingdatadel[i].addEventListener('click', function () {
+                // console.log(uploadingdatadel[i].id)
+                for (let j = 0; j < globaluploadlist.length; j++) {
+                    if (globaluploadlist[j].id == uploadingdatadel[i].id) {
+                        globaluploadlist[j].status = -1
+                        resetUploadList()
+                    }
+                }
+            })         
         }
     } else {
         uploadingdatabox.innerHTML += `
@@ -712,7 +702,7 @@ function upLoadFile(file) {
                 }
             }
         };
-        let delid = 'uploadingdatadel' + uploadtask.id
+        let delid = 'uploadingdata' + uploadtask.id
         const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
         const progressbar = uploadingdata.querySelector(`.progress-bar`)
         const uploadinfototle = uploadingdata.querySelector(`.uploadinfototle`)
