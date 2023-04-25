@@ -497,12 +497,11 @@ body {
     word-wrap: break-word;
     white-space: pre-wrap;
     width: fit-content;
-    display: inline-block;
 }
 
 .filelogois {
     width: 35px;
-    display: inline-block;
+    margin: auto;
     font-family: "Font Awesome 6 Free";
     font-size: 2rem;
     color: #333;
