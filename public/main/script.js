@@ -482,7 +482,7 @@ function resetUploadList () {
         }
     } else {
         uploadingdatabox.innerHTML += `
-            <div class="uploadingdata">
+            <div class="uploadingdatanull">
                 暂无下载记录
             </div>`
     }

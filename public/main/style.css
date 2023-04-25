@@ -518,6 +518,7 @@ body {
     display: flex;
     height: 160px;
     color: #6C757D;
-    text-align: center;
     align-items: center;
+    margin: auto;
+    width: fit-content;
 }
