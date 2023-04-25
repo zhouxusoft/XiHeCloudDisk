@@ -634,7 +634,8 @@ function upLoadFile(file) {
         // console.log(formData.get("file"))
 
         let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function (event) {
+            
             if (this.readyState === XMLHttpRequest.DONE) {
                 let resmsg = JSON.parse(this.response)
                 console.log(resmsg.msg)
@@ -649,6 +650,10 @@ function upLoadFile(file) {
                 }
             }
         };
+        xhr.upload.addEventListener('progress', function (e) {
+            console.log(e.loaded / e.total * 100 + "%")
+        })
+
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
     });
