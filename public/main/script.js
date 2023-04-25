@@ -640,14 +640,13 @@ function upLoadFile(file) {
                 console.log(resmsg.msg)
                 if (this.status === 200) {
                     let resData = JSON.parse(this.response)
-                    console.log(resData.data.objectId)
+                    // console.log(resData.data.objectId)
                     let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
                     let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
                     if (toSend.message) {
                         socket.emit('message', JSON.stringify(toSend))
                     }
                 }
-                
             }
         };
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
