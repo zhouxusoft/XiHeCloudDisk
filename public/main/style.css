@@ -409,16 +409,14 @@ body {
 }
 
 .uploading {
-    width: 280px;
-    height: 160px;
+    height: 140px;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8);
     border-radius: 4px;
     margin-bottom: 10px;
 }
 
 .uploadapi {
-    width: 280px;
-    height: 140px;
+    min-height: 182px;
     border: 1px dashed rgba(0, 0, 0, 0.8);
     border-radius: 4px;
     display: flex;
@@ -439,7 +437,7 @@ body {
 
 .uploadingdatabox {
     overflow: auto;
-    height: 120px;
+    height: 140px;
 }
 
 .uploadingdatabox::-webkit-scrollbar {
@@ -460,7 +458,7 @@ body {
 }
 
 .uploadingdatainfo {
-    max-width: 240px;
+    max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -477,24 +475,8 @@ body {
     cursor: pointer;
 }
 
-.pop2 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1002;
-    background-color: rgba(255, 255, 255, 0.97);
-    padding: 35px 10px 10px;
-    width: 300px;
-    height: fit-content;
-    min-height: 370px;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8);
-    border-radius: 6px;
-    display: none;
-}
-
 .makesuresendimage {
-    margin: auto;
+    margin: 10px auto 0;
     text-align: center;
     font-size: 1.25rem;
     margin-bottom: 5px;
@@ -504,7 +486,7 @@ body {
     margin: auto;
     text-align: center;
     width: fit-content;
-    max-width: 200px;
+    max-width: 80%;
     border-radius: 6px;
     padding: 8px;
     margin-bottom: 15px;
@@ -516,7 +498,6 @@ body {
     word-wrap: break-word;
     white-space: pre-wrap;
     width: fit-content;
-    max-width: 140px;
     display: inline-block;
 }
 
@@ -530,14 +511,6 @@ body {
 }
 
 .makesure {
-    margin: auto;
+    margin: 0 auto 10px;
     width: fit-content;
-}
-
-.makesuresend {
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 280px;
 }

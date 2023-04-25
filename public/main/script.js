@@ -416,159 +416,44 @@ socket.on('updatepage', (filelist) => {
 const pop = document.getElementsByClassName("pop")[0]
 const pop2 = document.getElementsByClassName("pop2")[0]
 const overlay = document.getElementsByClassName("overlay")[0]
+const uploadapibox = document.getElementById("uploadapibox")
 
-function showPop() {
-    //每打开一次 其内部的元素都应该重新加载一遍
-    while (pop.firstChild) {
-        pop.removeChild(pop.firstChild);
+function showuploadapi() {
+    while (uploadapibox.firstChild) {
+        uploadapibox.removeChild(uploadapibox.firstChild);
     }
-
-    pop.style.display = "block";
-    overlay.style.height = "100%";
-    overlay.style.transition = "none"
-
-    //添加并获取关闭按钮 注册监听事件
-    pop.innerHTML += `<div class="closebtn"></div>`;
-    pop.addEventListener("click", function (event) {
-        if (event.target.classList.contains("closebtn")) {
-            hidePop();
-        }
-    });
-}
-
-function hidePop() {
-    pop.style.display = "none"
-    overlay.style.height = "0"
-    overlay.style.transition = "0.5s ease-out"
-}
-
-function showPop2() {
-    //每打开一次 其内部的元素都应该重新加载一遍
-    while (pop2.firstChild) {
-        pop2.removeChild(pop2.firstChild);
-    }
-
-    pop2.style.display = "block"
-    //添加并获取关闭按钮 注册监听事件
-    pop2.innerHTML += `<div class="closebtn"></div>`
-    pop2.addEventListener("click", function (event) {
-        if (event.target.classList.contains("closebtn")) {
-            hidePop2();
-        }
-    });
-}
-
-function hidePop2() {
-    pop2.style.display = "none";
-}
-
-function upLoadFile(file) {
-    //选择好文件后进入预览，选择是否上传
-    showPop2()
-    pop2.innerHTML += `
-        <div class="makesuresend">
-            <div class="makesuresendimage">是否确认上传</div>
-            <div class="filebox">
-                <div class="filelogois">\uf15b</div>
-                <div class="filenameis">${file.name}</div>
-            </div>
-            <div class="makesure">
-                <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
-                <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
-            </div>
-        </div>`
-
-    let yesbtn = document.getElementById("yesbtn");
-    let nobtn = document.getElementById("nobtn");
-    //点击确认上传
-    yesbtn.addEventListener("click", function () {
-        hidePop2()
-        let formData = new FormData()
-        // 将文件对象添加到formData对象中
-        formData.append('file', file)
-        formData.append('name', file.name)
-        formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
-        formData.append('puid', '198665227')
-
-        // console.log(formData.get("file"))
-
-        let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                let resData = JSON.parse(this.response)
-                let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
-                if (toSend.message) {
-                    socket.emit('message', JSON.stringify(toSend))
-                }
-            } else {
-                console.log('上传失败')
-            }
-        };
-        xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
-        xhr.send(formData)
-    });
-    nobtn.addEventListener("click", function () {
-        hidePop2()
-    });
-}
-
-const uploadfile = document.getElementById("uploadfile")
-const newdir = document.getElementById("newdir")
-const getshare = document.getElementById("getshare")
-
-uploadfile.addEventListener('click', function () {
-    showPop()
-    pop.innerHTML += `
-        <div class="uploading">
-            <div class="uploadingspan">上传列表：</div>
-            <div class="hr3"></div>
-            <div class="uploadingdatabox">
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
-                        上传进度功能开发中
-                    </div>
-                    <div class="uploadingdatadel">
-                        \uf00d
-                    </div>
-                </div>
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">     
-                        <span class="badge bg-danger" title="上传失败">!</span>
-                        上传进度功能开发中上传进度功能开发中
-                    </div>
-                    <div class="uploadingdatadel">
-                        \uf00d
-                    </div>
-                </div>
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="badge bg-success" title="上传成功">√</span>
-                        上传进度功能开发中
-                    </div>
-                    <div class="uploadingdatadel">
-                        \uf00d
-                    </div>
-                </div>
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
-                        <span class="badge bg-danger" title="上传失败">!</span>
-                        <span class="badge bg-success" title="上传成功">√</span>
-                        上传进度功能开发中
-                    </div>
-                    <div class="uploadingdatadel" title="从列表中删除">
-                        \uf00d
-                    </div>
-                </div>
-            </div>
-        </div>
+    uploadapibox.innerHTML += `
         <div class="uploadapi" id="drop-zone">
             <span class="fileapispan">将文件拖拽于此或</span>
-            <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfileclick">点击上传</button>
+            <button type="button" class="btn btn-outline-secondary secondbtn"
+                id="uploadfileclick">点击上传</button>
         </div>
     `
+    /* 点击上传文件 */
+    const uploadfileclick = document.getElementById("uploadfileclick")
+
+    uploadfileclick.addEventListener('click', function () {
+        
+        // console.log('uploadfile')
+        const fileInput = document.createElement('input')
+
+        fileInput.type = 'file'
+        fileInput.name = 'file'
+
+        fileInput.onchange = function () {
+            let file = this.files[0];
+            // console.log(file.name)
+            // console.log(file.size)
+            // console.log(file.type)
+            // console.log(file.lastModified)
+
+            //选择好文件后进入预览，选择是否上传
+            showmakesureuploadapi(file.name)
+            upLoadFile(file)
+        };
+        //自动触发input的点击事件
+        fileInput.click();
+    })
 
     /* 拖拽上传文件 */
     const dropZone = document.getElementById('drop-zone');
@@ -620,30 +505,120 @@ uploadfile.addEventListener('click', function () {
         }
         
     });
+}
 
-    /* 点击上传文件 */
-    const uploadfileclick = document.getElementById("uploadfileclick")
+function showmakesureuploadapi(filename) {
+    while (uploadapibox.firstChild) {
+        uploadapibox.removeChild(uploadapibox.firstChild);
+    }
+    uploadapibox.innerHTML += `
+        <div class="uploadapi">
+            <div class="makesuresend">
+                <div class="makesuresendimage">是否确认上传</div>
+                <div class="filebox">
+                    <div class="filelogois">\uf15b</div>
+                    <div class="filenameis">${filename}</div>
+                </div>
+                <div class="makesure">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
+                </div>
+            </div>
+        </div>
+    `
+}
 
-    uploadfileclick.addEventListener('click', function () {
-        // console.log('uploadfile')
-        const fileInput = document.createElement('input')
+function showPop() {
+    //每打开一次 其内部的元素都应该重新加载一遍
+    while (pop.firstChild) {
+        pop.removeChild(pop.firstChild);
+    }
 
-        fileInput.type = 'file'
-        fileInput.name = 'file'
+    pop.style.display = "block";
+    overlay.style.height = "100%";
+    overlay.style.transition = "none"
 
-        fileInput.onchange = function () {
-            let file = this.files[0];
-            // console.log(file.name)
-            // console.log(file.size)
-            // console.log(file.type)
-            // console.log(file.lastModified)
+    //添加并获取关闭按钮 注册监听事件
+    pop.innerHTML += `<div class="closebtn"></div>`;
+    pop.addEventListener("click", function (event) {
+        if (event.target.classList.contains("closebtn")) {
+            hidePop();
+        }
+    });
+}
 
-            //选择好文件后进入预览，选择是否上传
-            upLoadFile(file)
+function hidePop() {
+    pop.style.display = "none"
+    overlay.style.height = "0"
+    overlay.style.transition = "0.5s ease-out"
+}
+
+function showPop2() {
+    //每打开一次 其内部的元素都应该重新加载一遍
+    while (pop2.firstChild) {
+        pop2.removeChild(pop2.firstChild);
+    }
+
+    pop2.style.display = "block"
+    //添加并获取关闭按钮 注册监听事件
+    pop2.innerHTML += `<div class="closebtn"></div>`
+    pop2.addEventListener("click", function (event) {
+        if (event.target.classList.contains("closebtn")) {
+            hidePop2();
+        }
+    });
+}
+
+function hidePop2() {
+    pop2.style.display = "none";
+}
+
+function upLoadFile(file) {
+    //选择好文件后进入预览，选择是否上传
+
+    let yesbtn = document.getElementById("yesbtn")
+    let nobtn = document.getElementById("nobtn")
+    //点击确认上传
+    yesbtn.addEventListener("click", function () {
+
+        let formData = new FormData()
+        // 将文件对象添加到formData对象中
+        formData.append('file', file)
+        formData.append('name', file.name)
+        formData.append('_token', '99ad00c891d3e9e9bc9a613314ef9890')
+        formData.append('puid', '198665227')
+
+        // console.log(formData.get("file"))
+
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                let resData = JSON.parse(this.response)
+                let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
+                let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
+                if (toSend.message) {
+                    socket.emit('message', JSON.stringify(toSend))
+                }
+            } else {
+                console.log('上传失败')
+            }
         };
-        //自动触发input的点击事件
-        fileInput.click();
+        xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
+        xhr.send(formData)
+    });
+    nobtn.addEventListener("click", function () {
+        showuploadapi()
     })
+}
+
+const uploadfile = document.getElementById("uploadfile")
+const newdir = document.getElementById("newdir")
+const getshare = document.getElementById("getshare")
+const uploadfilemodal = document.getElementById("uploadfilemodal")
+const makesureuploadfilemodal = document.getElementById("makesureuploadfilemodal")
+
+uploadfile.addEventListener('click', function () {
+    showuploadapi()
 })
 
 newdir.addEventListener('click', function () {

@@ -35,7 +35,8 @@
         <div class="btns">
             <nav class="navbar navbar-expand-md bg-white navbar-dark">
                 <div class="btn-group bottombtngroup">
-                    <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile">上传文件</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile"
+                        data-bs-toggle="modal" data-bs-target="#uploadfilemodal">上传文件</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="newdir">建文件夹</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="getshare">获取分享</button>
                 </div>
@@ -64,6 +65,67 @@
     <div class="overlay"></div>
     <div class="pop"></div>
     <div class="pop2"></div>
+
+    <!-- uploadfileModal -->
+    <div class="modal fade" id="uploadfilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">上传列表：</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="uploading">
+                        <div class="uploadingdatabox">
+                            <div class="uploadingdata">
+                                <div class="uploadingdatainfo">
+                                    <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                                    上传进度功能开发中
+                                </div>
+                                <div class="uploadingdatadel">
+                                    &#xf00d
+                                </div>
+                            </div>
+                            <div class="uploadingdata">
+                                <div class="uploadingdatainfo">
+                                    <span class="badge bg-danger" title="上传失败">!</span>
+                                    上传进度功能开发中上传进度功能开发中
+                                </div>
+                                <div class="uploadingdatadel">
+                                    &#xf00d
+                                </div>
+                            </div>
+                            <div class="uploadingdata">
+                                <div class="uploadingdatainfo">
+                                    <span class="badge bg-success" title="上传成功">√</span>
+                                    上传进度功能开发中
+                                </div>
+                                <div class="uploadingdatadel">
+                                    &#xf00d
+                                </div>
+                            </div>
+                            <div class="uploadingdata">
+                                <div class="uploadingdatainfo">
+                                    <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                                    <span class="badge bg-danger" title="上传失败">!</span>
+                                    <span class="badge bg-success" title="上传成功">√</span>
+                                    上传进度功能开发中
+                                </div>
+                                <div class="uploadingdatadel" title="从列表中删除">
+                                    &#xf00d
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="uploadapibox"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal" id="closeuploadfilemodal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
 </body>
 
