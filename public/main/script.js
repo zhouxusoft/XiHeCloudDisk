@@ -414,7 +414,7 @@ socket.on('updatepage', (filelist) => {
 })
 
 const uploadapibox = document.getElementById("uploadapibox")
-const uploadingdatabox = document.getElementById("uploadingdatabox")
+const uploadingdatabox = document.getElementsByClassName("uploadingdatabox")[0]
 
 // 用于存放上传文件的列表
 let globaluploadlist = []
@@ -425,58 +425,100 @@ function resetUploadList () {
         uploadingdatabox.removeChild(uploadingdatabox.firstChild)
     }
     if (globaluploadlist.length > 0) {
-        for (let i = globaluploadlist.length - 1; i < 0; i--) {
-            let delid = uploadingdatadel + globaluploadlist[i].id
+        console.log(globaluploadlist)
+        for (let i = globaluploadlist.length - 1; i > -1; i--) {
+            
+            let delid = 'uploadingdatadel' + globaluploadlist[i].id
             if (globaluploadlist[i].status == 0) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata">
-                        <div class="uploadingdatainfo">
+                    <div class="uploadingdata" id="${delid}">
+                        <div class="uploadicon">
                             <span class="spinner-border spinner-border-sm" title="正在上传"></span>
-                            ${globaluploadlist[i].name}
                         </div>
-                        <div class="uploadingdatadel" id="uploadingdatadel${delid}">
-                            \uf00d
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
+                            </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:0%"></div>
+                            </div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle"></div>
+                                <div class="uploadinfospeed"></div>
+                            </div>
+                        </div>
+                        <div class="uploadingdatadel">
+                            <div class="uploaddelicon">\uf00d</div>
                         </div>
                     </div>`
-                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
-    
+                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
+                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
+
                 uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status == -1
+                    globaluploadlist[i].status = -1
+                    resetUploadList()
                 })
             }
             else if (globaluploadlist[i].status == 1) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata">
-                        <div class="uploadingdatainfo">
-                            <span class="badge bg-success" title="上传成功">√</span>
-                            ${globaluploadlist[i].name}
+                    <div class="uploadingdata" id="${delid}">
+                        <div class="uploadicon">
+                        <span class="badge bg-success" title="上传成功">\uf00c</span>
+                        </div>
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
+                            </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:0%"></div>
+                            </div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle"></div>
+                                <div class="uploadinfospeed"></div>
+                            </div>
                         </div>
                         <div class="uploadingdatadel">
-                            \uf00d
+                            <div class="uploaddelicon">\uf00d</div>
                         </div>
                     </div>`
-                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
-    
+
+                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
+                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
+                
                 uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status == -1
+                    globaluploadlist[i].status = -1
+                    resetUploadList()
                 })
             }
             else if (globaluploadlist[i].status == 2) {
                 uploadingdatabox.innerHTML += `
-                    <div class="uploadingdata">
-                        <div class="uploadingdatainfo">
-                            <span class="badge bg-danger" title="上传失败">!</span>
-                            ${globaluploadlist[i].name}
+                    <div class="uploadingdata" id="${delid}">
+                        <div class="uploadicon">
+                        <span class="badge bg-danger" title="上传失败">\u0021</span>
+                        </div>
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
+                            </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:0%"></div>
+                            </div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle"></div>
+                                <div class="uploadinfospeed"></div>
+                            </div>
                         </div>
                         <div class="uploadingdatadel">
-                            \uf00d
+                            <div class="uploaddelicon">\uf00d</div>
                         </div>
                     </div>`
                 
-                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+                const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
+                const uploadingdatadel = uploadingdata.querySelector(`.uploadingdatadel`)
     
                 uploadingdatadel.addEventListener('click', function () {
-                    globaluploadlist[i].status == -1
+                    globaluploadlist[i].status = -1
+                    resetUploadList()
                 })
             }
         }
@@ -613,7 +655,7 @@ function upLoadFile(file) {
     let nobtn = document.getElementById("nobtn")
     //点击确认上传
     yesbtn.addEventListener("click", function () {
-        // 将文件加值上传列表
+        // 将文件加至上传列表
 
         let uploadtask = {
             id: uploadid++,
@@ -621,6 +663,7 @@ function upLoadFile(file) {
             status: 0
         }
         globaluploadlist.unshift(uploadtask)
+        resetUploadList()
 
         showUpLoadApi()
 
@@ -634,7 +677,7 @@ function upLoadFile(file) {
         // console.log(formData.get("file"))
 
         let xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function (event) {
+        xhr.onreadystatechange = function () {
             
             if (this.readyState === XMLHttpRequest.DONE) {
                 let resmsg = JSON.parse(this.response)
@@ -650,10 +693,17 @@ function upLoadFile(file) {
                 }
             }
         };
-
+        let delid = 'uploadingdatadel' + uploadtask.id
+        const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
+        const progressbar = uploadingdata.querySelector(`.progress-bar`)
+        const uploadinfototle = uploadingdata.querySelector(`.uploadinfototle`)
+        const uploadinfospeed = uploadingdata.querySelector(`.uploadinfospeed`)
         // 获取上传进度
         xhr.upload.addEventListener('progress', function (e) {
-            console.log(e.loaded / e.total * 100 + '%')
+            let progresspercent = e.loaded / e.total * 100 + '%'
+            // console.log(progresspercent)
+            progressbar.style.width = progresspercent
+            uploadinfototle.textContent = getFileSize(e.loaded) + '/' + getFileSize(e.total)
         })
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
