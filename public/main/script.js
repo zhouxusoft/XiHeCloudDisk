@@ -418,7 +418,7 @@ const pop2 = document.getElementsByClassName("pop2")[0]
 const overlay = document.getElementsByClassName("overlay")[0]
 const uploadapibox = document.getElementById("uploadapibox")
 
-function showuploadapi() {
+function showUpLoadApi() {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
     }
@@ -448,7 +448,7 @@ function showuploadapi() {
             // console.log(file.lastModified)
 
             //选择好文件后进入预览，选择是否上传
-            showmakesureuploadapi(file.name)
+            showMakeSureUpLoadApi(file.name)
             upLoadFile(file)
         };
         //自动触发input的点击事件
@@ -478,28 +478,10 @@ function showuploadapi() {
         if (item) {
             // 判断是否为文件夹
             if (item.isDirectory) {
-                showPop2()
-                pop2.innerHTML += `
-                    <div class="makesuresend">
-                        <div class="makesuresendimage">功能待完善中</div>
-                        <div class="makesuresendimage">当前只支持单文件上传</div>
-                        <br>
-                        <div class="makesure">
-                            <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
-                            <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
-                        </div>
-                    </div>`
-
-                let yesbtn = document.getElementById("yesbtn")
-                let nobtn = document.getElementById("nobtn")
-                yesbtn.addEventListener("click", function () {
-                    hidePop2()
-                });
-                nobtn.addEventListener("click", function () {
-                    hidePop2()
-                });
+                showErrUpLoadApi()
             } else {
                 //选择好文件后进入预览，选择是否上传
+                showMakeSureUpLoadApi(file.name)
                 upLoadFile(file)
             }
         }
@@ -507,7 +489,7 @@ function showuploadapi() {
     });
 }
 
-function showmakesureuploadapi(filename) {
+function showMakeSureUpLoadApi(filename) {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
     }
@@ -526,6 +508,28 @@ function showmakesureuploadapi(filename) {
             </div>
         </div>
     `
+}
+
+function showErrUpLoadApi() {
+    while (uploadapibox.firstChild) {
+        uploadapibox.removeChild(uploadapibox.firstChild);
+    }
+    uploadapibox.innerHTML += `
+        <div class="uploadapi">
+            <div class="makesuresend">
+                <div class="makesuresendimage">功能待完善中</div>
+                <div class="makesuresendimage">目前只支持单文件上传</div>
+                <br>
+                <div class="makesure">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">我已知晓</button>
+                </div>
+            </div>
+        </div>
+    `
+    let yesbtn = document.getElementById("yesbtn")
+    yesbtn.addEventListener("click", function () {
+        showUpLoadApi()
+    });
 }
 
 function showPop() {
@@ -580,6 +584,7 @@ function upLoadFile(file) {
     let nobtn = document.getElementById("nobtn")
     //点击确认上传
     yesbtn.addEventListener("click", function () {
+        showUpLoadApi()
 
         let formData = new FormData()
         // 将文件对象添加到formData对象中
@@ -592,22 +597,26 @@ function upLoadFile(file) {
 
         let xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                let resData = JSON.parse(this.response)
-                let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
-                if (toSend.message) {
-                    socket.emit('message', JSON.stringify(toSend))
+            if (this.readyState === XMLHttpRequest.DONE) {
+                let resmsg = JSON.parse(this.response)
+                console.log(resmsg.msg)
+                if (this.status === 200) {
+                    let resData = JSON.parse(this.response)
+                    console.log(resData.data.objectId)
+                    let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
+                    let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
+                    if (toSend.message) {
+                        socket.emit('message', JSON.stringify(toSend))
+                    }
                 }
-            } else {
-                console.log('上传失败')
+                
             }
         };
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
     });
     nobtn.addEventListener("click", function () {
-        showuploadapi()
+        showUpLoadApi()
     })
 }
 
@@ -618,7 +627,7 @@ const uploadfilemodal = document.getElementById("uploadfilemodal")
 const makesureuploadfilemodal = document.getElementById("makesureuploadfilemodal")
 
 uploadfile.addEventListener('click', function () {
-    showuploadapi()
+    showUpLoadApi()
 })
 
 newdir.addEventListener('click', function () {
