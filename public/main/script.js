@@ -431,7 +431,7 @@ function resetUploadList () {
         }       
     }
     if (length > 0) {
-        console.log(globaluploadlist)
+        // console.log(globaluploadlist)
         for (let i = 0; i < globaluploadlist.length ; i++) {
             
             let dataid = 'uploadingdata' + globaluploadlist[i].id
@@ -447,14 +447,14 @@ function resetUploadList () {
                                 ${globaluploadlist[i].filename}
                             </div>
                             <div class="progress uploadprogress">
-                                <div class="progress-bar" style="width:0%"></div>
+                                <div class="progress-bar" style="width:0%" id="${globaluploadlist[i].id}"></div>
                             </div>
                             <div class="uploadinfopro">
-                                <div class="uploadinfototle"></div>
-                                <div class="uploadinfospeed"></div>
+                                <div class="uploadinfototle" id="${globaluploadlist[i].id}"></div>
+                                <div class="uploadinfospeed" id="${globaluploadlist[i].id}"></div>
                             </div>
                         </div>
-                        <div class="uploadingdatadel">
+                        <div class="uploadingdatadel" title="取消上传">
                             <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
@@ -477,7 +477,7 @@ function resetUploadList () {
                                 <div class="uploadinfospeed"></div>
                             </div>
                         </div>
-                        <div class="uploadingdatadel">
+                        <div class="uploadingdatadel" title="从列表中删除">
                             <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
@@ -500,7 +500,7 @@ function resetUploadList () {
                                 <div class="uploadinfospeed"></div>
                             </div>
                         </div>
-                        <div class="uploadingdatadel">
+                        <div class="uploadingdatadel" title="从列表中删除">
                             <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>
                     </div>`
@@ -711,17 +711,23 @@ function upLoadFile(file) {
                 }
             }
         };
-        let delid = 'uploadingdata' + uploadtask.id
-        const uploadingdata = uploadingdatabox.querySelector(`#${delid}`)
-        const progressbar = uploadingdata.querySelector(`.progress-bar`)
-        const uploadinfototle = uploadingdata.querySelector(`.uploadinfototle`)
-        const uploadinfospeed = uploadingdata.querySelector(`.uploadinfospeed`)
+
+        const progressbar = document.getElementsByClassName(`progress-bar`)
+        const uploadinfototle = document.getElementsByClassName(`uploadinfototle`)
+        const uploadinfospeed = document.getElementsByClassName(`uploadinfospeed`)
         // 获取上传进度
         xhr.upload.addEventListener('progress', function (e) {
             let progresspercent = e.loaded / e.total * 100 + '%'
-            // console.log(progresspercent)
-            progressbar.style.width = progresspercent
-            uploadinfototle.textContent = getFileSize(e.loaded) + '/' + getFileSize(e.total)
+            for (let i = 0; i < progressbar.length; i++) {
+                if (progressbar[i].id == uploadtask.id) {
+                    progressbar[i].style.width = progresspercent
+                }        
+            }
+            for (let i = 0; i < uploadinfototle.length; i++) {
+                if (uploadinfototle[i].id == uploadtask.id) {
+                    uploadinfototle[i].textContent = getFileSize(e.loaded) + '/' + getFileSize(e.total)
+                }
+            }
         })
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
