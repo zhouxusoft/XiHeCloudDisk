@@ -424,60 +424,67 @@ function resetUploadList () {
     while (uploadingdatabox.firstChild) {
         uploadingdatabox.removeChild(uploadingdatabox.firstChild)
     }
-    for (let i = globaluploadlist.length - 1; i < 0; i--) {
-        let delid = uploadingdatadel + globaluploadlist[i].id
-        if (globaluploadlist[i].status == 0) {
-            uploadingdatabox.innerHTML += `
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="spinner-border spinner-border-sm" title="正在上传"></span>
-                        ${globaluploadlist[i].name}
-                    </div>
-                    <div class="uploadingdatadel" id="uploadingdatadel${delid}">
-                        \uf00d
-                    </div>
-                </div>`
-            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
-
-            uploadingdatadel.addEventListener('click', function () {
-                globaluploadlist[i].status == -1
-            })
+    if (globaluploadlist.length > 0) {
+        for (let i = globaluploadlist.length - 1; i < 0; i--) {
+            let delid = uploadingdatadel + globaluploadlist[i].id
+            if (globaluploadlist[i].status == 0) {
+                uploadingdatabox.innerHTML += `
+                    <div class="uploadingdata">
+                        <div class="uploadingdatainfo">
+                            <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                            ${globaluploadlist[i].name}
+                        </div>
+                        <div class="uploadingdatadel" id="uploadingdatadel${delid}">
+                            \uf00d
+                        </div>
+                    </div>`
+                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+    
+                uploadingdatadel.addEventListener('click', function () {
+                    globaluploadlist[i].status == -1
+                })
+            }
+            else if (globaluploadlist[i].status == 1) {
+                uploadingdatabox.innerHTML += `
+                    <div class="uploadingdata">
+                        <div class="uploadingdatainfo">
+                            <span class="badge bg-success" title="上传成功">√</span>
+                            ${globaluploadlist[i].name}
+                        </div>
+                        <div class="uploadingdatadel">
+                            \uf00d
+                        </div>
+                    </div>`
+                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+    
+                uploadingdatadel.addEventListener('click', function () {
+                    globaluploadlist[i].status == -1
+                })
+            }
+            else if (globaluploadlist[i].status == 2) {
+                uploadingdatabox.innerHTML += `
+                    <div class="uploadingdata">
+                        <div class="uploadingdatainfo">
+                            <span class="badge bg-danger" title="上传失败">!</span>
+                            ${globaluploadlist[i].name}
+                        </div>
+                        <div class="uploadingdatadel">
+                            \uf00d
+                        </div>
+                    </div>`
+                
+                const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
+    
+                uploadingdatadel.addEventListener('click', function () {
+                    globaluploadlist[i].status == -1
+                })
+            }
         }
-        else if (globaluploadlist[i].status == 1) {
-            uploadingdatabox.innerHTML += `
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="badge bg-success" title="上传成功">√</span>
-                        ${globaluploadlist[i].name}
-                    </div>
-                    <div class="uploadingdatadel">
-                        \uf00d
-                    </div>
-                </div>`
-            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
-
-            uploadingdatadel.addEventListener('click', function () {
-                globaluploadlist[i].status == -1
-            })
-        }
-        else if (globaluploadlist[i].status == 2) {
-            uploadingdatabox.innerHTML += `
-                <div class="uploadingdata">
-                    <div class="uploadingdatainfo">
-                        <span class="badge bg-danger" title="上传失败">!</span>
-                        ${globaluploadlist[i].name}
-                    </div>
-                    <div class="uploadingdatadel">
-                        \uf00d
-                    </div>
-                </div>`
-            
-            const uploadingdatadel = uploadingdatabox.querySelector(`#${delid}`)
-
-            uploadingdatadel.addEventListener('click', function () {
-                globaluploadlist[i].status == -1
-            })
-        }
+    } else {
+        uploadingdatabox.innerHTML += `
+            <div class="uploadingdata">
+                暂无下载记录
+            </div>`
     }
 }
 
