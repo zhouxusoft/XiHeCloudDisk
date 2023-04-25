@@ -424,8 +424,14 @@ function resetUploadList () {
     while (uploadingdatabox.firstChild) {
         uploadingdatabox.removeChild(uploadingdatabox.firstChild)
     }
-    if (globaluploadlist.length > 0) {
-        // console.log(globaluploadlist)
+    let length = 0
+    for (let i = 0; i < globaluploadlist.length; i++) {
+        if (globaluploadlist[i].status != -1) {
+            length ++
+        }       
+    }
+    if (length > 0) {
+        console.log(globaluploadlist)
         for (let i = 0; i < globaluploadlist.length ; i++) {
             
             let dataid = 'uploadingdata' + globaluploadlist[i].id
@@ -504,10 +510,13 @@ function resetUploadList () {
         for (let i = 0; i < uploadingdatadel.length; i++) {
             uploadingdatadel[i].addEventListener('click', function () {
                 // console.log(uploadingdatadel[i].id)
-                for (let j = 0; j < globaluploadlist.length; j++) {
-                    if (globaluploadlist[j].id == uploadingdatadel[i].id) {
-                        globaluploadlist[j].status = -1
-                        resetUploadList()
+                if (uploadingdatadel[i].id) {
+                    for (let j = 0; j < globaluploadlist.length; j++) {
+                        if (globaluploadlist[j].id == uploadingdatadel[i].id) {
+                            globaluploadlist[j].status = -1
+                            resetUploadList()
+                            break
+                        }
                     }
                 }
             })         
