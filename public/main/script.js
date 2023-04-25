@@ -548,10 +548,10 @@ function resetUploadList () {
         }
         const uploadingdatadel = document.getElementsByClassName("uploaddelicon")
         for (let i = 0; i < uploadingdatadel.length; i++) {
-            uploadingdatadel[i].removeEventListener("click", () => resetUploadListen(uploadingdatadel[i]))
-            console.log('r')
-            uploadingdatadel[i].addEventListener('click', () => resetUploadListen(uploadingdatadel[i])) 
-            console.log('a')        
+            uploadingdatadel[i].removeEventListener("click", () => resetUploadListen())
+            uploadingdatadel[i].addEventListener('click', function(event) {
+                resetUploadListen(event.target)
+            })       
         }
     } else {
         uploadingdatabox.innerHTML += `
