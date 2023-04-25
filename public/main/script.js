@@ -650,10 +650,11 @@ function upLoadFile(file) {
                 }
             }
         };
+
+        // 获取上传进度
         xhr.upload.addEventListener('progress', function (e) {
             console.log(e.loaded / e.total * 100 + '%')
         })
-
         xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
     });
