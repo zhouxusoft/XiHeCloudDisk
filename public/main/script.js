@@ -430,7 +430,7 @@ function resetUploadListen (uploadingdatadel) {
                 let dataid = 'uploadingdata' + globaluploadlist[j].id
                 const resetuploaddata = document.getElementById(`${dataid}`)
                 if (resetuploaddata) {
-                    console.log(resetuploaddata)
+                    // console.log(resetuploaddata)
                     uploadingdatabox.removeChild(resetuploaddata)
                 }
                 resetUploadList()
