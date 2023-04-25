@@ -448,7 +448,7 @@ function showUpLoadApi() {
             // console.log(file.lastModified)
 
             //选择好文件后进入预览，选择是否上传
-            showMakeSureUpLoadApi(file.name)
+            showMakeSureUpLoadApi(file.name, file.size)
             upLoadFile(file)
         };
         //自动触发input的点击事件
@@ -481,7 +481,7 @@ function showUpLoadApi() {
                 showErrUpLoadApi()
             } else {
                 //选择好文件后进入预览，选择是否上传
-                showMakeSureUpLoadApi(file.name)
+                showMakeSureUpLoadApi(file.name, file.size)
                 upLoadFile(file)
             }
         }
@@ -489,20 +489,20 @@ function showUpLoadApi() {
     });
 }
 
-function showMakeSureUpLoadApi(filename) {
+function showMakeSureUpLoadApi(filename, filesize) {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
     }
     uploadapibox.innerHTML += `
         <div class="uploadapi">
             <div class="makesuresend">
-                <div class="makesuresendimage">是否确认上传</div>
                 <div class="filebox">
                     <div class="filelogois">\uf15b</div>
                     <div class="filenameis">${filename}</div>
+                    <div>( ${getFileSize(filesize)} )</div>
                 </div>
                 <div class="makesure">
-                    <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">确定</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="yesbtn">上传</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="nobtn">取消</button>
                 </div>
             </div>
