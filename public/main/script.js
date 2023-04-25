@@ -413,11 +413,12 @@ socket.on('updatepage', (filelist) => {
     resetNext()
 })
 
-const pop = document.getElementsByClassName("pop")[0]
-const pop2 = document.getElementsByClassName("pop2")[0]
-const overlay = document.getElementsByClassName("overlay")[0]
 const uploadapibox = document.getElementById("uploadapibox")
 
+// 用于存放上传文件的列表
+let globalfileuploadlist
+
+/* 显示文件拖拽上传页面 */
 function showUpLoadApi() {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
@@ -489,6 +490,7 @@ function showUpLoadApi() {
     });
 }
 
+/* 显示确认上传的文件详情页面 */
 function showMakeSureUpLoadApi(filename, filesize) {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
@@ -510,6 +512,7 @@ function showMakeSureUpLoadApi(filename, filesize) {
     `
 }
 
+/* 上传错误格式文件时显示 */
 function showErrUpLoadApi() {
     while (uploadapibox.firstChild) {
         uploadapibox.removeChild(uploadapibox.firstChild);
@@ -532,51 +535,7 @@ function showErrUpLoadApi() {
     });
 }
 
-function showPop() {
-    //每打开一次 其内部的元素都应该重新加载一遍
-    while (pop.firstChild) {
-        pop.removeChild(pop.firstChild);
-    }
-
-    pop.style.display = "block";
-    overlay.style.height = "100%";
-    overlay.style.transition = "none"
-
-    //添加并获取关闭按钮 注册监听事件
-    pop.innerHTML += `<div class="closebtn"></div>`;
-    pop.addEventListener("click", function (event) {
-        if (event.target.classList.contains("closebtn")) {
-            hidePop();
-        }
-    });
-}
-
-function hidePop() {
-    pop.style.display = "none"
-    overlay.style.height = "0"
-    overlay.style.transition = "0.5s ease-out"
-}
-
-function showPop2() {
-    //每打开一次 其内部的元素都应该重新加载一遍
-    while (pop2.firstChild) {
-        pop2.removeChild(pop2.firstChild);
-    }
-
-    pop2.style.display = "block"
-    //添加并获取关闭按钮 注册监听事件
-    pop2.innerHTML += `<div class="closebtn"></div>`
-    pop2.addEventListener("click", function (event) {
-        if (event.target.classList.contains("closebtn")) {
-            hidePop2();
-        }
-    });
-}
-
-function hidePop2() {
-    pop2.style.display = "none";
-}
-
+/* 文件上传功能 */
 function upLoadFile(file) {
     //选择好文件后进入预览，选择是否上传
 
