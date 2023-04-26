@@ -329,7 +329,7 @@ let dirlist = []
 const position = document.getElementsByClassName("position")[0]
 const positionbtns = document.getElementsByClassName("positionbtn")
 
-// 清除文件夹导航栏的元素
+/* 清除文件夹导航栏的元素 */
 function clearPosition() {
     while (position.firstChild) {
         position.removeChild(position.firstChild)
@@ -337,7 +337,7 @@ function clearPosition() {
     position.innerHTML += `<div class="positionbtn" id="0">主目录</div>`
 }
 
-// 获取文件夹导航栏元素
+/* 获取文件夹导航栏元素 */
 function getDirList(id) {
     if (id == 0) {
         return dirlist
@@ -353,7 +353,7 @@ function getDirList(id) {
     }
 }
 
-// 向文件夹导航栏添加子元素
+/* 向文件夹导航栏添加子元素 */
 function addDirNavBar(name, id) {
     position.innerHTML += `
         <div class="positionwhite"></div>
@@ -361,7 +361,7 @@ function addDirNavBar(name, id) {
 
 }
 
-// 刷新文件夹导航栏
+/* 刷新文件夹导航栏 */
 function resetDirNavBar(id) {
     clearPosition()
     dirlist = []
@@ -421,6 +421,7 @@ const uploadingdatanull = document.getElementsByClassName("uploadingdatanull")
 let globaluploadlist = []
 let uploadid = 1
 
+/* 重新添加上传列表删除键的监听事件 */
 function resetUploadListen (uploadingdatadel) {
     if (uploadingdatadel.id) {
         for (let j = 0; j < globaluploadlist.length; j++) {
@@ -441,6 +442,7 @@ function resetUploadListen (uploadingdatadel) {
     }
 }
 
+/* 刷新上传列表 */
 function resetUploadList () {
 
     let length = 0
