@@ -466,57 +466,60 @@ function resetUploadList () {
                     if (resetuploaddata) {
                         uploadingdatabox.removeChild(resetuploaddata)
                     }
-                    uploadingdatabox.innerHTML += `
-                        <div class="uploadingdata" id="${dataid}">
-                            <div class="uploadicon">
-                                <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                    const b = document.createElement('div')
+                    b.className = 'uploadingdata'
+                    b.id = dataid
+                    b.innerHTML += `
+                        <div class="uploadicon">
+                            <span class="spinner-border spinner-border-sm" title="正在上传"></span>
+                        </div>
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
                             </div>
-                            <div class="uploadinfo">
-                                <div class="uploadinfoname">
-                                    ${globaluploadlist[i].filename}
-                                </div>
-                                <div class="progress uploadprogress">
-                                    <div class="progress-bar" style="width:0%" id="${globaluploadlist[i].id}"></div>
-                                </div>
-                                <div class="uploadinfopro">
-                                    <div class="uploadinfototle" id="${globaluploadlist[i].id}"></div>
-                                    <div class="uploadinfospeed" id="${globaluploadlist[i].id}"></div>
-                                </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:0%" id="${globaluploadlist[i].id}"></div>
                             </div>
-                            <div class="uploadingdatadel" title="取消上传">
-                                <div class="uploaddelicon" id="${delid}">\uf00d</div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle" id="${globaluploadlist[i].id}"></div>
+                                <div class="uploadinfospeed" id="${globaluploadlist[i].id}"></div>
                             </div>
+                        </div>
+                        <div class="uploadingdatadel" title="取消上传">
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>`
-                    uploadingdatabox.scrollTop = uploadingdatabox.scrollHeight;
+                    uploadingdatabox.insertBefore(b, uploadingdatabox.firstChild)
                 }
                 else if (globaluploadlist[i].status == 1 && globaluploadlist[i].statusn == 0) {
                     globaluploadlist[i].statusn = 1
                     const resetuploaddata = document.getElementById(`${dataid}`)
+                    console.log(resetuploaddata)
                     if (resetuploaddata) {
                         uploadingdatabox.removeChild(resetuploaddata)
                     }
-                    uploadingdatabox.innerHTML += `
-                        <div class="uploadingdata" id="${dataid}">
-                            <div class="uploadicon">
-                            <span class="badge bg-success" title="上传成功">\uf00c</span>
+                    const b = document.createElement('div')
+                    b.className = 'uploadingdata'
+                    b.id = dataid
+                    b.innerHTML += `
+                        <div class="uploadicon">
+                        <span class="badge bg-success" title="上传成功">\uf00c</span>
+                        </div>
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
                             </div>
-                            <div class="uploadinfo">
-                                <div class="uploadinfoname">
-                                    ${globaluploadlist[i].filename}
-                                </div>
-                                <div class="progress uploadprogress">
-                                    <div class="progress-bar" style="width:100%"></div>
-                                </div>
-                                <div class="uploadinfopro">
-                                    <div class="uploadinfototle">${getFileSize(globaluploadlist[i].filesize)}/${getFileSize(globaluploadlist[i].filesize)}</div>
-                                    <div class="uploadinfospeed"></div>
-                                </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:100%"></div>
                             </div>
-                            <div class="uploadingdatadel" title="从列表中删除">
-                                <div class="uploaddelicon" id="${delid}">\uf00d</div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle">${getFileSize(globaluploadlist[i].filesize)}/${getFileSize(globaluploadlist[i].filesize)}</div>
+                                <div class="uploadinfospeed"></div>
                             </div>
+                        </div>
+                        <div class="uploadingdatadel" title="从列表中删除">
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>`
-                    uploadingdatabox.scrollTop = uploadingdatabox.scrollHeight;
+                    uploadingdatabox.insertBefore(b, uploadingdatabox.firstChild)
                 }
                 else if (globaluploadlist[i].status == 2 && globaluploadlist[i].statusn == 0) {
                     globaluploadlist[i].statusn = 2
@@ -524,28 +527,29 @@ function resetUploadList () {
                     if (resetuploaddata) {
                         uploadingdatabox.removeChild(resetuploaddata)
                     }
-                    uploadingdatabox.innerHTML += `
-                        <div class="uploadingdata" id="${dataid}">
-                            <div class="uploadicon">
-                            <span class="badge bg-danger" title="上传失败">\u0021</span>
+                    const b = document.createElement('div')
+                    b.className = 'uploadingdata'
+                    b.id = dataid
+                    b.innerHTML += `
+                        <div class="uploadicon">
+                        <span class="badge bg-danger" title="上传失败">\u0021</span>
+                        </div>
+                        <div class="uploadinfo">
+                            <div class="uploadinfoname">
+                                ${globaluploadlist[i].filename}
                             </div>
-                            <div class="uploadinfo">
-                                <div class="uploadinfoname">
-                                    ${globaluploadlist[i].filename}
-                                </div>
-                                <div class="progress uploadprogress">
-                                    <div class="progress-bar" style="width:0%"></div>
-                                </div>
-                                <div class="uploadinfopro">
-                                    <div class="uploadinfototle">0/${getFileSize(globaluploadlist[i].filesize)}</div>
-                                    <div class="uploadinfospeed"></div>
-                                </div>
+                            <div class="progress uploadprogress">
+                                <div class="progress-bar" style="width:0%"></div>
                             </div>
-                            <div class="uploadingdatadel" title="从列表中删除">
-                                <div class="uploaddelicon" id="${delid}">\uf00d</div>
+                            <div class="uploadinfopro">
+                                <div class="uploadinfototle">0/${getFileSize(globaluploadlist[i].filesize)}</div>
+                                <div class="uploadinfospeed"></div>
                             </div>
+                        </div>
+                        <div class="uploadingdatadel" title="从列表中删除">
+                            <div class="uploaddelicon" id="${delid}">\uf00d</div>
                         </div>`
-                    uploadingdatabox.scrollTop = uploadingdatabox.scrollHeight;
+                    uploadingdatabox.insertBefore(b, uploadingdatabox.firstChild)
                 }
             }
         }
