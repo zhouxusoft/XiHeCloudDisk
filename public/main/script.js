@@ -246,7 +246,6 @@ function resetFilePage(parentid) {
     // 清除选中文件夹
     dirselected = 0
     let filelist = getDirSonData(globalfilelist, parentid)
-    // console.log(filelist)
     if (filelist.length > 0) {
         // 文件夹在前 文件在后
         for (let i = 0; i < filelist.length; i++) {
@@ -404,6 +403,7 @@ socket.on('updatepage', (filelist) => {
     globalfilelist = filelist
     if (dirlist.length > 0) {
         const id = dirlist[dirlist.length - 1]
+        // console.log('update', id)
         resetFilePage(id)
         resetDirNavBar(id)
     } else {
@@ -495,7 +495,7 @@ function resetUploadList () {
                 else if (globaluploadlist[i].status == 1 && globaluploadlist[i].statusn == 0) {
                     globaluploadlist[i].statusn = 1
                     const resetuploaddata = document.getElementById(`${dataid}`)
-                    console.log(resetuploaddata)
+                    // console.log(resetuploaddata)
                     if (resetuploaddata) {
                         uploadingdatabox.removeChild(resetuploaddata)
                     }
@@ -720,6 +720,11 @@ function upLoadFile(file) {
 
         // console.log(formData.get("file"))
 
+        let parentid = 0
+        if (dirlist.length > 0) {
+            parentid = dirlist[dirlist.length - 1]
+        }
+
         let xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE) {
@@ -736,10 +741,10 @@ function upLoadFile(file) {
                     }
                     let resData = JSON.parse(this.response)
                     // console.log(resData.data.objectId)
-                    let filemessage = "$file$name=" + file.name + "$src=" + resData.data.objectId
-                    let toSend = { userid: token.id, nickname: token.nickname, message: filemessage }
-                    if (toSend.message) {
-                        socket.emit('message', JSON.stringify(toSend))
+                    // console.log(parentid)
+                    let toSend = { name: file.name, createrid: token.id, url:resData.data.objectId ,isfile: 1, size: file.size, parentid: parentid}
+                    if (toSend) {
+                        socket.emit('uploadfile', JSON.stringify(toSend))
                     }
                 } else {
                     // 上传失败

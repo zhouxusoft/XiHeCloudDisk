@@ -65,7 +65,6 @@ exports.login = (req, res) => {
             return res.cc('密码错误')
         }
         const user = { ...results[0], password: '' }
-        user.room = 1
         res.send({
             status: 0,
             message: '登陆成功',

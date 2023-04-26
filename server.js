@@ -32,8 +32,31 @@ io.on('connection', (socket) => {
         })
     })
 
-    //切换文件目录时触发
-    socket.on
+    // 上传文件时触发
+    socket.on('uploadfile', (fileinfo) => {
+        fileinfo = JSON.parse(fileinfo)
+
+        // 定义数据库插入语句 插入上传的文件信息
+        const sql = `INSERT INTO filedata SET ?`
+        dbpan.query(sql, {
+                name: fileinfo.name,
+                url: fileinfo.url,
+                isfile: fileinfo.isfile,
+                parentid: fileinfo.parentid,
+                createrid: fileinfo.createrid,
+                size: fileinfo.size
+            }, (err, results) => {
+                if (err) throw err
+                // 定义数据库查询语句语句 查询该属于用户的所有文件
+                const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+
+                dbpan.query(sql2, fileinfo.createrid, (err, results) => {
+                    if (err) return err
+                    // console.log(results)
+                    socket.emit('updatepage', results)
+                })
+        })
+    })
 });
 
 //启动服务器
