@@ -447,7 +447,7 @@ body {
 .uploadingdata {
     display: flex;
     justify-content: space-between;
-    margin: 5px;
+    margin: 5px 5px 0;
     padding: 3px 0;
     transition: 0.3s;
     height: 54px;
@@ -577,7 +577,7 @@ body {
     font-size: 1.25rem;
     font-family: "Font Awesome 6 Free";
     font-weight: 600;
-    color: #444;
+    color: #999;
     cursor: pointer;
 }
 
