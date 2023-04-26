@@ -24,7 +24,36 @@ function handleClick(event) {
             resetDirNavBar(event.currentTarget.id)
             // console.log('6', getDirList(event.currentTarget.id))
         } else {
-            alert(666)
+            for (let i = 0; i < globalfilelist.length; i++) {
+                if (event.currentTarget.id == globalfilelist[i].id) {
+                    downloadfilebtn.click()
+                    while (downloadingdatabox.firstChild) {
+                        downloadingdatabox.removeChild(downloadingdatabox.firstChild)
+                    }
+                    downloadingdatabox.innerHTML += `
+                        <div class="filebox">
+                            <div class="filelogois">\uf15b</div>
+                            <div class="filenameis">${globalfilelist[i].name}</div>
+                            <div>( ${getFileSize(globalfilelist[i].size)} )</div>
+                        </div>
+                    `
+                    // 获取每日一言
+                    downloadtip.textContent = '我会一直写代码，直到我看不清屏幕的那一天'
+                    let xhr = new XMLHttpRequest()
+                    xhr.open('POST', 'https://v1.hitokoto.cn/', false)
+                    xhr.send()
+                    let resData = JSON.parse(xhr.responseText)
+                    if (resData) {
+                        let datamsg = resData.hitokoto
+                        downloadtip.textContent = datamsg
+                    }
+                    yesdownload.removeEventListener('click', downLoadFile)
+                    yesdownload.addEventListener('click', function() {
+                        downLoadFile(globalfilelist[i].url);
+                    })
+                    break
+                }
+            }    
         }
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
@@ -50,6 +79,19 @@ function resetNext() {
     }
 }
 
+function downLoadFile(url) {
+    let downloadUrl = 'http://sharewh1.xuexi365.com/share/download/' + url
+    var iframe_box = document.querySelector('#iframe_box')
+    while (iframe_box.firstChild) {
+        iframe_box.removeChild(iframe_box.firstChild)
+    }
+    iframe_box.innerHTML = iframe_box.innerHTML + '<iframe src="' + downloadUrl + '"><iframe>'
+}
+
+const downloadtip = document.getElementsByClassName("downloadtip")[0]
+const downloadingdatabox = document.getElementsByClassName("downloadingdatabox")[0]
+const downloadfilebtn = document.getElementById("downloadfilebtn")
+const yesdownload = document.getElementById("yesdownload")
 var filedata = document.getElementsByClassName("filedata")
 var back = document.getElementById("back")
 var next = document.getElementById("next")

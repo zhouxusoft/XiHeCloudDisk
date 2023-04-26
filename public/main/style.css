@@ -580,3 +580,15 @@ body {
     color: #444;
     cursor: pointer;
 }
+
+.downloadbtnbox {
+    margin: auto;
+    width: fit-content;
+}
+
+.downloadtip {
+    width: 100%;
+    text-align: center;
+    color: #6C757D;
+    user-select: text;
+}

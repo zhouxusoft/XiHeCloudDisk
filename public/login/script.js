@@ -18,11 +18,6 @@ let from = document.getElementsByClassName("from")[0]
 
 // 获取每日一言
 let xhr = new XMLHttpRequest()
-// xhr.onreadystatechange = function () {
-//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        
-//     }
-// }
 xhr.open('POST', 'https://v1.hitokoto.cn/', false)
 xhr.send()
 let resData = JSON.parse(xhr.responseText)
