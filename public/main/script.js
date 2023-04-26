@@ -38,7 +38,7 @@ function handleClick(event) {
                         </div>
                     `
                     // 获取每日一言
-                    downloadtip.textContent = '我会一直写代码，直到我看不清屏幕的那一天'
+                    downloadtip.textContent = '我会一直写代码，直到我看不清屏幕的那一天。'
                     let xhr = new XMLHttpRequest()
                     xhr.open('POST', 'https://v1.hitokoto.cn/', false)
                     xhr.send()
@@ -276,6 +276,16 @@ function getDirSonData(filelist, id) {
     for (let i = 0; i < filelist.length; i++) {
         if (filelist[i].parentid == id) {
             sonlist.push(filelist[i])
+        }
+    }
+    // 检查重名文件 在前端加以区分
+    for (let i = 0; i < sonlist.length; i++) {
+        let count = 1
+        for (let j = i + 1; j < sonlist.length; j++) {
+            if (sonlist[i].name == sonlist[j].name) {
+                sonlist[j].name = sonlist[j].name + ' (' + count + ')'
+                count ++
+            }
         }
     }
     return sonlist
@@ -831,15 +841,29 @@ const newdir = document.getElementById("newdir")
 const getshare = document.getElementById("getshare")
 const uploadfilemodal = document.getElementById("uploadfilemodal")
 const makesureuploadfilemodal = document.getElementById("makesureuploadfilemodal")
+const newfilename = document.getElementsByClassName("newfilename")[0]
+const yesnewfile = document.getElementById("yesnewfile")
 
 uploadfile.addEventListener('click', function () {
     showUpLoadApi()
 })
 
-newdir.addEventListener('click', function () {
-    showPop()
+yesnewfile.addEventListener('click', function () {
+    let newname = newfilename.value
+    newfilename.value = ''
+    if (newname == '') {
+        newname = '新建文件夹'
+    }
+    newDir(newname)
 })
 
-getshare.addEventListener('click', function () {
-    showPop()
-})
+function newDir(name) {
+    let parentid = 0
+    if (dirlist.length > 0) {
+        parentid = dirlist[dirlist.length - 1]
+    }
+    let toSend = { name: name, createrid: token.id, isfile: 0, parentid: parentid}
+    if (toSend) {
+        socket.emit('newdir', JSON.stringify(toSend))
+    }
+}

@@ -37,7 +37,8 @@
                 <div class="btn-group bottombtngroup">
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="uploadfile"
                         data-bs-toggle="modal" data-bs-target="#uploadfilemodal">上传文件</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn" id="newdir">建文件夹</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="newdir" data-bs-toggle="modal"
+                        data-bs-target="#newfilemodal">建文件夹</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="getshare">获取分享</button>
                 </div>
                 <div class="btn-group bottombtngroup">
@@ -92,7 +93,8 @@
         </div>
     </div>
     <!-- downloadfileModal -->
-    <button style="display: none" id="downloadfilebtn" data-bs-toggle="modal" data-bs-target="#downloadfilemodal">上传文件</button>
+    <button style="display: none" id="downloadfilebtn" data-bs-toggle="modal"
+        data-bs-target="#downloadfilemodal">上传文件</button>
     <div class="modal fade" id="downloadfilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -107,6 +109,33 @@
                         <div class="downloadbtnbox">
                             <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
                                 id="yesdownload">下载</button>
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="closedownloadfilemodal">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="downloadtip">我会一直写代码，直到我看不清屏幕的那一天</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- newfileModal -->
+    <div class="modal fade" id="newfilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">新建文件夹：</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="newfile">
+                        <div class="newfilebox">
+                            <input type="text" class="newfilename form-control" placeholder="新建文件夹">
+                        </div>
+                        <div class="downloadbtnbox">
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="yesnewfile">新建</button>
                             <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
                                 id="closedownloadfilemodal">取消</button>
                         </div>

@@ -592,3 +592,13 @@ body {
     color: #6C757D;
     user-select: text;
 }
+
+.newfilebox {
+    width: fit-content;
+    margin: 30px auto;
+
+}
+
+.newfilename {
+    border: 1px solid #000
+}

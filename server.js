@@ -6,7 +6,8 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 //导入数据库操作模块
-const { db, dbpan } = require('./database/index')
+const { db, dbpan } = require('./database/index');
+const { dir } = require('console');
 
 //默认加载页面
 app.get('/', (req, res) => {
@@ -51,6 +52,29 @@ io.on('connection', (socket) => {
                 const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
 
                 dbpan.query(sql2, fileinfo.createrid, (err, results) => {
+                    if (err) return err
+                    // console.log(results)
+                    socket.emit('updatepage', results)
+                })
+        })
+    })
+
+    // 新建文件夹时触发
+    socket.on('newdir', (dirinfo) => {
+        dirinfo = JSON.parse(dirinfo)
+        // 定义数据库插入语句 插入上传的文件信息
+        const sql = `INSERT INTO filedata SET ?`
+        dbpan.query(sql, {
+                name: dirinfo.name,
+                isfile: dirinfo.isfile,
+                parentid: dirinfo.parentid,
+                createrid: dirinfo.createrid,
+            }, (err, results) => {
+                if (err) throw err
+                // 定义数据库查询语句语句 查询该属于用户的所有文件
+                const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+
+                dbpan.query(sql2, dirinfo.createrid, (err, results) => {
                     if (err) return err
                     // console.log(results)
                     socket.emit('updatepage', results)
