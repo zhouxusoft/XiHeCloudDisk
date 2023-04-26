@@ -19,7 +19,7 @@
 
 <body>
     <div class="container mx-3 borderbox">
-        <div class="top">Godxu 云盘
+        <div class="top" data-bs-toggle="modal" data-bs-target="#logoutmodal">Godxu 云盘
             <div class="exitbtn"></div>
         </div>
         <div class="topmenu"></div>
@@ -99,7 +99,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">文件下载：</h1>
+                    <h1 class="modal-title fs-5">文件下载：</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="downloadtip">我会一直写代码，直到我看不清屏幕的那一天</div>
+                    <div class="downloadtip">我会一直写代码，直到我看不清屏幕的那一天。</div>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">新建文件夹：</h1>
+                    <h1 class="modal-title fs-5">新建文件夹：</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -142,7 +142,30 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="downloadtip">我会一直写代码，直到我看不清屏幕的那一天</div>
+                    <div class="downloadtip newfiletip">我会一直写代码，直到我看不清屏幕的那一天。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- logoutModal -->
+    <div class="modal fade" id="logoutmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 logouttitle">退出登录</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="logouttip">确定退出当前账号</div>
+                </div>
+                <div class="modal-footer">
+                    <div class="logoutbtnbox">
+                        <div class="logoutbtnbox2">
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="yeslogout">退出</button>
+                            <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                                id="closedownloadfilemodal">取消</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

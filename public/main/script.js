@@ -8,6 +8,19 @@ if (!token) {
 // 定义socket对象
 const socket = io('http://127.0.0.1:30020')
 
+/* 获取每日一言 */
+function getSentence() {
+    let text = '我会一直写代码，直到我看不清屏幕的那一天。'
+    let xhr = new XMLHttpRequest()
+    xhr.open('POST', 'https://v1.hitokoto.cn/', false)
+    xhr.send()
+    let resData = JSON.parse(xhr.responseText)
+    if (resData) {
+        text = resData.hitokoto
+    }
+    return text
+}
+
 function handleClick(event) {
     //点击菜单不触发事件
     if (!event.target.classList.contains("btn-sm") && !event.target.classList.contains("dirmenu") && !event.target.classList.contains("filemenu")) {
@@ -38,15 +51,7 @@ function handleClick(event) {
                         </div>
                     `
                     // 获取每日一言
-                    downloadtip.textContent = '我会一直写代码，直到我看不清屏幕的那一天。'
-                    let xhr = new XMLHttpRequest()
-                    xhr.open('POST', 'https://v1.hitokoto.cn/', false)
-                    xhr.send()
-                    let resData = JSON.parse(xhr.responseText)
-                    if (resData) {
-                        let datamsg = resData.hitokoto
-                        downloadtip.textContent = datamsg
-                    }
+                    downloadtip.textContent = getSentence()
                     yesdownload.removeEventListener('click', downLoadFile)
                     yesdownload.addEventListener('click', function() {
                         downLoadFile(globalfilelist[i].url);
@@ -92,12 +97,18 @@ const downloadtip = document.getElementsByClassName("downloadtip")[0]
 const downloadingdatabox = document.getElementsByClassName("downloadingdatabox")[0]
 const downloadfilebtn = document.getElementById("downloadfilebtn")
 const yesdownload = document.getElementById("yesdownload")
+const yeslogout = document.getElementById("yeslogout")
 var filedata = document.getElementsByClassName("filedata")
 var back = document.getElementById("back")
 var next = document.getElementById("next")
 var topmenu = document.getElementsByClassName("topmenu")[0]
 var selected = null
 var dirselected = 0
+
+yeslogout.addEventListener('click', function () {
+    localStorage.clear()
+    window.location = '../login/'
+})
 
 // 获取文件操作菜单按钮和文件操作菜单
 var filemenus = document.getElementsByClassName("filemenu")
@@ -843,14 +854,21 @@ const uploadfilemodal = document.getElementById("uploadfilemodal")
 const makesureuploadfilemodal = document.getElementById("makesureuploadfilemodal")
 const newfilename = document.getElementsByClassName("newfilename")[0]
 const yesnewfile = document.getElementById("yesnewfile")
+const newfiletip = document.getElementsByClassName("newfiletip")[0]
 
 uploadfile.addEventListener('click', function () {
     showUpLoadApi()
 })
 
+newdir.addEventListener('click', function () {
+    // 刷新一言句子
+    newfiletip.textContent = getSentence()
+    // 重置文件夹名输入框内容
+    newfilename.value = ''
+})
+
 yesnewfile.addEventListener('click', function () {
     let newname = newfilename.value
-    newfilename.value = ''
     if (newname == '') {
         newname = '新建文件夹'
     }

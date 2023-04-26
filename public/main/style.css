@@ -602,3 +602,23 @@ body {
 .newfilename {
     border: 1px solid #000
 }
+
+.logouttitle {
+    text-align: center;
+    width: 100%;
+}
+
+.logoutbtnbox {
+    margin: auto;
+    width: 100%;
+}
+.logoutbtnbox2 {
+    margin: auto;
+    width: fit-content;
+}
+
+.logouttip {
+    width: 100%;
+    text-align: center;
+    color: #6C757D;
+}
