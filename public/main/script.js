@@ -887,13 +887,38 @@ function newDir(name) {
     }
 }
 
+const getsharefiledatabody = document.getElementsByClassName("getsharefiledatabody")[0]
+
 let golbalsharelist = []
+
+function resetShareList () {
+    while (getsharefiledatabody.firstChild) {
+        getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
+    }
+    if (golbalsharelist.length > 0) {
+        for (let i = golbalsharelist.length - 1; i > -1; i--) {
+            getsharefiledatabody.innerHTML += `
+                <tr class="getsharefiledata">
+                    <td>${golbalsharelist[i].filename}</td>
+                    <td>${golbalsharelist[i].sharetime}</td>
+                    <td class="getsharefilecode">
+                        <div style="width: 64px;"></div>
+                        <div class="getsharefilecodenum">${golbalsharelist[i].sharecode}</div>
+                        <div class="getsharefilecodedel" id="${golbalsharelist[i].id}">取消分享</div>
+                    </td>
+                </tr>
+            `
+        }
+    } else {
+        getsharefiledatabody.innerHTML += `
+            <div class="sharenull">暂无分享记录</div>`
+    }
+}
 
 socket.on('sharelist', (sharelist) => {
     golbalsharelist = sharelist
-    
 })
 
 getshare.addEventListener('click', function () {
-    socket.emit('sharelist', JSON.stringify(JSON))
+    resetShareList()
 })
