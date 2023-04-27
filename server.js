@@ -92,6 +92,21 @@ io.on('connection', (socket) => {
             socket.emit('sharelist', results)
         })
     })
+
+    // 删除分享时触发
+    socket.on('delshare', (toSend) => {
+        toSend = JSON.parse(toSend)
+        const sql = `DELETE FROM sharefile WHERE id=?`
+        dbpan.query(sql, toSend.id, (err, results) => {
+            if (err) return err
+
+            const sql2 = `SELECT * FROM sharefile WHERE sharerid = ?`
+            dbpan.query(sql2, toSend.sharerid, (err, results) => {
+                if (err) return err
+                socket.emit('sharelist', results)
+            })
+        })
+    })
 });
 
 //启动服务器

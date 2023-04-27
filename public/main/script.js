@@ -924,14 +924,19 @@ function resetShareList () {
     }
     for (let i = 0; i < getsharefilecodedel.length; i++) {
         getsharefilecodedel[i].addEventListener('click', function () {
-            socket.emit('delshare', getsharefilecodedel[i].id)
+            let toSend = {
+                id: getsharefilecodedel[i].id,
+                sharerid: token.id
+            }
+            socket.emit('delshare', JSON.stringify(toSend))
+            console.log(getsharefilecodedel[i].id)
         })
     }
 }
 
 socket.on('sharelist', (sharelist) => {
     globalsharelist = sharelist
-    // resetShareList()
+    resetShareList()
 })
 
 getshare.addEventListener('click', function () {
