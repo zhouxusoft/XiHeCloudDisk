@@ -197,9 +197,39 @@ const sharecode = document.getElementsByClassName("sharecode")[0]
 copysharecodemodal.addEventListener('click', function () {
     let text = sharecode.textContent
     text = text.slice(4)
-    console.log(text)
+    // console.log(text)
     navigator.clipboard.writeText(text)
 })
+
+function filecopy() {
+    
+}
+
+function filemove() {
+    
+}
+
+function fileshare(fileid) {
+    // 获得一个六位随机数
+    let randomNum = Math.floor(Math.random() * 1000000)
+    let randomsharecode = '' + fileid + randomNum
+    randomsharecode = randomsharecode.slice(0, 6)
+    // console.log(randomsharecode)
+    let toSend = {
+        fileid: fileid,
+        sharecode: randomsharecode,
+        sharerid: token.id
+    }
+    socket.emit('sharefile', JSON.stringify(toSend))
+}
+
+function filerename() {
+    
+}
+
+function fileremove () {
+
+}
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
@@ -243,8 +273,8 @@ function resetPageFun() {
     // 给所有菜单添加点击监听事件
     for (let i = 0; i < menubtngroup.length; i++) {
         menubtngroup[i].addEventListener('click', function (event) {
-            console.log(event.target.classList[0])
-            console.log(event.currentTarget.id)
+            // console.log(event.target.classList[0])
+            // console.log(event.currentTarget.id)
             if (event.target.classList[0] == 'copy') {
 
             } 
@@ -252,7 +282,7 @@ function resetPageFun() {
 
             } 
             else if (event.target.classList[0] == 'share') {
-
+                fileshare(event.currentTarget.id)
             } 
             else if (event.target.classList[0] == 'rename') {
 
@@ -956,7 +986,7 @@ function resetShareList () {
                 sharerid: token.id
             }
             socket.emit('delshare', JSON.stringify(toSend))
-            console.log(getsharefilecodedel[i].id)
+            // console.log(getsharefilecodedel[i].id)
         })
     }
 }
