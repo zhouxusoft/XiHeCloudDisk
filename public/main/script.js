@@ -214,6 +214,7 @@ function fileshare(fileid) {
     let randomNum = Math.floor(Math.random() * 1000000)
     let randomsharecode = '' + fileid + randomNum
     randomsharecode = randomsharecode.slice(0, 6)
+    sharecode.textContent = '分享码：' + randomsharecode
     // console.log(randomsharecode)
     let toSend = {
         fileid: fileid,
