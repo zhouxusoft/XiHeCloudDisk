@@ -197,9 +197,23 @@ const sharecode = document.getElementsByClassName("sharecode")[0]
 copysharecodemodal.addEventListener('click', function () {
     let text = sharecode.textContent
     text = text.slice(4)
-    // console.log(text)
-    navigator.clipboard.writeText(text)
+    console.log(text)
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text)
+    } else {
+        copyToClipboard(text)
+    }
+    
 })
+
+function copyToClipboard(text) {
+    const input = document.createElement('textarea');
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+}
 
 function filecopy() {
     
