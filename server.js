@@ -118,19 +118,23 @@ io.on('connection', (socket) => {
             // console.log(results)
             let name = results[0].name
             
-            const sql2 = `INSERT INTO sharefile SET ?`
-            dbpan.query(sql2, {
-                    fileid: toSend.fileid,
-                    filename: name,
-                    sharecode: toSend.sharecode,
-                    sharerid: toSend.sharerid
-                }, (err, results) => {
-                    if (err) throw err
-                    const sql3 = `SELECT * FROM sharefile WHERE sharerid = ?`
-                    dbpan.query(sql3, toSend.sharerid, (err, results) => {
-                        if (err) return err
-                        socket.emit('sharelist', results)
-                    })
+            const sql4 = `DELETE FROM sharefile WHERE fileid=?`
+            dbpan.query(sql4, toSend.fileid, (err, results) => {
+                if (err) return err
+                const sql2 = `INSERT INTO sharefile SET ?`
+                dbpan.query(sql2, {
+                        fileid: toSend.fileid,
+                        filename: name,
+                        sharecode: toSend.sharecode,
+                        sharerid: toSend.sharerid
+                    }, (err, results) => {
+                        if (err) throw err
+                        const sql3 = `SELECT * FROM sharefile WHERE sharerid = ?`
+                        dbpan.query(sql3, toSend.sharerid, (err, results) => {
+                            if (err) return err
+                            socket.emit('sharelist', results)
+                        })
+                })
             })
         })
     })
