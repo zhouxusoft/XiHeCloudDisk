@@ -234,7 +234,8 @@ function resetPageFun() {
     // 给所有菜单添加点击监听事件
     for (let i = 0; i < menubtngroup.length; i++) {
         menubtngroup[i].addEventListener('click', function (event) {
-            console.log(event.target)
+            console.log(event.target.classList[0])
+            console.log(event.currentTarget.id)
         })
     }
 }
@@ -330,7 +331,7 @@ function resetFilePage(parentid) {
                             </div>
                             <div class="dirmenu">
                                 <div class="dirpop dirpopdown">
-                                    <div class="btn-group-vertical menubtngroup">
+                                    <div class="btn-group-vertical menubtngroup" id="${filelist[i].id}">
                                         <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
                                         <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
                                         <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
@@ -363,7 +364,7 @@ function resetFilePage(parentid) {
                             </div>
                             <div class="filemenu">
                                 <div class="filepop filepopdown">
-                                    <div class="btn-group-vertical menubtngroup">
+                                    <div class="btn-group-vertical menubtngroup" id="${filelist[i].id}">
                                         <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
                                         <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
                                         <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
