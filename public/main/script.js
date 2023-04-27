@@ -191,6 +191,15 @@ const share = document.getElementsByClassName("share")
 const rename = document.getElementsByClassName("rename")
 const remove = document.getElementsByClassName("remove")
 const menubtngroup = document.getElementsByClassName("menubtngroup")
+const copysharecodemodal = document.getElementById("copysharecodemodal")
+const sharecode = document.getElementsByClassName("sharecode")[0]
+
+copysharecodemodal.addEventListener('click', function () {
+    let text = sharecode.textContent
+    text = text.slice(4)
+    console.log(text)
+    navigator.clipboard.writeText(text)
+})
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
 function resetPageFun() {
@@ -236,6 +245,21 @@ function resetPageFun() {
         menubtngroup[i].addEventListener('click', function (event) {
             console.log(event.target.classList[0])
             console.log(event.currentTarget.id)
+            if (event.target.classList[0] == 'copy') {
+
+            } 
+            else if (event.target.classList[0] == 'move') {
+
+            } 
+            else if (event.target.classList[0] == 'share') {
+
+            } 
+            else if (event.target.classList[0] == 'rename') {
+
+            } 
+            else if (event.target.classList[0] == 'remove') {
+
+            } 
         })
     }
 }
@@ -334,7 +358,8 @@ function resetFilePage(parentid) {
                                     <div class="btn-group-vertical menubtngroup" id="${filelist[i].id}">
                                         <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
                                         <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
-                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn" data-bs-toggle="modal"
+                                        data-bs-target="#sharemodal">分享</button>
                                         <button type="button"
                                             class="rename btn btn-sm btn-outline-secondary secondbtn">重命名</button>
                                         <button type="button" class="remove btn btn-sm btn-outline-secondary secondbtn">删除</button>
@@ -367,7 +392,8 @@ function resetFilePage(parentid) {
                                     <div class="btn-group-vertical menubtngroup" id="${filelist[i].id}">
                                         <button type="button" class="copy btn btn-sm btn-outline-secondary secondbtn">复制</button>
                                         <button type="button" class="move btn btn-sm btn-outline-secondary secondbtn">移动</button>
-                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn">分享</button>
+                                        <button type="button" class="share btn btn-sm btn-outline-secondary secondbtn" data-bs-toggle="modal"
+                                        data-bs-target="#sharemodal">分享</button>
                                         <button type="button"
                                             class="rename btn btn-sm btn-outline-secondary secondbtn">重命名</button>
                                         <button type="button" class="remove btn btn-sm btn-outline-secondary secondbtn">删除</button>

@@ -692,3 +692,12 @@ body {
 .sharenull {
     margin: 10px 0 0 10px;
 }
+
+.sharecode {
+    user-select: text !important;
+    width: fit-content;
+    margin: auto;
+    padding: 20px 20px 12px;
+    font-size: 1.25rem;
+    color: #6C757D;
+}
