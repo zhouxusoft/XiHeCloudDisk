@@ -450,6 +450,7 @@ let globalfilelist
 // 客户端连接成功时触发
 socket.on('connect', () => {
     socket.emit('login', JSON.stringify(token))
+    socket.emit('sharelist', JSON.stringify(token))
 })
 
 // 首次加载文件列表页面时触发
@@ -885,3 +886,14 @@ function newDir(name) {
         socket.emit('newdir', JSON.stringify(toSend))
     }
 }
+
+let golbalsharelist = []
+
+socket.on('sharelist', (sharelist) => {
+    golbalsharelist = sharelist
+    
+})
+
+getshare.addEventListener('click', function () {
+    socket.emit('sharelist', JSON.stringify(JSON))
+})

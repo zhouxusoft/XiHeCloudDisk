@@ -39,7 +39,8 @@
                         data-bs-toggle="modal" data-bs-target="#uploadfilemodal">上传文件</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" id="newdir" data-bs-toggle="modal"
                         data-bs-target="#newfilemodal">建文件夹</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn" id="getshare">获取分享</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" id="getshare"
+                        data-bs-toggle="modal" data-bs-target="#getsharemodal">获取分享</button>
                 </div>
                 <div class="btn-group bottombtngroup">
                     <button type="button" class="btn btn-outline-secondary secondbtn d-none d-sm-block disabled"
@@ -164,6 +165,67 @@
                                 id="yeslogout">退出</button>
                             <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
                                 id="closedownloadfilemodal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- getshareModal -->
+    <div class="modal fade" id="getsharemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">我的分享</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="getsharelisttable">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr class="getsharefiledatahead">
+                                    <th scope="col">文件（夹）名</th>
+                                    <th scope="col">分享时间</th>
+                                    <th scope="col">分享码</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="getsharefiledata">
+                                    <td>达瓦达瓦</td>
+                                    <td>2023-04-22 15:24:35</td>
+                                    <td class="getsharefilecode">
+                                        <div style="width: 64px;"></div>
+                                        <div class="getsharefilecodenum">487155</div>
+                                        <div class="getsharefilecodedel">取消分享</div>
+                                    </td>
+                                </tr>
+                                <tr class="getsharefiledata">
+                                    <td>达瓦达瓦阿瓦达.doc</td>
+                                    <td>2023-04-22 15:24:35</td>
+                                    <td class="getsharefilecode">
+                                        <div style="width: 64px;"></div>
+                                        <div class="getsharefilecodenum">487155</div>
+                                        <div class="getsharefilecodedel">取消分享</div>
+                                    </td>
+                                </tr><tr class="getsharefiledata">
+                                    <td>达瓦达瓦Awdaw伟大</td>
+                                    <td>2023-04-22 15:24:35</td>
+                                    <td class="getsharefilecode">
+                                        <div style="width: 64px;"></div>
+                                        <div class="getsharefilecodenum">487155</div>
+                                        <div class="getsharefilecodedel">取消分享</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="getshareinputboxboder">
+                        <div class="getshareinputbox">
+                            <input class="form-control getshareinput me-2" type="text" placeholder="输入六位数分享码获取文件">
+                            <button class="btn btn-outline-secondary getshareinputbtn" type="button">获取</button>
                         </div>
                     </div>
                 </div>

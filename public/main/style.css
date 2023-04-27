@@ -622,3 +622,69 @@ body {
     text-align: center;
     color: #6C757D;
 }
+
+.getshareinputboxboder {
+    width: 100%;
+}
+
+.getshareinputbox {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.getshareinput {
+    display: inline-block;
+}
+
+.getshareinputbtn {
+    width: 80px;
+    display: inline-block;
+}
+
+.getsharefiledatahead:first-child {
+    width: 40%;
+    max-width: 40%;
+}
+
+.getsharefiledatahead:nth-child(2){
+    width: 30%;
+    max-width: 30%;
+}
+
+.getsharefiledatahead:nth-child(3) {
+    width: 80px;
+}
+
+.getsharelisttable {
+    overflow: auto;
+    max-height: 400px;
+}
+
+.getsharefilecodenum {
+    width: 64px;
+    height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.getsharefilecodedel {
+    width: 0;
+    height: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: width 0.3s;
+    cursor: pointer;
+    color: #f00;
+}
+
+.getsharefiledata:hover .getsharefilecodenum {
+    width: 0;
+    height: 0;
+}
+
+.getsharefiledata:hover .getsharefilecodedel {
+    width: 64px;
+    height: 24px;
+}

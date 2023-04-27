@@ -81,6 +81,17 @@ io.on('connection', (socket) => {
                 })
         })
     })
+
+    // 获取分享列表时触发
+    socket.on('sharelist', (token) => {
+        token = JSON.parse(token)
+
+        const sql = `SELECT * FROM sharefile WHERE sharerid = ?`
+        dbpan.query(sql, token.id, (err, results) => {
+            if (err) return err
+            socket.emit('sharelist', results)
+        })
+    })
 });
 
 //启动服务器
