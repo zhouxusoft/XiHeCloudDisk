@@ -888,23 +888,32 @@ function newDir(name) {
 }
 
 const getsharefiledatabody = document.getElementsByClassName("getsharefiledatabody")[0]
+const getsharefilecodedel = document.getElementsByClassName("getsharefilecodedel")
 
-let golbalsharelist = []
+let globalsharelist = []
+
+/* 修改日期格式 */
+function getTimeFull(timestrap) {
+    const date = timestrap.slice(0, 10).replace(/-/g, '/')
+    const time = timestrap.slice(11, 19)
+    const formattedDateTime = `${date} ${time}`
+    return formattedDateTime
+}
 
 function resetShareList () {
     while (getsharefiledatabody.firstChild) {
         getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
     }
-    if (golbalsharelist.length > 0) {
-        for (let i = golbalsharelist.length - 1; i > -1; i--) {
+    if (globalsharelist.length > 0) {
+        for (let i = globalsharelist.length - 1; i > -1; i--) {
             getsharefiledatabody.innerHTML += `
                 <tr class="getsharefiledata">
-                    <td>${golbalsharelist[i].filename}</td>
-                    <td>${golbalsharelist[i].sharetime}</td>
+                    <td>${globalsharelist[i].filename}</td>
+                    <td>${getTimeFull(globalsharelist[i].sharetime)}</td>
                     <td class="getsharefilecode">
                         <div style="width: 64px;"></div>
-                        <div class="getsharefilecodenum">${golbalsharelist[i].sharecode}</div>
-                        <div class="getsharefilecodedel" id="${golbalsharelist[i].id}">取消分享</div>
+                        <div class="getsharefilecodenum">${globalsharelist[i].sharecode}</div>
+                        <div class="getsharefilecodedel" id="${globalsharelist[i].id}">取消分享</div>
                     </td>
                 </tr>
             `
@@ -913,10 +922,16 @@ function resetShareList () {
         getsharefiledatabody.innerHTML += `
             <div class="sharenull">暂无分享记录</div>`
     }
+    for (let i = 0; i < getsharefilecodedel.length; i++) {
+        getsharefilecodedel[i].addEventListener('click', function () {
+            socket.emit('delshare', getsharefilecodedel[i].id)
+        })
+    }
 }
 
 socket.on('sharelist', (sharelist) => {
-    golbalsharelist = sharelist
+    globalsharelist = sharelist
+    // resetShareList()
 })
 
 getshare.addEventListener('click', function () {
