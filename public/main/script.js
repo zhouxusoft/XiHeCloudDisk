@@ -85,7 +85,7 @@ function resetNext() {
 }
 
 function downLoadFile(url) {
-    let downloadUrl = 'http://sharewh1.xuexi365.com/share/download/' + url
+    let downloadUrl = 'https://sharewh1.xuexi365.com/share/download/' + url
     var iframe_box = document.querySelector('#iframe_box')
     while (iframe_box.firstChild) {
         iframe_box.removeChild(iframe_box.firstChild)
@@ -912,7 +912,7 @@ function upLoadFile(file) {
                 }
             }
         })
-        xhr.open('POST', 'http://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
+        xhr.open('POST', 'https://pan-yz.chaoxing.com/upload/uploadfile?fldid=857365562672803840', true)
         xhr.send(formData)
     });
     nobtn.addEventListener("click", function () {
