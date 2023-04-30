@@ -52,10 +52,9 @@ function handleClick(event) {
                     `
                     // 获取每日一言
                     downloadtip.textContent = getSentence()
-                    yesdownload.removeEventListener('click', downLoadFile)
-                    yesdownload.addEventListener('click', function() {
-                        downLoadFile(globalfilelist[i].url);
-                    })
+                    
+                    downloadfileurl = globalfilelist[i].url
+
                     break
                 }
             }    
@@ -85,6 +84,7 @@ function resetNext() {
 }
 
 function downLoadFile(url) {
+    console.log('down')
     let downloadUrl = 'https://sharewh1.xuexi365.com/share/download/' + url
     var iframe_box = document.querySelector('#iframe_box')
     while (iframe_box.firstChild) {
@@ -104,6 +104,11 @@ var next = document.getElementById("next")
 var topmenu = document.getElementsByClassName("topmenu")[0]
 var selected = null
 var dirselected = 0
+let downloadfileurl = 0
+
+yesdownload.addEventListener('click', function() {
+    downLoadFile(downloadfileurl)
+})
 
 yeslogout.addEventListener('click', function () {
     localStorage.clear()
@@ -197,6 +202,12 @@ const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
 const yesremove = document.getElementById("yesremove")
 
+let removefileid = -1
+
+yesremove.addEventListener('click', function() {
+    yesRemoveFile(removefileid)
+})
+
 copysharecodemodal.addEventListener('click', function () {
     let text = sharecode.textContent
     text = text.slice(4)
@@ -269,15 +280,16 @@ function fileremove (fileid) {
                     <div>( ${sonnum} 项 )</div>
                 </div>`
             }
-            yesremove.removeEventListener('click', yesRemoveFile)
-            yesremove.addEventListener('click', function() {
-                yesRemoveFile(fileid);
-            })
+            
+            removefileid = fileid
+            
+            break
         }
     }
 }
 
 function yesRemoveFile (fileid) {
+    console.log(fileid)
     let toSend = {
         fileid: fileid,
         createrid: token.id
