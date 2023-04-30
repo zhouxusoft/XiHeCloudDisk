@@ -701,3 +701,8 @@ body {
     font-size: 1.25rem;
     color: #6C757D;
 }
+
+.removebtnbox {
+    margin: auto;
+    width: fit-content;
+}

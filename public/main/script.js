@@ -193,6 +193,8 @@ const remove = document.getElementsByClassName("remove")
 const menubtngroup = document.getElementsByClassName("menubtngroup")
 const copysharecodemodal = document.getElementById("copysharecodemodal")
 const sharecode = document.getElementsByClassName("sharecode")[0]
+const removefilebtn = document.getElementById("removefilebtn")
+const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
 
 copysharecodemodal.addEventListener('click', function () {
     let text = sharecode.textContent
@@ -242,8 +244,33 @@ function filerename() {
     
 }
 
-function fileremove () {
-
+function fileremove (fileid) {
+    removefilebtn.click()
+    for (let i = 0; i < globalfilelist.length; i++) {
+        if (globalfilelist[i].id == fileid) {
+            console.log(globalfilelist[i])
+            while (removeingdatabox.firstChild) {
+                removeingdatabox.removeChild(removeingdatabox.firstChild)
+            }
+            if (globalfilelist[i].isfile == 1) {
+                removeingdatabox.innerHTML += `
+                <div class="filebox">
+                    <div class="filelogois">\uf15b</div>
+                    <div class="filenameis">${globalfilelist[i].name}</div>
+                    <div>( ${getFileSize(globalfilelist[i].size)} )</div>
+                </div>`
+            } else {
+                let sonnum = getDirSonNum(globalfilelist, fileid)
+                removeingdatabox.innerHTML += `
+                <div class="filebox">
+                    <div class="filelogois">\ue185</div>
+                    <div class="filenameis">${globalfilelist[i].name}</div>
+                    <div>( ${sonnum} 项 )</div>
+                </div>`
+            }
+            
+        }
+    }
 }
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置
@@ -303,7 +330,7 @@ function resetPageFun() {
 
             } 
             else if (event.target.classList[0] == 'remove') {
-
+                fileremove(event.currentTarget.id)
             } 
         })
     }
