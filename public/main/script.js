@@ -84,7 +84,7 @@ function resetNext() {
 }
 
 function downLoadFile(url) {
-    console.log('down')
+    // console.log('down')
     let downloadUrl = 'https://sharewh1.xuexi365.com/share/download/' + url
     var iframe_box = document.querySelector('#iframe_box')
     while (iframe_box.firstChild) {
@@ -289,7 +289,7 @@ function fileremove (fileid) {
 }
 
 function yesRemoveFile (fileid) {
-    console.log(fileid)
+    // console.log(fileid)
     let toSend = {
         fileid: fileid,
         createrid: token.id
