@@ -195,6 +195,7 @@ const copysharecodemodal = document.getElementById("copysharecodemodal")
 const sharecode = document.getElementsByClassName("sharecode")[0]
 const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
+const yesremove = document.getElementById("yesremove")
 
 copysharecodemodal.addEventListener('click', function () {
     let text = sharecode.textContent
@@ -248,7 +249,7 @@ function fileremove (fileid) {
     removefilebtn.click()
     for (let i = 0; i < globalfilelist.length; i++) {
         if (globalfilelist[i].id == fileid) {
-            console.log(globalfilelist[i])
+            // console.log(globalfilelist[i])
             while (removeingdatabox.firstChild) {
                 removeingdatabox.removeChild(removeingdatabox.firstChild)
             }
@@ -268,9 +269,20 @@ function fileremove (fileid) {
                     <div>( ${sonnum} 项 )</div>
                 </div>`
             }
-            
+            yesremove.removeEventListener('click', yesRemoveFile)
+            yesremove.addEventListener('click', function() {
+                yesRemoveFile(fileid);
+            })
         }
     }
+}
+
+function yesRemoveFile (fileid) {
+    let toSend = {
+        fileid: fileid,
+        createrid: token.id
+    }
+    socket.emit('removefile', JSON.stringify(toSend))
 }
 
 // 用于在页面元素变化时，确定每个元素菜单弹出的位置

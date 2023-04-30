@@ -148,6 +148,23 @@ io.on('connection', (socket) => {
             })
         })
     })
+
+    // 删除文件时触发
+    socket.on('removefile', (toSend) => {
+        toSend = JSON.parse(toSend)
+
+        const sql = `DELETE FROM filedata WHERE id=?`
+        dbpan.query(sql, toSend.fileid, (err, results) => {
+            if (err) return err
+            // 返回删除后的文件列表
+            const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+            dbpan.query(sql2, toSend.createrid, (err, results) => {
+                if (err) return err
+                // console.log(results)
+                socket.emit('updatepage', results)
+            })
+        })
+    })
 });
 
 //启动服务器
