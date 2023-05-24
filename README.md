@@ -1,7 +1,7 @@
 # XiHeCloudDisk
 基于超星云盘的简易轻量化云盘
 
-#### nodejs + socket
+#### Nodejs + Socket + BootStrap5
 
 - 注册登录
 - 上传文件
