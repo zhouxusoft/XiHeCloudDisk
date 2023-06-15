@@ -1,6 +1,5 @@
 # XiHeCloudDisk
-
-基于超星云盘的简易轻量化云盘
+> 基于超星云盘的简易轻量化云盘
 
 #### Nodejs + Socket + BootStrap5
 
