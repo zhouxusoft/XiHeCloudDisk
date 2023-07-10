@@ -1070,18 +1070,22 @@ getshare.addEventListener('click', function () {
 const getshareinputbtn = document.getElementsByClassName("getshareinputbtn")[0]
 const getshareinput = document.getElementsByClassName("getshareinput ")[0]
 
-function getShareFile(shareid, userid) {
+function getShareFile(shareid) {
     // console.log(fileid)
     let toSend = {
-        fileid: fileid,
-        createrid: token.id
+        shareid: shareid,
+        userid: token.id
     }
-    socket.emit('removefile', JSON.stringify(toSend))
+    socket.emit('getsharefile', JSON.stringify(toSend))
 }
 
 getshareinputbtn.addEventListener('click', function () {
     let shareid = getshareinput.value
     if (shareid != '') {
-        getShareFile(shareid, token.id)
+        getShareFile(shareid)
     }
+})
+
+socket.on('getsharefile', (hasfile) => {
+    console.log(hasfile)
 })
