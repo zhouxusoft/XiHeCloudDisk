@@ -1092,7 +1092,7 @@ getshareinputbtn.addEventListener('click', function () {
 
 // 点击获取分享后发生，选择是否获取
 socket.on('getsharefile', (hasfile) => {
-    console.log(hasfile)
+    // console.log(hasfile)
     while (getsharefiledatabody.firstChild) {
         getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
     }
@@ -1129,7 +1129,7 @@ socket.on('getsharefile', (hasfile) => {
                 </div>
                 <div class="sharebtnbox">
                     <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
-                        id="yesgetshare">获取</button>
+                        id="yesgetshare">保存</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn"
                         id="closesharemodal">取消</button>
                 </div>
@@ -1138,6 +1138,17 @@ socket.on('getsharefile', (hasfile) => {
         const yesgetshare = document.getElementById("yesgetshare")
         yesgetshare.addEventListener('click', function () {
             getshareinput.value = ''
+            let parentid = 0
+            if (dirlist.length > 0) {
+                parentid = dirlist[dirlist.length - 1]
+            }
+            let toSend = {
+                file: hasfile,
+                userid: token.id,
+                parentid: parentid
+            }
+            console.log(parentid)
+            socket.emit('yesgetsharefile', JSON.stringify(toSend))
         })
     }
     const closesharemodal = document.getElementById("closesharemodal")

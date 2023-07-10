@@ -200,6 +200,32 @@ io.on('connection', (socket) => {
             }
         })
     })
+
+    // 确认保存分享时触发
+    socket.on('yesgetsharefile', (toSend) => {
+        toSend = JSON.parse(toSend)
+        // console.log(toSend)
+        if(toSend.file.isfile == 1) {
+            // 定义数据库插入语句 插入上传的文件信息
+            const sql = `INSERT INTO filedata SET ?`
+            dbpan.query(sql, {
+                    name: toSend.file.name,
+                    url: toSend.file.url,
+                    isfile: toSend.file.isfile,
+                    parentid: toSend.parentid,
+                    createrid: toSend.userid,
+                    size: toSend.file.size
+                }, (err, results) => {
+                    if (err) throw err
+                    // 定义数据库查询语句语句 查询该属于用户的所有文件
+                    const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+                    dbpan.query(sql2, toSend.userid, (err, results) => {
+                        if (err) return err
+                        socket.emit('updatepage', results)
+                    })        
+            })
+        }
+    })
 })
 
 //启动服务器
