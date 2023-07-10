@@ -1070,7 +1070,6 @@ getshare.addEventListener('click', function () {
     resetShareList()
 })
 
-// 点击获取分享按钮
 const getshareinputbtn = document.getElementsByClassName("getshareinputbtn")[0]
 const getshareinput = document.getElementsByClassName("getshareinput ")[0]
 
@@ -1083,6 +1082,7 @@ function getShareFile(shareid) {
     socket.emit('getsharefile', JSON.stringify(toSend))
 }
 
+// 点击获取分享按钮
 getshareinputbtn.addEventListener('click', function () {
     let shareid = getshareinput.value
     if (shareid != '') {
@@ -1090,6 +1090,7 @@ getshareinputbtn.addEventListener('click', function () {
     }
 })
 
+// 点击获取分享后发生，选择是否获取
 socket.on('getsharefile', (hasfile) => {
     console.log(hasfile)
     while (getsharefiledatabody.firstChild) {
@@ -1098,7 +1099,12 @@ socket.on('getsharefile', (hasfile) => {
     sharefiletitle.innerText = '获取分享'
     getsharefiledatahead.classList.add('hide')
     if(hasfile == 0) {
-        getsharefiledatabody.innerHTML += `分享码错误`
+        getsharefiledatabody.innerHTML += `<span class="noshare">分享码有误</span>
+            <div class="sharebtnbox">
+                <button type="button" class="btn btn-outline-secondary secondbtn"
+                    id="closesharemodal">返回</button>
+            </div>
+        `
     } else {
         if (hasfile.isfile == 1) {
             getsharefiledatabody.innerHTML += `
@@ -1107,16 +1113,36 @@ socket.on('getsharefile', (hasfile) => {
                     <div class="filenameis">${hasfile.name}</div>
                     <div>( ${getFileSize(hasfile.size)} )</div>
                 </div>
+                <div class="sharebtnbox">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                        id="yesgetshare">获取</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn"
+                        id="closesharemodal">取消</button>
+                </div>
             `
         } else {
             getsharefiledatabody.innerHTML += `
                 <div class="filebox">
-                    <div class="filelogois">\ue185</div>
+                    <div class="sharefilelogois">\ue185</div>
                     <div class="filenameis">${hasfile.name}</div>
-                    <div>( ${hasfile.size} 项)</div>
+                    <div>( ${hasfile.size} 项 )</div>
+                </div>
+                <div class="sharebtnbox">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                        id="yesgetshare">获取</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn"
+                        id="closesharemodal">取消</button>
                 </div>
             `
         }
-        
+        const yesgetshare = document.getElementById("yesgetshare")
+        yesgetshare.addEventListener('click', function () {
+            getshareinput.value = ''
+        })
     }
+    const closesharemodal = document.getElementById("closesharemodal")
+    closesharemodal.addEventListener('click', function () {
+        getshareinput.value = ''
+        resetShareList()
+    })
 })

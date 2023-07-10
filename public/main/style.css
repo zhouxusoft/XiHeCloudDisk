@@ -714,3 +714,24 @@ body {
 .show {
     display: block;
 }
+
+.sharebtnbox {
+    margin: auto;
+    width: fit-content;
+}
+
+.noshare {
+    display: flex;
+    color: #6C757D;
+    margin: 30px auto;
+    justify-content: center;
+}
+
+.sharefilelogois {
+    width: 55px;
+    margin: auto;
+    font-family: "Font Awesome 6 Free";
+    font-size: 2rem;
+    color: #333;
+    font-weight: 300;
+}
