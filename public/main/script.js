@@ -1012,6 +1012,8 @@ function newDir(name) {
 
 const getsharefiledatabody = document.getElementsByClassName("getsharefiledatabody")[0]
 const getsharefilecodedel = document.getElementsByClassName("getsharefilecodedel")
+const getsharefiledatahead = document.getElementsByClassName("getsharefiledatahead")[0]
+const sharefiletitle = document.getElementById("sharefiletitle")
 
 let globalsharelist = []
 
@@ -1027,6 +1029,8 @@ function resetShareList () {
     while (getsharefiledatabody.firstChild) {
         getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
     }
+    getsharefiledatahead.classList.remove('hide')
+    sharefiletitle.innerText = '我的分享'
     if (globalsharelist.length > 0) {
         for (let i = globalsharelist.length - 1; i > -1; i--) {
             getsharefiledatabody.innerHTML += `
@@ -1088,4 +1092,31 @@ getshareinputbtn.addEventListener('click', function () {
 
 socket.on('getsharefile', (hasfile) => {
     console.log(hasfile)
+    while (getsharefiledatabody.firstChild) {
+        getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
+    }
+    sharefiletitle.innerText = '获取分享'
+    getsharefiledatahead.classList.add('hide')
+    if(hasfile == 0) {
+        getsharefiledatabody.innerHTML += `分享码错误`
+    } else {
+        if (hasfile.isfile == 1) {
+            getsharefiledatabody.innerHTML += `
+                <div class="filebox">
+                    <div class="filelogois">\uf15b</div>
+                    <div class="filenameis">${hasfile.name}</div>
+                    <div>( ${getFileSize(hasfile.size)} )</div>
+                </div>
+            `
+        } else {
+            getsharefiledatabody.innerHTML += `
+                <div class="filebox">
+                    <div class="filelogois">\ue185</div>
+                    <div class="filenameis">${hasfile.name}</div>
+                    <div>( ${hasfile.size} 项)</div>
+                </div>
+            `
+        }
+        
+    }
 })

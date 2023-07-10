@@ -169,28 +169,38 @@ io.on('connection', (socket) => {
     // 获取分享时触发
     socket.on('getsharefile', (toSend) => {
         toSend = JSON.parse(toSend)
-        console.log(toSend)
+        // console.log(toSend)
         // 查找文件对应的文件分享码
         const sql = `SELECT * FROM sharefile WHERE sharecode=?`
         dbpan.query(sql, toSend.shareid, (err, results) => {
             if (err) return err
-            console.log(results)
+            // console.log(results)
             let hasfile = 0
             if(results.length > 0) {
                 const sql2 = `SELECT * FROM filedata WHERE id = ?`
                 dbpan.query(sql2, results[0].fileid, (err, results) => {
                     if (err) return err
-                    console.log(results[0])
+                    // console.log(results[0])
                     hasfile = results[0]
-                    console.log(hasfile)
-                    socket.emit('getsharefile', hasfile)
+                    // console.log(hasfile)
+                    if (hasfile.isfile == 0) {
+                        const sql3 = `SELECT * FROM filedata WHERE parentid = ?`
+                        dbpan.query(sql3, results[0].id, (err, result) => {
+                            if (err) return err
+                            console.log(result.length)
+                            hasfile.size = result.length
+                            socket.emit('getsharefile', hasfile)
+                        })
+                    } else {
+                        socket.emit('getsharefile', hasfile)
+                    }
                 })
             } else {
                 socket.emit('getsharefile', hasfile)
             }
         })
     })
-});
+})
 
 //启动服务器
 server.listen(30020, () => {

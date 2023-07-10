@@ -706,3 +706,11 @@ body {
     margin: auto;
     width: fit-content;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
