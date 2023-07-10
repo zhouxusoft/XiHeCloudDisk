@@ -165,6 +165,43 @@ io.on('connection', (socket) => {
             })
         })
     })
+
+    // 获取分享时触发
+    socket.on('sharefile', (toSend) => {
+        toSend = JSON.parse(toSend)
+        
+        // 查找文件对应的文件名
+        const sql = `SELECT name FROM filedata WHERE id=?`
+        dbpan.query(sql, toSend.fileid, (err, results) => {
+            if (err) return err
+            // console.log(results)
+            let name = results[0].name
+            
+            // 如果该文件已经处于分状态 则删除后重新添加分享
+            const sql4 = `DELETE FROM sharefile WHERE fileid=?`
+            dbpan.query(sql4, toSend.fileid, (err, results) => {
+                if (err) return err
+
+                // 插入分享文件
+                const sql2 = `INSERT INTO sharefile SET ?`
+                dbpan.query(sql2, {
+                        fileid: toSend.fileid,
+                        filename: name,
+                        sharecode: toSend.sharecode,
+                        sharerid: toSend.sharerid
+                    }, (err, results) => {
+                        if (err) throw err
+
+                        // 返回新的分享列表
+                        const sql3 = `SELECT * FROM sharefile WHERE sharerid = ?`
+                        dbpan.query(sql3, toSend.sharerid, (err, results) => {
+                            if (err) return err
+                            socket.emit('sharelist', results)
+                        })
+                })
+            })
+        })
+    })
 });
 
 //启动服务器

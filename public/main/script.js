@@ -1065,3 +1065,23 @@ socket.on('sharelist', (sharelist) => {
 getshare.addEventListener('click', function () {
     resetShareList()
 })
+
+// 点击获取分享按钮
+const getshareinputbtn = document.getElementsByClassName("getshareinputbtn")[0]
+const getshareinput = document.getElementsByClassName("getshareinput ")[0]
+
+function getShareFile(shareid, userid) {
+    // console.log(fileid)
+    let toSend = {
+        fileid: fileid,
+        createrid: token.id
+    }
+    socket.emit('removefile', JSON.stringify(toSend))
+}
+
+getshareinputbtn.addEventListener('click', function () {
+    let shareid = getshareinput.value
+    if (shareid != '') {
+        getShareFile(shareid, token.id)
+    }
+})
