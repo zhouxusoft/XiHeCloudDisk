@@ -40,22 +40,22 @@ io.on('connection', (socket) => {
         // 定义数据库插入语句 插入上传的文件信息
         const sql = `INSERT INTO filedata SET ?`
         dbpan.query(sql, {
-                name: fileinfo.name,
-                url: fileinfo.url,
-                isfile: fileinfo.isfile,
-                parentid: fileinfo.parentid,
-                createrid: fileinfo.createrid,
-                size: fileinfo.size
-            }, (err, results) => {
-                if (err) throw err
-                // 定义数据库查询语句语句 查询该属于用户的所有文件
-                const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+            name: fileinfo.name,
+            url: fileinfo.url,
+            isfile: fileinfo.isfile,
+            parentid: fileinfo.parentid,
+            createrid: fileinfo.createrid,
+            size: fileinfo.size
+        }, (err, results) => {
+            if (err) throw err
+            // 定义数据库查询语句语句 查询该属于用户的所有文件
+            const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
 
-                dbpan.query(sql2, fileinfo.createrid, (err, results) => {
-                    if (err) return err
-                    // console.log(results)
-                    socket.emit('updatepage', results)
-                })
+            dbpan.query(sql2, fileinfo.createrid, (err, results) => {
+                if (err) return err
+                // console.log(results)
+                socket.emit('updatepage', results)
+            })
         })
     })
 
@@ -65,20 +65,20 @@ io.on('connection', (socket) => {
         // 定义数据库插入语句 插入上传的文件信息
         const sql = `INSERT INTO filedata SET ?`
         dbpan.query(sql, {
-                name: dirinfo.name,
-                isfile: dirinfo.isfile,
-                parentid: dirinfo.parentid,
-                createrid: dirinfo.createrid,
-            }, (err, results) => {
-                if (err) throw err
-                // 定义数据库查询语句语句 查询该属于用户的所有文件
-                const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+            name: dirinfo.name,
+            isfile: dirinfo.isfile,
+            parentid: dirinfo.parentid,
+            createrid: dirinfo.createrid,
+        }, (err, results) => {
+            if (err) throw err
+            // 定义数据库查询语句语句 查询该属于用户的所有文件
+            const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
 
-                dbpan.query(sql2, dirinfo.createrid, (err, results) => {
-                    if (err) return err
-                    // console.log(results)
-                    socket.emit('updatepage', results)
-                })
+            dbpan.query(sql2, dirinfo.createrid, (err, results) => {
+                if (err) return err
+                // console.log(results)
+                socket.emit('updatepage', results)
+            })
         })
     })
 
@@ -115,14 +115,14 @@ io.on('connection', (socket) => {
     // 分享文件时触发
     socket.on('sharefile', (toSend) => {
         toSend = JSON.parse(toSend)
-        
+
         // 查找文件对应的文件名
         const sql = `SELECT name FROM filedata WHERE id=?`
         dbpan.query(sql, toSend.fileid, (err, results) => {
             if (err) return err
             // console.log(results)
             let name = results[0].name
-            
+
             // 如果该文件已经处于分状态 则删除后重新添加分享
             const sql4 = `DELETE FROM sharefile WHERE fileid=?`
             dbpan.query(sql4, toSend.fileid, (err, results) => {
@@ -131,19 +131,19 @@ io.on('connection', (socket) => {
                 // 插入分享文件
                 const sql2 = `INSERT INTO sharefile SET ?`
                 dbpan.query(sql2, {
-                        fileid: toSend.fileid,
-                        filename: name,
-                        sharecode: toSend.sharecode,
-                        sharerid: toSend.sharerid
-                    }, (err, results) => {
-                        if (err) throw err
+                    fileid: toSend.fileid,
+                    filename: name,
+                    sharecode: toSend.sharecode,
+                    sharerid: toSend.sharerid
+                }, (err, results) => {
+                    if (err) throw err
 
-                        // 返回新的分享列表
-                        const sql3 = `SELECT * FROM sharefile WHERE sharerid = ?`
-                        dbpan.query(sql3, toSend.sharerid, (err, results) => {
-                            if (err) return err
-                            socket.emit('sharelist', results)
-                        })
+                    // 返回新的分享列表
+                    const sql3 = `SELECT * FROM sharefile WHERE sharerid = ?`
+                    dbpan.query(sql3, toSend.sharerid, (err, results) => {
+                        if (err) return err
+                        socket.emit('sharelist', results)
+                    })
                 })
             })
         })
@@ -176,7 +176,7 @@ io.on('connection', (socket) => {
             if (err) return err
             // console.log(results)
             let hasfile = 0
-            if(results.length > 0) {
+            if (results.length > 0) {
                 const sql2 = `SELECT * FROM filedata WHERE id = ?`
                 dbpan.query(sql2, results[0].fileid, (err, results) => {
                     if (err) return err
@@ -205,44 +205,66 @@ io.on('connection', (socket) => {
     socket.on('yesgetsharefile', (toSend) => {
         toSend = JSON.parse(toSend)
         // console.log(toSend)
-        if(toSend.file.isfile == 1) {
+        if (toSend.file.isfile == 1) {
             // 定义数据库插入语句 插入上传的文件信息
             const sql = `INSERT INTO filedata SET ?`
             dbpan.query(sql, {
-                    name: toSend.file.name,
-                    url: toSend.file.url,
-                    isfile: toSend.file.isfile,
-                    parentid: toSend.parentid,
-                    createrid: toSend.userid,
-                    size: toSend.file.size
-                }, (err, results) => {
-                    if (err) throw err
-                    // 定义数据库查询语句语句 查询该属于用户的所有文件
-                    const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
-                    dbpan.query(sql2, toSend.userid, (err, results) => {
-                        if (err) return err
-                        socket.emit('updatepage', results)
-                    })        
+                name: toSend.file.name,
+                url: toSend.file.url,
+                isfile: toSend.file.isfile,
+                parentid: toSend.parentid,
+                createrid: toSend.userid,
+                size: toSend.file.size
+            }, (err, results) => {
+                if (err) throw err
+                // 定义数据库查询语句语句 查询该属于用户的所有文件
+                const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+                dbpan.query(sql2, toSend.userid, (err, results) => {
+                    if (err) return err
+                    socket.emit('updatepage', results)
+                })
             })
         } else {
             filelist = [toSend.file]
+
             function getDirFile(pid) {
-                const sql = `SELECT * FROM filedata WHERE parentid = ?`
-                dbpan.query(sql, pid, (err, results) => {
-                    if (err) return err
-                    for (let i = 0; i < results.length; i++) {
-                        if (results[i].isfile == 1) {
-                            filelist.push(results[i])
-                        } else {
-                            filelist.push(results[i])
-                            getDirFile(results[i].id)
+                return new Promise((resolve, reject) => {
+                    const sql = `SELECT * FROM filedata WHERE parentid = ?`
+                    dbpan.query(sql, pid, (err, results) => {
+                        if (err) return reject(err)
+
+                        const promises = []
+                        for (let i = 0; i < results.length; i++) {
+                            const file = results[i]
+                            if (file.isfile == 1) {
+                                filelist.push(file)
+                            } else {
+                                filelist.push(file)
+                                promises.push(getDirFile(file.id))
+                            }
                         }
-                    }
-                    console.log(filelist)
-                })        
+
+                        Promise.all(promises)
+                            .then((nestedResults) => {
+                                nestedResults.forEach((nestedFileList) => {
+                                    // filelist.push(...nestedFileList)
+                                });
+                                resolve(filelist)
+                            })
+                            .catch(reject)
+                    })
+                })
             }
-            getDirFile(toSend.file.id)
-            
+
+            (async function () {
+                try {
+                    const result = await getDirFile(toSend.file.id)
+                    console.log(result)
+                } catch (err) {
+                    console.error(err)
+                }
+            })();
+
         }
     })
 })
