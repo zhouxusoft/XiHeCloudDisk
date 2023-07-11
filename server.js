@@ -187,7 +187,7 @@ io.on('connection', (socket) => {
                         const sql3 = `SELECT * FROM filedata WHERE parentid = ?`
                         dbpan.query(sql3, results[0].id, (err, result) => {
                             if (err) return err
-                            console.log(result.length)
+                            // console.log(result.length)
                             hasfile.size = result.length
                             socket.emit('getsharefile', hasfile)
                         })
@@ -225,10 +225,24 @@ io.on('connection', (socket) => {
                     })        
             })
         } else {
-            filelist = []
+            filelist = [toSend.file]
             function getDirFile(pid) {
-                
+                const sql = `SELECT * FROM filedata WHERE parentid = ?`
+                dbpan.query(sql, pid, (err, results) => {
+                    if (err) return err
+                    for (let i = 0; i < results.length; i++) {
+                        if (results[i].isfile == 1) {
+                            filelist.push(results[i])
+                        } else {
+                            filelist.push(results[i])
+                            getDirFile(results[i].id)
+                        }
+                    }
+                    console.log(filelist)
+                })        
             }
+            getDirFile(toSend.file.id)
+            
         }
     })
 })
