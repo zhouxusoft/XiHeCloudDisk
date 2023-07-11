@@ -224,6 +224,11 @@ io.on('connection', (socket) => {
                         socket.emit('updatepage', results)
                     })        
             })
+        } else {
+            filelist = []
+            function getDirFile(pid) {
+                
+            }
         }
     })
 })
