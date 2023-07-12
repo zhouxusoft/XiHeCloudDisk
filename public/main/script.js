@@ -54,6 +54,8 @@ function handleClick(event) {
                     downloadtip.textContent = getSentence()
                     
                     downloadfileurl = globalfilelist[i].url
+                    downloadfilename = globalfilelist[i].name
+                    downloadfilesize = getFileSize(globalfilelist[i].size)
 
                     break
                 }
@@ -97,6 +99,11 @@ const downloadtip = document.getElementsByClassName("downloadtip")[0]
 const downloadingdatabox = document.getElementsByClassName("downloadingdatabox")[0]
 const downloadfilebtn = document.getElementById("downloadfilebtn")
 const yesdownload = document.getElementById("yesdownload")
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+const toastbody = document.getElementsByClassName("toast-body")[0]
+const downloadfilesizetip = document.getElementById("downloadfilesizetip")
+const downloadfilenametip = document.getElementById("downloadfilenametip")
 const yeslogout = document.getElementById("yeslogout")
 var filedata = document.getElementsByClassName("filedata")
 var back = document.getElementById("back")
@@ -104,10 +111,23 @@ var next = document.getElementById("next")
 var topmenu = document.getElementsByClassName("topmenu")[0]
 var selected = null
 var dirselected = 0
-let downloadfileurl = 0
+let downloadfileurl = ''
+let downloadfilename = ''
+let downloadfilesize = ''
+
+if (toastTrigger) {
+  toastTrigger.addEventListener('click', () => {
+    const toast = new bootstrap.Toast(toastLiveExample, { delay: 3000})
+    toast.show()
+  })
+}
 
 yesdownload.addEventListener('click', function() {
     downLoadFile(downloadfileurl)
+    toastbody.textContent = downloadfilename
+    downloadfilesizetip.textContent = downloadfilesize
+    downloadfilenametip.textContent = '即将开始下载'
+    liveToastBtn.click()
 })
 
 yeslogout.addEventListener('click', function () {

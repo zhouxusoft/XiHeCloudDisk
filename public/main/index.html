@@ -80,7 +80,7 @@
                     <div class="uploading">
                         <div class="uploadingdatabox">
                             <div class="uploadingdatanull">
-                                暂无下载记录
+                                暂无上传记录
                             </div>
                         </div>
                     </div>
@@ -254,6 +254,24 @@
             </div>
         </div>
     </div>
+
+    <!-- tips toast -->
+    <button type="button" id="liveToastBtn" style="display: none">Show live toast</button>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../login/icon/cloud_four.png" class="rounded me-2" width="20px">
+                <strong class="me-auto" id="downloadfilenametip">Godxu云盘</strong>
+                <small id="downloadfilesizetip"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                即将开始下载:
+            </div>
+        </div>
+    </div>
+
+    <!-- download ifream -->
     <div style="display: none" id="iframe_box"></div>
     <script src="./script.js"></script>
 </body>
