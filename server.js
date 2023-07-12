@@ -225,46 +225,79 @@ io.on('connection', (socket) => {
                 })
             })
         } else {
-            filelist = [toSend.file]
+            const sql = `INSERT INTO filedata SET ?`
+            dbpan.query(sql, {
+                name: toSend.file.name,
+                url: toSend.file.url,
+                isfile: toSend.file.isfile,
+                parentid: toSend.parentid,
+                createrid: toSend.userid,
+                size: toSend.file.size
+            }, (err, results) => {
+                if (err) throw err
+                const insertId = results.insertId
+                // console.log(insertId)
+                filelist = []
+                function getDirFile(pid) {
+                    return new Promise((resolve, reject) => {
+                        const sql = `SELECT * FROM filedata WHERE parentid = ?`
+                        dbpan.query(sql, pid, (err, results) => {
+                            if (err) return reject(err)
 
-            function getDirFile(pid) {
-                return new Promise((resolve, reject) => {
-                    const sql = `SELECT * FROM filedata WHERE parentid = ?`
-                    dbpan.query(sql, pid, (err, results) => {
-                        if (err) return reject(err)
-
-                        const promises = []
-                        for (let i = 0; i < results.length; i++) {
-                            const file = results[i]
-                            if (file.isfile == 1) {
-                                filelist.push(file)
-                            } else {
-                                filelist.push(file)
-                                promises.push(getDirFile(file.id))
+                            const promises = []
+                            for (let i = 0; i < results.length; i++) {
+                                const file = results[i]
+                                if (file.isfile == 1) {
+                                    filelist.push(file)
+                                } else {
+                                    filelist.push(file)
+                                    promises.push(getDirFile(file.id))
+                                }
                             }
-                        }
 
-                        Promise.all(promises)
-                            .then((nestedResults) => {
-                                nestedResults.forEach((nestedFileList) => {
-                                    // filelist.push(...nestedFileList)
-                                });
-                                resolve(filelist)
-                            })
-                            .catch(reject)
+                            Promise.all(promises)
+                                .then((nestedResults) => {
+                                    resolve(filelist)
+                                })
+                                .catch(reject)
+                        })
                     })
-                })
-            }
-
-            (async function () {
-                try {
-                    const result = await getDirFile(toSend.file.id)
-                    console.log(result)
-                } catch (err) {
-                    console.error(err)
                 }
-            })();
 
+                (async function () {
+                    try {
+                        const result = await getDirFile(toSend.file.id)
+                        // console.log(result)
+                        for (let i = 0; i < result.length; i++) {
+                            const sql = `INSERT INTO filedata SET ?`
+                            let val = {
+                                id: result[i].id - toSend.file.id + insertId,
+                                name: result[i].name,
+                                url: result[i].url,
+                                isfile: result[i].isfile,
+                                parentid: result[i].parentid - toSend.file.id + insertId,
+                                createrid: toSend.userid,
+                                size: result[i].size
+                            }
+                            // console.log(result[i].parentid, toSend.file.id, insertId, val)
+                            dbpan.query(sql, val, (err, results) => {
+                                if (err) return err
+                                const insertedId = results.insertId
+                                // console.log(insertedId)
+                                if (i == result.length - 1) {
+                                    const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+                                    dbpan.query(sql2, toSend.userid, (err, results) => {
+                                        if (err) return err
+                                        socket.emit('updatepage', results)
+                                    })
+                                }
+                            })
+                        }
+                    } catch (err) {
+                        console.error(err)
+                    }
+                })()
+            })
         }
     })
 })

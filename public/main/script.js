@@ -1147,7 +1147,7 @@ socket.on('getsharefile', (hasfile) => {
                 userid: token.id,
                 parentid: parentid
             }
-            console.log(parentid)
+            // console.log(parentid)
             socket.emit('yesgetsharefile', JSON.stringify(toSend))
         })
     }
