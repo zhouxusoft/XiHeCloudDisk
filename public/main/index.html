@@ -271,6 +271,29 @@
         </div>
     </div>
 
+    <!-- copyfileModal -->
+    <button style="display: none" id="copyfilebtn" data-bs-toggle="modal" data-bs-target="#copyfilemodal">复制文件</button>
+    <div class="modal fade" id="copyfilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">复制文件</h1>
+                    <small>&nbsp;( 选择目标目录 )</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="copyfilelistbox">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                        id="closecopyfilemodal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- download ifream -->
     <div style="display: none" id="iframe_box"></div>
     <script src="./script.js"></script>

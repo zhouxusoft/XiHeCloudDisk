@@ -221,6 +221,8 @@ const sharecode = document.getElementsByClassName("sharecode")[0]
 const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
 const yesremove = document.getElementById("yesremove")
+const copyfilebtn = document.getElementById("copyfilebtn")
+const copyfilelistbox = document.getElementById("copyfilelistbox")
 
 let removefileid = -1
 
@@ -240,6 +242,10 @@ copysharecodemodal.addEventListener('click', function () {
     
 })
 
+function setCopyDirList() {
+    
+}
+
 function copyToClipboard(text) {
     const input = document.createElement('textarea')
     input.value = text
@@ -249,8 +255,8 @@ function copyToClipboard(text) {
     document.body.removeChild(input)
 }
 
-function filecopy() {
-    
+function filecopy(fileid) {
+    copyfilebtn.click()
 }
 
 function filemove() {
@@ -362,7 +368,7 @@ function resetPageFun() {
             // console.log(event.target.classList[0])
             // console.log(event.currentTarget.id)
             if (event.target.classList[0] == 'copy') {
-
+                filecopy(event.currentTarget.id)
             } 
             else if (event.target.classList[0] == 'move') {
 
