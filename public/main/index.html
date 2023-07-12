@@ -281,12 +281,54 @@
                     <small>&nbsp;( 选择目标目录 )</small>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body copy-modal-body">
+                    <div class="copymenubox">
+                        <div class="copyposition">
+                            <div class="copypositionbtn">主目录</div>
+                            <div class="positionwhite"></div>
+                            <div class="copypositionbtn">新建文件夹</div>
+                        </div>
+                        <div class="copybackmenu"></div>
+                    </div>
+                    <div class="hr1"></div>
                     <div id="copyfilelistbox">
-                        
+                        <div class="copyfiledata dir my-2">
+                            <div class="dirfont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    新建文件夹1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copyfiledata dir my-2">
+                            <div class="dirfont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    新建文件夹2
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copyfiledata dir my-2">
+                            <div class="dirfont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    新建文件夹1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copyfiledata dir my-2">
+                            <div class="dirfont"></div>
+                            <div class="fileinfo">
+                                <div class="filename">
+                                    新建文件夹2
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary secondbtn" data-bs-dismiss="modal"
+                        id="surecopyfilemodal">复制到此处</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
                         id="closecopyfilemodal">取消</button>
                 </div>

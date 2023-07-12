@@ -52,14 +52,14 @@ function handleClick(event) {
                     `
                     // 获取每日一言
                     downloadtip.textContent = getSentence()
-                    
+
                     downloadfileurl = globalfilelist[i].url
                     downloadfilename = globalfilelist[i].name
                     downloadfilesize = getFileSize(globalfilelist[i].size)
 
                     break
                 }
-            }    
+            }
         }
         // 选中事件点击过一次后，移除被选中属性并且移除监听事件
         selected.classList.remove("selected")
@@ -116,13 +116,13 @@ let downloadfilename = ''
 let downloadfilesize = ''
 
 if (toastTrigger) {
-  toastTrigger.addEventListener('click', () => {
-    const toast = new bootstrap.Toast(toastLiveExample, { delay: 3000})
-    toast.show()
-  })
+    toastTrigger.addEventListener('click', () => {
+        const toast = new bootstrap.Toast(toastLiveExample, { delay: 3000 })
+        toast.show()
+    })
 }
 
-yesdownload.addEventListener('click', function() {
+yesdownload.addEventListener('click', function () {
     downLoadFile(downloadfileurl)
     toastbody.textContent = downloadfilename
     downloadfilesizetip.textContent = downloadfilesize
@@ -226,7 +226,7 @@ const copyfilelistbox = document.getElementById("copyfilelistbox")
 
 let removefileid = -1
 
-yesremove.addEventListener('click', function() {
+yesremove.addEventListener('click', function () {
     yesRemoveFile(removefileid)
 })
 
@@ -239,8 +239,12 @@ copysharecodemodal.addEventListener('click', function () {
     } else {
         copyToClipboard(text)
     }
-    
+
 })
+
+let copdirlist = [0]
+let currentcopydirid = 0
+
 
 function setCopyDirList() {
     
@@ -260,7 +264,7 @@ function filecopy(fileid) {
 }
 
 function filemove() {
-    
+
 }
 
 function fileshare(fileid) {
@@ -279,10 +283,10 @@ function fileshare(fileid) {
 }
 
 function filerename() {
-    
+
 }
 
-function fileremove (fileid) {
+function fileremove(fileid) {
     removefilebtn.click()
     for (let i = 0; i < globalfilelist.length; i++) {
         if (globalfilelist[i].id == fileid) {
@@ -306,15 +310,15 @@ function fileremove (fileid) {
                     <div>( ${sonnum} 项 )</div>
                 </div>`
             }
-            
+
             removefileid = fileid
-            
+
             break
         }
     }
 }
 
-function yesRemoveFile (fileid) {
+function yesRemoveFile(fileid) {
     // console.log(fileid)
     let toSend = {
         fileid: fileid,
@@ -369,19 +373,19 @@ function resetPageFun() {
             // console.log(event.currentTarget.id)
             if (event.target.classList[0] == 'copy') {
                 filecopy(event.currentTarget.id)
-            } 
+            }
             else if (event.target.classList[0] == 'move') {
 
-            } 
+            }
             else if (event.target.classList[0] == 'share') {
                 fileshare(event.currentTarget.id)
-            } 
+            }
             else if (event.target.classList[0] == 'rename') {
 
-            } 
+            }
             else if (event.target.classList[0] == 'remove') {
                 fileremove(event.currentTarget.id)
-            } 
+            }
         })
     }
 }
@@ -442,7 +446,7 @@ function getDirSonData(filelist, id) {
         for (let j = i + 1; j < sonlist.length; j++) {
             if (sonlist[i].name == sonlist[j].name) {
                 sonlist[j].name = sonlist[j].name + ' (' + count + ')'
-                count ++
+                count++
             }
         }
     }
@@ -635,7 +639,7 @@ let globaluploadlist = []
 let uploadid = 1
 
 /* 重新添加上传列表删除键的监听事件 */
-function resetUploadListen (uploadingdatadel) {
+function resetUploadListen(uploadingdatadel) {
     if (uploadingdatadel.id) {
         for (let j = 0; j < globaluploadlist.length; j++) {
             // console.log('j', j)
@@ -656,22 +660,22 @@ function resetUploadListen (uploadingdatadel) {
 }
 
 /* 刷新上传列表 */
-function resetUploadList () {
+function resetUploadList() {
 
     let length = 0
     for (let i = 0; i < globaluploadlist.length; i++) {
         if (globaluploadlist[i].status != -1) {
-            length ++
-        }       
+            length++
+        }
     }
     if (length > 0) {
         if (uploadingdatanull.length > 0) {
             for (let i = 0; i < uploadingdatanull.length; i++) {
-                uploadingdatabox.removeChild(uploadingdatanull[i])   
-            }            
+                uploadingdatabox.removeChild(uploadingdatanull[i])
+            }
         }
         // console.log(globaluploadlist)
-        for (let i = 0; i < globaluploadlist.length ; i++) {
+        for (let i = 0; i < globaluploadlist.length; i++) {
             let dataid = 'uploadingdata' + globaluploadlist[i].id
             let delid = globaluploadlist[i].id
             if (globaluploadlist[i].status != globaluploadlist[i].statusn) {
@@ -771,9 +775,9 @@ function resetUploadList () {
         const uploadingdatadel = document.getElementsByClassName("uploaddelicon")
         for (let i = 0; i < uploadingdatadel.length; i++) {
             uploadingdatadel[i].removeEventListener("click", resetUploadListen)
-            uploadingdatadel[i].addEventListener('click', function(event) {
+            uploadingdatadel[i].addEventListener('click', function (event) {
                 resetUploadListen(event.target)
-            })       
+            })
         }
     } else {
         if (uploadingdatanull.length == 0) {
@@ -801,7 +805,7 @@ function showUpLoadApi() {
     const uploadfileclick = document.getElementById("uploadfileclick")
 
     uploadfileclick.addEventListener('click', function () {
-        
+
         // console.log('uploadfile')
         const fileInput = document.createElement('input')
 
@@ -853,7 +857,7 @@ function showUpLoadApi() {
                 upLoadFile(file)
             }
         }
-        
+
     })
 }
 
@@ -955,7 +959,7 @@ function upLoadFile(file) {
                     let resData = JSON.parse(this.response)
                     // console.log(resData.data.objectId)
                     // console.log(parentid)
-                    let toSend = { name: file.name, createrid: token.id, url:resData.data.objectId ,isfile: 1, size: file.size, parentid: parentid}
+                    let toSend = { name: file.name, createrid: token.id, url: resData.data.objectId, isfile: 1, size: file.size, parentid: parentid }
                     if (toSend) {
                         socket.emit('uploadfile', JSON.stringify(toSend))
                     }
@@ -981,7 +985,7 @@ function upLoadFile(file) {
             for (let i = 0; i < progressbar.length; i++) {
                 if (progressbar[i].id == uploadtask.id) {
                     progressbar[i].style.width = progresspercent
-                }        
+                }
             }
             for (let i = 0; i < uploadinfototle.length; i++) {
                 if (uploadinfototle[i].id == uploadtask.id) {
@@ -1030,7 +1034,7 @@ function newDir(name) {
     if (dirlist.length > 0) {
         parentid = dirlist[dirlist.length - 1]
     }
-    let toSend = { name: name, createrid: token.id, isfile: 0, parentid: parentid}
+    let toSend = { name: name, createrid: token.id, isfile: 0, parentid: parentid }
     if (toSend) {
         socket.emit('newdir', JSON.stringify(toSend))
     }
@@ -1051,7 +1055,7 @@ function getTimeFull(timestrap) {
     return formattedDateTime
 }
 
-function resetShareList () {
+function resetShareList() {
     while (getsharefiledatabody.firstChild) {
         getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
     }
@@ -1124,7 +1128,7 @@ socket.on('getsharefile', (hasfile) => {
     }
     sharefiletitle.innerText = '获取分享'
     getsharefiledatahead.classList.add('hide')
-    if(hasfile == 0) {
+    if (hasfile == 0) {
         getsharefiledatabody.innerHTML += `<span class="noshare">分享码有误</span>
             <div class="sharebtnbox">
                 <button type="button" class="btn btn-outline-secondary secondbtn"
