@@ -217,6 +217,7 @@ const rename = document.getElementsByClassName("rename")
 const remove = document.getElementsByClassName("remove")
 const menubtngroup = document.getElementsByClassName("menubtngroup")
 const copysharecodemodal = document.getElementById("copysharecodemodal")
+const movefilebtn = document.getElementById("movefilebtn")
 const sharecode = document.getElementsByClassName("sharecode")[0]
 const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
@@ -263,8 +264,8 @@ function filecopy(fileid) {
     copyfilebtn.click()
 }
 
-function filemove() {
-
+function filemove(fileid) {
+    movefilebtn.click()
 }
 
 function fileshare(fileid) {
@@ -375,7 +376,7 @@ function resetPageFun() {
                 filecopy(event.currentTarget.id)
             }
             else if (event.target.classList[0] == 'move') {
-
+                filemove(event.currentTarget.id)
             }
             else if (event.target.classList[0] == 'share') {
                 fileshare(event.currentTarget.id)
