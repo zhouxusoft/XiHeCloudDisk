@@ -282,7 +282,7 @@ io.on('connection', (socket) => {
                             // console.log(result[i].parentid, toSend.file.id, insertId, val)
                             dbpan.query(sql, val, (err, results) => {
                                 if (err) return err
-                                const insertedId = results.insertId
+                                // const insertedId = results.insertId
                                 // console.log(insertedId)
                                 if (i == result.length - 1) {
                                     const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
@@ -310,37 +310,113 @@ io.on('connection', (socket) => {
         dbpan.query(sql, toSend.copymovefileid, (err, result) => {
             if (err) return err
             file = result[0]
-            const sql2 = `INSERT INTO filedata SET ?`
-            dbpan.query(sql2, {
-                name: file.name,
-                url: file.url,
-                isfile: file.isfile,
-                parentid: toSend.targetdirid,
-                createrid: toSend.userid,
-                size: file.size
-            }, (err, results) => {
-                if (err) throw err
-                if (toSend.iscopy == 0) {
-                    const sql4 = `DELETE FROM filedata WHERE id = ?`
-                    dbpan.query(sql4, toSend.copymovefileid, (err, result) => {
-                        if (err) return err
-                        // console.log('del')
+            if (file.isfile == 1) {
+                const sql2 = `INSERT INTO filedata SET ?`
+                dbpan.query(sql2, {
+                    name: file.name,
+                    url: file.url,
+                    isfile: file.isfile,
+                    parentid: toSend.targetdirid,
+                    createrid: toSend.userid,
+                    size: file.size
+                }, (err, results) => {
+                    if (err) throw err
+                    if (toSend.iscopy == 0) {
+                        const sql4 = `DELETE FROM filedata WHERE id = ?`
+                        dbpan.query(sql4, toSend.copymovefileid, (err, result) => {
+                            if (err) return err
+                            // console.log('del')
+                            // 定义数据库查询语句语句 查询该属于用户的所有文件
+                            const sql3 = `SELECT * FROM filedata WHERE createrid = ?`
+                            dbpan.query(sql3, toSend.userid, (err, results) => {
+                                if (err) return err
+                                socket.emit('updatepage', results)
+                            })
+                        })
+                    } else {
                         // 定义数据库查询语句语句 查询该属于用户的所有文件
                         const sql3 = `SELECT * FROM filedata WHERE createrid = ?`
                         dbpan.query(sql3, toSend.userid, (err, results) => {
                             if (err) return err
                             socket.emit('updatepage', results)
                         })
-                    })
-                } else {
-                    // 定义数据库查询语句语句 查询该属于用户的所有文件
-                    const sql3 = `SELECT * FROM filedata WHERE createrid = ?`
-                    dbpan.query(sql3, toSend.userid, (err, results) => {
-                        if (err) return err
-                        socket.emit('updatepage', results)
-                    })
-                }
-            })
+                    }
+                })
+            } else {
+                const sql = `INSERT INTO filedata SET ?`
+                dbpan.query(sql, {
+                    name: file.name,
+                    url: file.url,
+                    isfile: file.isfile,
+                    parentid: toSend.targetdirid,
+                    createrid: toSend.userid,
+                    size: file.size
+                }, (err, results) => {
+                    if (err) throw err
+                    const insertId = results.insertId
+                    // console.log(insertId)
+                    filelist = []
+                    function getDirFile(pid) {
+                        return new Promise((resolve, reject) => {
+                            const sql = `SELECT * FROM filedata WHERE parentid = ?`
+                            dbpan.query(sql, pid, (err, results) => {
+                                if (err) return reject(err)
+
+                                const promises = []
+                                for (let i = 0; i < results.length; i++) {
+                                    const file = results[i]
+                                    if (file.isfile == 1) {
+                                        filelist.push(file)
+                                    } else {
+                                        filelist.push(file)
+                                        promises.push(getDirFile(file.id))
+                                    }
+                                }
+
+                                Promise.all(promises)
+                                    .then((nestedResults) => {
+                                        resolve(filelist)
+                                    })
+                                    .catch(reject)
+                            })
+                        })
+                    }
+
+                    (async function () {
+                        try {
+                            const result = await getDirFile(file.id)
+                            // console.log(result)
+                            for (let i = 0; i < result.length; i++) {
+                                const sql = `INSERT INTO filedata SET ?`
+                                let val = {
+                                    id: result[i].id - file.id + insertId,
+                                    name: result[i].name,
+                                    url: result[i].url,
+                                    isfile: result[i].isfile,
+                                    parentid: result[i].parentid - file.id + insertId,
+                                    createrid: toSend.userid,
+                                    size: result[i].size
+                                }
+                                // console.log(result[i].parentid, toSend.file.id, insertId, val)
+                                dbpan.query(sql, val, (err, results) => {
+                                    if (err) return err
+                                    // const insertedId = results.insertId
+                                    // console.log(insertedId)
+                                    if (i == result.length - 1) {
+                                        const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+                                        dbpan.query(sql2, toSend.userid, (err, results) => {
+                                            if (err) return err
+                                            socket.emit('updatepage', results)
+                                        })
+                                    }
+                                })
+                            }
+                        } catch (err) {
+                            console.error(err)
+                        }
+                    })()
+                })
+            }
         })
     })
 })
