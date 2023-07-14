@@ -799,3 +799,8 @@ body {
 #surecopyfilemodal {
     width: 120px;
 }
+
+.nodirdir {
+    margin: 20px auto;
+    width: fit-content;
+}

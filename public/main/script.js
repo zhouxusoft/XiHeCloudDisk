@@ -246,7 +246,7 @@ copysharecodemodal.addEventListener('click', function () {
 })
 
 let iscopy = 1
-let copdirlist = [0]
+let copydirlist = []
 let currentcopydirid = 0
 
 /* 重置复制文件的弹出窗口的文件夹导航 */
@@ -254,11 +254,67 @@ function clearCopyPosition() {
     while (copyposition.firstChild) {
         copyposition.removeChild(copyposition.firstChild)
     }
-    copyposition.innerHTML += `<div class="copypositionbtn" id="copy-0">主目录</div>`
+    copyposition.innerHTML += `<div class="copypositionbtn" data-copynav="0">主目录</div>`
 }
 
-function setCopyDirList() {
-    
+function getCopyNavList(currentid) {
+    for (let i = 0; i < globalfilelist.length; i++) {
+        if (globalfilelist[i].id == currentid) {
+            if (globalfilelist[i].parentid == 0) {
+                copydirlist.reverse()
+            } else {
+                copydirlist.push(globalfilelist[i].id)
+            }
+        }
+    }
+}
+
+function setCopyNav(currentid) {
+    clearCopyPosition()
+    for (let i = 0; i < copydirlist.length; i++) {
+        for (let j = 0; j < globalfilelist.length; j++) {
+            if (globalfilelist[j].id == copydirlist[i]) {
+                copyposition.innerHTML += `
+                    <div class="positionwhite"></div>
+                    <div class="copypositionbtn" data-copynav="${globalfilelist[j].id}">${globalfilelist[j].name}</div>
+                `
+            }
+        }
+    }
+}
+
+function setCopyDirList(pid) {
+    setCopyNav(pid)
+    while (copyfilelistbox.firstChild) {
+        copyfilelistbox.removeChild(copyfilelistbox.firstChild)
+    }
+    let hasdir = 0
+    for (let i = 0; i < globalfilelist.length; i++) {
+        if (globalfilelist[i].isfile == 0 && globalfilelist[i].parentid == pid) {
+            hasdir = 1
+            copyfilelistbox.innerHTML += `
+                <div class="copyfiledata dir my-2" data-copy="${globalfilelist[i].id}">
+                    <div class="dirfont"></div>
+                    <div class="fileinfo">
+                        <div class="filename">
+                            ${globalfilelist[i].name}
+                        </div>
+                    </div>
+                </div>
+            `
+        }
+    }
+    if (hasdir == 0) {
+        copyfilelistbox.innerHTML += `<div class="nodirdir">空目录文件夹</div>`
+    }
+    const copyfiledata = document.getElementsByClassName("copyfiledata")
+    for (let i = 0; i < copyfiledata.length; i++) {
+        copyfiledata[i].addEventListener('click', function () {
+            let pid = copyfiledata[i].dataset.copy
+            currentcopydirid = pid
+            setCopyDirList(pid)
+        })
+    }
 }
 
 function copyToClipboard(text) {
@@ -272,25 +328,22 @@ function copyToClipboard(text) {
 
 function filecopy(fileid) {
     iscopy = 1
-    copdirlist = [0]
     currentcopydirid = 0
     copyormovetitle.textContent = '复制文件'
     surecopyfilemodal.textContent = '复制到此处'
     clearCopyPosition()
+    setCopyDirList(currentcopydirid)
     copyfilebtn.click()
-    
 }
 
 function filemove(fileid) {
     iscopy = 0
-    copdirlist = [0]
     currentcopydirid = 0
     copyormovetitle.textContent = '移动文件'
     surecopyfilemodal.textContent = '移动到此处'
     clearCopyPosition()
     copyfilebtn.click()
-    copyfilebtn.click()
-}
+} 
 
 function fileshare(fileid) {
     // 获得一个六位随机数
