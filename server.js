@@ -310,16 +310,38 @@ io.on('connection', (socket) => {
         dbpan.query(sql, toSend.copymovefileid, (err, result) => {
             if (err) return err
             file = result[0]
-            const sql2 = `SELECT * FROM filedata WHERE id = ?`
-            dbpan.query(sql2, toSend.copymovefileid, (err, result) => {
-                if (err) return err
-                file = result[0]
-                
+            const sql2 = `INSERT INTO filedata SET ?`
+            dbpan.query(sql2, {
+                name: file.name,
+                url: file.url,
+                isfile: file.isfile,
+                parentid: toSend.targetdirid,
+                createrid: toSend.userid,
+                size: file.size
+            }, (err, results) => {
+                if (err) throw err
+                if (toSend.iscopy == 0) {
+                    const sql4 = `DELETE FROM filedata WHERE id = ?`
+                    dbpan.query(sql4, toSend.copymovefileid, (err, result) => {
+                        if (err) return err
+                        // console.log('del')
+                        // 定义数据库查询语句语句 查询该属于用户的所有文件
+                        const sql3 = `SELECT * FROM filedata WHERE createrid = ?`
+                        dbpan.query(sql3, toSend.userid, (err, results) => {
+                            if (err) return err
+                            socket.emit('updatepage', results)
+                        })
+                    })
+                } else {
+                    // 定义数据库查询语句语句 查询该属于用户的所有文件
+                    const sql3 = `SELECT * FROM filedata WHERE createrid = ?`
+                    dbpan.query(sql3, toSend.userid, (err, results) => {
+                        if (err) return err
+                        socket.emit('updatepage', results)
+                    })
+                }
+            })
         })
-        })
-        if (toSend.iscopy == 0) {
-            
-        }
     })
 })
 

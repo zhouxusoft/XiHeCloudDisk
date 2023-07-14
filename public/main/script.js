@@ -259,9 +259,20 @@ copybackmenu.addEventListener('click', function () {
     }
 })
 
+surecopyfilemodal.addEventListener('click', function () {
+    let toSend = {
+        iscopy: iscopy,
+        copymovefileid: copymovefileid,
+        targetdirid: currentcopydirid,
+        userid: token.id
+    }
+    socket.emit('copyormovefile', JSON.stringify(toSend))
+})
+
 let iscopy = 1
 let copydirlist = []
 let currentcopydirid = 0
+let copymovefileid = 0
 
 /* 重置复制文件的弹出窗口的文件夹导航 */
 function clearCopyPosition() {
@@ -354,6 +365,7 @@ function copyToClipboard(text) {
 }
 
 function filecopy(fileid) {
+    copymovefileid = fileid
     iscopy = 1
     currentcopydirid = 0
     copyormovetitle.textContent = '复制文件'
@@ -364,11 +376,13 @@ function filecopy(fileid) {
 }
 
 function filemove(fileid) {
+    copymovefileid = fileid
     iscopy = 0
     currentcopydirid = 0
     copyormovetitle.textContent = '移动文件'
     surecopyfilemodal.textContent = '移动到此处'
     clearCopyPosition()
+    setCopyDirList(currentcopydirid)
     copyfilebtn.click()
 } 
 
@@ -415,9 +429,7 @@ function fileremove(fileid) {
                     <div>( ${sonnum} 项 )</div>
                 </div>`
             }
-
             removefileid = fileid
-
             break
         }
     }
