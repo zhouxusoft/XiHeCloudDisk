@@ -300,6 +300,27 @@ io.on('connection', (socket) => {
             })
         }
     })
+
+    // 移动或复制文件时触发
+    socket.on('copyormovefile', (toSend) => {
+        toSend = JSON.parse(toSend)
+        let file = []
+        // 定义数据库插入语句 插入上传的文件信息
+        const sql = `SELECT * FROM filedata WHERE id = ?`
+        dbpan.query(sql, toSend.copymovefileid, (err, result) => {
+            if (err) return err
+            file = result[0]
+            const sql2 = `SELECT * FROM filedata WHERE id = ?`
+            dbpan.query(sql2, toSend.copymovefileid, (err, result) => {
+                if (err) return err
+                file = result[0]
+                
+        })
+        })
+        if (toSend.iscopy == 0) {
+            
+        }
+    })
 })
 
 //启动服务器
