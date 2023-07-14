@@ -217,7 +217,9 @@ const rename = document.getElementsByClassName("rename")
 const remove = document.getElementsByClassName("remove")
 const menubtngroup = document.getElementsByClassName("menubtngroup")
 const copysharecodemodal = document.getElementById("copysharecodemodal")
-const movefilebtn = document.getElementById("movefilebtn")
+const copyposition =document.getElementsByClassName("copyposition")[0]
+const copyormovetitle = document.getElementById("copyormovetitle")
+const surecopyfilemodal = document.getElementById("surecopyfilemodal")
 const sharecode = document.getElementsByClassName("sharecode")[0]
 const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
@@ -243,9 +245,17 @@ copysharecodemodal.addEventListener('click', function () {
 
 })
 
+let iscopy = 1
 let copdirlist = [0]
 let currentcopydirid = 0
 
+/* 重置复制文件的弹出窗口的文件夹导航 */
+function clearCopyPosition() {
+    while (copyposition.firstChild) {
+        copyposition.removeChild(copyposition.firstChild)
+    }
+    copyposition.innerHTML += `<div class="copypositionbtn" id="copy-0">主目录</div>`
+}
 
 function setCopyDirList() {
     
@@ -261,11 +271,25 @@ function copyToClipboard(text) {
 }
 
 function filecopy(fileid) {
+    iscopy = 1
+    copdirlist = [0]
+    currentcopydirid = 0
+    copyormovetitle.textContent = '复制文件'
+    surecopyfilemodal.textContent = '复制到此处'
+    clearCopyPosition()
     copyfilebtn.click()
+    
 }
 
 function filemove(fileid) {
-    movefilebtn.click()
+    iscopy = 0
+    copdirlist = [0]
+    currentcopydirid = 0
+    copyormovetitle.textContent = '移动文件'
+    surecopyfilemodal.textContent = '移动到此处'
+    clearCopyPosition()
+    copyfilebtn.click()
+    copyfilebtn.click()
 }
 
 function fileshare(fileid) {
@@ -283,7 +307,7 @@ function fileshare(fileid) {
     socket.emit('sharefile', JSON.stringify(toSend))
 }
 
-function filerename() {
+function filerename(fileid) {
 
 }
 
@@ -382,7 +406,7 @@ function resetPageFun() {
                 fileshare(event.currentTarget.id)
             }
             else if (event.target.classList[0] == 'rename') {
-
+                filerename(event.currentTarget.id)
             }
             else if (event.target.classList[0] == 'remove') {
                 fileremove(event.currentTarget.id)

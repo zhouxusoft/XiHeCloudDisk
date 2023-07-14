@@ -277,14 +277,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">复制文件</h1>
+                    <h1 class="modal-title fs-5" id="copyormovetitle">复制文件</h1>
                     <small>&nbsp;( 选择目标目录 )</small>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body copy-modal-body">
                     <div class="copymenubox">
                         <div class="copyposition">
-                            <div class="copypositionbtn">主目录</div>
+                            <div class="copypositionbtn" id="copy-0">主目录</div>
                             <div class="positionwhite"></div>
                             <div class="copypositionbtn">新建文件夹</div>
                         </div>
@@ -329,55 +329,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary secondbtn" data-bs-dismiss="modal"
                         id="surecopyfilemodal">复制到此处</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
-                        id="closecopyfilemodal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- movefileModal -->
-    <button style="display: none" id="movefilebtn" data-bs-toggle="modal" data-bs-target="#movefilemodal">复制文件</button>
-    <div class="modal fade" id="movefilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">移动文件</h1>
-                    <small>&nbsp;( 选择目标目录 )</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body copy-modal-body">
-                    <div class="copymenubox">
-                        <div class="copyposition">
-                            <div class="copypositionbtn">主目录</div>
-                            <div class="positionwhite"></div>
-                            <div class="copypositionbtn">新建文件夹</div>
-                        </div>
-                        <div class="copybackmenu"></div>
-                    </div>
-                    <div class="hr1"></div>
-                    <div id="copyfilelistbox">
-                        <div class="copyfiledata dir my-2">
-                            <div class="dirfont"></div>
-                            <div class="fileinfo">
-                                <div class="filename">
-                                    新建文件夹1
-                                </div>
-                            </div>
-                        </div>
-                        <div class="copyfiledata dir my-2">
-                            <div class="dirfont"></div>
-                            <div class="fileinfo">
-                                <div class="filename">
-                                    新建文件夹2
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary secondbtn" data-bs-dismiss="modal"
-                        id="surecopyfilemodal">移动到此处</button>
                     <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
                         id="closecopyfilemodal">取消</button>
                 </div>
