@@ -220,6 +220,7 @@ const copysharecodemodal = document.getElementById("copysharecodemodal")
 const copyposition =document.getElementsByClassName("copyposition")[0]
 const copyormovetitle = document.getElementById("copyormovetitle")
 const surecopyfilemodal = document.getElementById("surecopyfilemodal")
+const copybackmenu = document.getElementsByClassName("copybackmenu")[0]
 const sharecode = document.getElementsByClassName("sharecode")[0]
 const removefilebtn = document.getElementById("removefilebtn")
 const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
@@ -245,14 +246,29 @@ copysharecodemodal.addEventListener('click', function () {
 
 })
 
+copybackmenu.addEventListener('click', function () {
+    if (copydirlist.length > 0) {
+        copydirlist.pop()
+        if (copydirlist.length == 0) {
+            currentcopydirid = 0
+        } else {
+            currentcopydirid = copydirlist[copydirlist.length - 1]
+        }
+        console.log(currentcopydirid)
+        setCopyDirList(currentcopydirid)
+    }
+})
+
 let iscopy = 1
 let copydirlist = []
 let currentcopydirid = 0
 
 /* 重置复制文件的弹出窗口的文件夹导航 */
 function clearCopyPosition() {
+    copydirlist = []
     while (copyposition.firstChild) {
         copyposition.removeChild(copyposition.firstChild)
+        // console.log('clear')
     }
     copyposition.innerHTML += `<div class="copypositionbtn" data-copynav="0">主目录</div>`
 }
@@ -260,10 +276,11 @@ function clearCopyPosition() {
 function getCopyNavList(currentid) {
     for (let i = 0; i < globalfilelist.length; i++) {
         if (globalfilelist[i].id == currentid) {
+            copydirlist.push(globalfilelist[i].id)
             if (globalfilelist[i].parentid == 0) {
                 copydirlist.reverse()
             } else {
-                copydirlist.push(globalfilelist[i].id)
+                getCopyNavList(globalfilelist[i].parentid)
             }
         }
     }
@@ -271,6 +288,8 @@ function getCopyNavList(currentid) {
 
 function setCopyNav(currentid) {
     clearCopyPosition()
+    getCopyNavList(currentid)
+    // console.log(copydirlist)
     for (let i = 0; i < copydirlist.length; i++) {
         for (let j = 0; j < globalfilelist.length; j++) {
             if (globalfilelist[j].id == copydirlist[i]) {
@@ -280,6 +299,14 @@ function setCopyNav(currentid) {
                 `
             }
         }
+    }
+    const copypositionbtn = document.getElementsByClassName("copypositionbtn")
+    for (let i = 0; i < copypositionbtn.length; i++) {
+        copypositionbtn[i].addEventListener('click', function () {
+            let pid = copypositionbtn[i].dataset.copynav
+            currentcopydirid = pid
+            setCopyDirList(currentcopydirid)
+        })
     }
 }
 
@@ -312,7 +339,7 @@ function setCopyDirList(pid) {
         copyfiledata[i].addEventListener('click', function () {
             let pid = copyfiledata[i].dataset.copy
             currentcopydirid = pid
-            setCopyDirList(pid)
+            setCopyDirList(currentcopydirid)
         })
     }
 }

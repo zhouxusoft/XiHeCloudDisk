@@ -794,6 +794,7 @@ body {
 #copyfilelistbox {
     height: 320px;
     overflow: auto;
+    margin: 0 4px;
 }
 
 #surecopyfilemodal {
