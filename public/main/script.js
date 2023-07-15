@@ -284,6 +284,7 @@ function clearCopyPosition() {
     copyposition.innerHTML += `<div class="copypositionbtn" data-copynav="0">主目录</div>`
 }
 
+/* 根据当前文件夹id获取文件夹列表 */
 function getCopyNavList(currentid) {
     for (let i = 0; i < globalfilelist.length; i++) {
         if (globalfilelist[i].id == currentid) {
@@ -297,6 +298,7 @@ function getCopyNavList(currentid) {
     }
 }
 
+/* 设置复制文件的弹出窗口的文件夹导航 */
 function setCopyNav(currentid) {
     clearCopyPosition()
     getCopyNavList(currentid)
@@ -321,6 +323,7 @@ function setCopyNav(currentid) {
     }
 }
 
+/* 设置复制文件的弹出窗口的文件夹列表 */
 function setCopyDirList(pid) {
     setCopyNav(pid)
     while (copyfilelistbox.firstChild) {
