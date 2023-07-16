@@ -217,7 +217,7 @@ const rename = document.getElementsByClassName("rename")
 const remove = document.getElementsByClassName("remove")
 const menubtngroup = document.getElementsByClassName("menubtngroup")
 const copysharecodemodal = document.getElementById("copysharecodemodal")
-const copyposition =document.getElementsByClassName("copyposition")[0]
+const copyposition = document.getElementsByClassName("copyposition")[0]
 const copyormovetitle = document.getElementById("copyormovetitle")
 const surecopyfilemodal = document.getElementById("surecopyfilemodal")
 const copybackmenu = document.getElementsByClassName("copybackmenu")[0]
@@ -280,21 +280,26 @@ surerenamefilemodal.addEventListener('click', function () {
         liveToastBtn.click()
     } else {
         let currnetname = ''
+        let isfile = 0
         for (let i = 0; i < globalfilelist.length; i++) {
             if (currnetrenamefileid == globalfilelist[i].id) {
                 currnetname = globalfilelist[i].name
+                isfile = globalfilelist[i].isfile
+                break
             }
         }
-        // console.log(currnetname)
-        let currentfileend = currnetname.split('.')[currnetname.split('.').length - 1]
-        let newnameend = newname.split('.')[newname.split('.').length - 1]
-        // console.log(currentfileend)
-        // console.log(newnameend)
-        if (currnetname.split('.').length > 1) {
-            if (newnameend.length == 1 || currentfileend != newnameend) {
-                newname += '.' + currentfileend
+        if (isfile) {
+            // console.log(currnetname)
+            let currentfileend = currnetname.split('.')[currnetname.split('.').length - 1]
+            let newnameend = newname.split('.')[newname.split('.').length - 1]
+            // console.log(currentfileend)
+            // console.log(newnameend)
+            if (currnetname.split('.').length > 1) {
+                if (newnameend.length == 1 || currentfileend != newnameend) {
+                    newname += '.' + currentfileend
+                }
+                // console.log(newname)
             }
-            // console.log(newname)
         }
         let toSend = {
             fileid: currnetrenamefileid,
@@ -424,7 +429,7 @@ function filemove(fileid) {
     clearCopyPosition()
     setCopyDirList(currentcopydirid)
     copyfilebtn.click()
-} 
+}
 
 function fileshare(fileid) {
     // 获得一个六位随机数
