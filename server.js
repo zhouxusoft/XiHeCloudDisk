@@ -419,6 +419,21 @@ io.on('connection', (socket) => {
             }
         })
     })
+
+    // 重命名文件时触发
+    socket.on('renamefile', (toSend) => {
+        toSend = JSON.parse(toSend)
+        const sql = `UPDATE filedata SET name = ? WHERE id = ?`
+        dbpan.query(sql, [toSend.newname, toSend.fileid], (err, results) => {
+            if (err) throw err
+            // 定义数据库查询语句语句 查询该属于用户的所有文件
+            const sql2 = `SELECT * FROM filedata WHERE createrid = ?`
+            dbpan.query(sql2, toSend.userid, (err, results) => {
+                if (err) return err
+                socket.emit('updatepage', results)
+            })
+        })
+    })
 })
 
 //启动服务器

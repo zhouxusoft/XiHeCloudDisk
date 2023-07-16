@@ -273,17 +273,33 @@ surecopyfilemodal.addEventListener('click', function () {
 })
 
 surerenamefilemodal.addEventListener('click', function () {
-    if (/\s/.test(renamefilename.value)) {
+    let newname = renamefilename.value
+    if (/\s/.test(newname) || newname == '') {
         toastbody.textContent = '重命名失败：文件名不能包含空白符'
         downloadfilesizetip.textContent = ''
         liveToastBtn.click()
     } else {
+        let currnetname = ''
+        for (let i = 0; i < globalfilelist.length; i++) {
+            if (currnetrenamefileid == globalfilelist[i].id) {
+                currnetname = globalfilelist[i].name
+            }
+        }
+        // console.log(currnetname)
+        let currentfileend = currnetname.split('.')[currnetname.split('.').length - 1]
+        let newnameend = newname.split('.')[newname.split('.').length - 1]
+        // console.log(currentfileend)
+        // console.log(newnameend)
+        if (currnetname.split('.').length > 1) {
+            if (newnameend.length == 1 || currentfileend != newnameend) {
+                newname += '.' + currentfileend
+            }
+            // console.log(newname)
+        }
         let toSend = {
-            iscopy: iscopy,
-            copymovefileid: copymovefileid,
-            targetdirid: currentcopydirid,
+            fileid: currnetrenamefileid,
             userid: token.id,
-            filename: renamefilename.value
+            newname: newname
         }
         socket.emit('renamefile', JSON.stringify(toSend))
     }
@@ -293,6 +309,7 @@ let iscopy = 1
 let copydirlist = []
 let currentcopydirid = 0
 let copymovefileid = 0
+let currnetrenamefileid = 0
 
 /* 重置复制文件的弹出窗口的文件夹导航 */
 function clearCopyPosition() {
@@ -428,8 +445,10 @@ function filerename(fileid) {
     for (let i = 0; i < globalfilelist.length; i++) {
         if (globalfilelist[i].id == fileid) {
             renamefilename.placeholder = globalfilelist[i].name
+            break
         }
     }
+    currnetrenamefileid = fileid
     renamefilename.value = ''
     renamefilebtn.click()
 }
