@@ -228,6 +228,8 @@ const yesremove = document.getElementById("yesremove")
 const copyfilebtn = document.getElementById("copyfilebtn")
 const copyfilelistbox = document.getElementById("copyfilelistbox")
 const renamefilebtn = document.getElementById("renamefilebtn")
+const renamefilename = document.getElementsByClassName("renamefilename")[0]
+const surerenamefilemodal = document.getElementById("surerenamefilemodal")
 
 let removefileid = -1
 
@@ -268,6 +270,23 @@ surecopyfilemodal.addEventListener('click', function () {
         userid: token.id
     }
     socket.emit('copyormovefile', JSON.stringify(toSend))
+})
+
+surerenamefilemodal.addEventListener('click', function () {
+    if (/\s/.test(renamefilename.value)) {
+        toastbody.textContent = '重命名失败：文件名不能包含空白符'
+        downloadfilesizetip.textContent = ''
+        liveToastBtn.click()
+    } else {
+        let toSend = {
+            iscopy: iscopy,
+            copymovefileid: copymovefileid,
+            targetdirid: currentcopydirid,
+            userid: token.id,
+            filename: renamefilename.value
+        }
+        socket.emit('renamefile', JSON.stringify(toSend))
+    }
 })
 
 let iscopy = 1
@@ -406,6 +425,12 @@ function fileshare(fileid) {
 }
 
 function filerename(fileid) {
+    for (let i = 0; i < globalfilelist.length; i++) {
+        if (globalfilelist[i].id == fileid) {
+            renamefilename.placeholder = globalfilelist[i].name
+        }
+    }
+    renamefilename.value = ''
     renamefilebtn.click()
 }
 
@@ -693,8 +718,8 @@ function getDirList(id) {
 function addDirNavBar(name, id) {
     position.innerHTML += `
         <div class="positionwhite"></div>
-        <div class="positionbtn" id="${id}">${name}</div>`
-
+        <div class="positionbtn" id="${id}">${name}</div>
+    `
 }
 
 /* 刷新文件夹导航栏 */
@@ -1144,10 +1169,16 @@ newdir.addEventListener('click', function () {
 
 yesnewfile.addEventListener('click', function () {
     let newname = newfilename.value
-    if (newname == '') {
-        newname = '新建文件夹'
+    if (/\s/.test(newname)) {
+        toastbody.textContent = '创建失败：文件名不能包含空白符'
+        downloadfilesizetip.textContent = ''
+        liveToastBtn.click()
+    } else {
+        if (newname == '') {
+            newname = '新建文件夹'
+        }
+        newDir(newname)
     }
-    newDir(newname)
 })
 
 function newDir(name) {
