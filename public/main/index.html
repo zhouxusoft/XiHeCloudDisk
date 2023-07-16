@@ -312,6 +312,30 @@
         </div>
     </div>
 
+    <!-- renamefileModal -->
+    <button style="display: none" id="renamefilebtn" data-bs-toggle="modal" data-bs-target="#renamefilemodal">复制文件</button>
+    <div class="modal fade" id="renamefilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="copyormovetitle">重命名文件（夹）</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body copy-modal-body">
+                    <div class="renamefilebox">
+                        <input type="text" class="renamefilename form-control" placeholder="重命名文件（夹）">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary secondbtn" data-bs-dismiss="modal"
+                        id="surerenamefilemodal">确认</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
+                        id="closecopyfilemodal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- download ifream -->
     <div style="display: none" id="iframe_box"></div>
     <script src="./script.js"></script>

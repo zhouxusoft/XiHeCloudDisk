@@ -805,3 +805,13 @@ body {
     margin: 20px auto;
     width: fit-content;
 }
+
+.renamefilebox {
+    width: fit-content;
+    margin: 30px auto;
+
+}
+
+.renamefilename {
+    border: 1px solid #000
+}

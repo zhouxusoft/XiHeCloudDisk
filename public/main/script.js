@@ -227,6 +227,7 @@ const removeingdatabox = document.getElementsByClassName("removeingdatabox")[0]
 const yesremove = document.getElementById("yesremove")
 const copyfilebtn = document.getElementById("copyfilebtn")
 const copyfilelistbox = document.getElementById("copyfilelistbox")
+const renamefilebtn = document.getElementById("renamefilebtn")
 
 let removefileid = -1
 
@@ -405,7 +406,7 @@ function fileshare(fileid) {
 }
 
 function filerename(fileid) {
-
+    renamefilebtn.click()
 }
 
 function fileremove(fileid) {
