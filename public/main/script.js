@@ -400,6 +400,7 @@ function setCopyDirList(pid) {
     }
 }
 
+/* 点击复制文本 */ 
 function copyToClipboard(text) {
     const input = document.createElement('textarea')
     input.value = text
