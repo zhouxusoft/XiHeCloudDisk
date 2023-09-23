@@ -3,7 +3,6 @@
     padding: 0;
     user-select: none;
     box-sizing: border-box;
-    font-weight: lighter;
 }
 
 body {
@@ -154,4 +153,43 @@ body {
 .getshareinputbtn {
     width: 80px;
     display: inline-block;
+}
+
+.filebox {
+    margin: auto;
+    text-align: center;
+    width: fit-content;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 15px;
+    padding-right: 12px;
+}
+
+.noshare {
+    display: flex;
+    color: #6C757D;
+    margin: 30px auto;
+    justify-content: center;
+}
+
+.filelogois {
+    width: 55px;
+    margin: auto;
+    font-family: "Font Awesome 6 Free";
+    font-size: 2rem;
+    color: #333;
+    font-weight: 300;
+}
+
+.sharebtnbox {
+    margin: auto;
+    width: fit-content;
+}
+
+.filenameis {
+    font-size: 1rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    width: fit-content;
+    margin-bottom: 5px;
 }

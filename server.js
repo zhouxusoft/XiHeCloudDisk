@@ -181,17 +181,22 @@ io.on('connection', (socket) => {
                 dbpan.query(sql2, results[0].fileid, (err, results) => {
                     if (err) return err
                     // console.log(results[0])
-                    hasfile = results[0]
-                    // console.log(hasfile)
-                    if (hasfile.isfile == 0) {
-                        const sql3 = `SELECT * FROM filedata WHERE parentid = ?`
-                        dbpan.query(sql3, results[0].id, (err, result) => {
-                            if (err) return err
-                            // console.log(result.length)
-                            hasfile.size = result.length
+                    if (results.length > 0) {
+                        hasfile = results[0]
+                        // console.log(hasfile)
+                        if (hasfile.isfile == 0) {
+                            const sql3 = `SELECT * FROM filedata WHERE parentid = ?`
+                            dbpan.query(sql3, results[0].id, (err, result) => {
+                                if (err) return err
+                                // console.log(result.length)
+                                hasfile.size = result.length
+                                socket.emit('getsharefile', hasfile)
+                            })
+                        } else {
                             socket.emit('getsharefile', hasfile)
-                        })
-                    } else {
+                        }
+                    }
+                    else {
                         socket.emit('getsharefile', hasfile)
                     }
                 })

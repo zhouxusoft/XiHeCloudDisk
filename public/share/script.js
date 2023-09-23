@@ -12,87 +12,39 @@ function downLoadFile(url) {
     iframe_box.innerHTML = iframe_box.innerHTML + '<iframe src="' + downloadUrl + '"><iframe>'
 }
 
-const downloadtip = document.getElementsByClassName("downloadtip")[0]
-const downloadingdatabox = document.getElementsByClassName("downloadingdatabox")[0]
-const downloadfilebtn = document.getElementById("downloadfilebtn")
-const yesdownload = document.getElementById("yesdownload")
+function getFileSize(bytes) {
+    if (bytes < 1024) {
+        return bytes + " Bytes";
+    } else if (bytes < 1048576) {
+        return (bytes / 1024).toFixed(2) + " KB";
+    } else if (bytes < 1073741824) {
+        return (bytes / 1048576).toFixed(2) + " MB";
+    } else {
+        return (bytes / 1073741824).toFixed(2) + " GB";
+    }
+}
+
 const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
 const toastbody = document.getElementsByClassName("toast-body")[0]
-const downloadfilesizetip = document.getElementById("downloadfilesizetip")
-const downloadfilenametip = document.getElementById("downloadfilenametip")
-const yeslogout = document.getElementById("yeslogout")
-var filedata = document.getElementsByClassName("filedata")
-var back = document.getElementById("back")
-var next = document.getElementById("next")
-var topmenu = document.getElementsByClassName("topmenu")[0]
-var selected = null
-var dirselected = 0
-let downloadfileurl = ''
-let downloadfilename = ''
-let downloadfilesize = ''
 
 if (toastTrigger) {
     toastTrigger.addEventListener('click', () => {
-        const toast = new bootstrap.Toast(toastLiveExample, { delay: 3000 })
+        const toast = new bootstrap.Toast(toastLiveExample, { delay: 4000 })
         toast.show()
     })
 }
 
-yesdownload.addEventListener('click', function () {
-    downLoadFile(downloadfileurl)
-    toastbody.textContent = downloadfilename
-    downloadfilesizetip.textContent = downloadfilesize
-    downloadfilenametip.textContent = '即将开始下载'
-    liveToastBtn.click()
-})
-
-// 获取文件操作菜单按钮和文件操作菜单
-var filemenus = document.getElementsByClassName("filemenu")
-var filepops = document.getElementsByClassName("filepop")
-var dirmenus = document.getElementsByClassName("dirmenu")
-var dirpops = document.getElementsByClassName("dirpop")
-var rowborder = document.getElementsByClassName("rowborder")[0]
-
-// 选中后再次点击
-
-const uploadfile = document.getElementById("uploadfile")
-const newdir = document.getElementById("newdir")
-const getshare = document.getElementById("getshare")
-const uploadfilemodal = document.getElementById("uploadfilemodal")
-const makesureuploadfilemodal = document.getElementById("makesureuploadfilemodal")
-const newfilename = document.getElementsByClassName("newfilename")[0]
-const yesnewfile = document.getElementById("yesnewfile")
-const newfiletip = document.getElementsByClassName("newfiletip")[0]
-
-uploadfile.addEventListener('click', function () {
-    showUpLoadApi()
-})
-
 const getsharefiledatabody = document.getElementsByClassName("getsharefiledatabody")[0]
-const getsharefilecodedel = document.getElementsByClassName("getsharefilecodedel")
-const getsharefiledatahead = document.getElementsByClassName("getsharefiledatahead")[0]
-const sharefiletitle = document.getElementById("sharefiletitle")
-
-let globalsharelist = []
-
-socket.on('sharelist', (sharelist) => {
-    globalsharelist = sharelist
-    resetShareList()
-})
-
-getshare.addEventListener('click', function () {
-    resetShareList()
-})
-
 const getshareinputbtn = document.getElementsByClassName("getshareinputbtn")[0]
 const getshareinput = document.getElementsByClassName("getshareinput ")[0]
+const downloadfilesizetip = document.getElementById("downloadfilesizetip")
+const downloadfilenametip = document.getElementById("downloadfilenametip")
 
 function getShareFile(shareid) {
     // console.log(fileid)
     let toSend = {
         shareid: shareid,
-        userid: token.id
     }
     socket.emit('getsharefile', JSON.stringify(toSend))
 }
@@ -115,7 +67,7 @@ socket.on('getsharefile', (hasfile) => {
         getsharefiledatabody.innerHTML += `<span class="noshare">分享码有误</span>
             <div class="sharebtnbox">
                 <button type="button" class="btn btn-outline-secondary secondbtn"
-                    id="closesharemodal">返回</button>
+                    id="closesharemodal">&nbsp;返回&nbsp;</button>
             </div>
         `
     } else {
@@ -127,10 +79,10 @@ socket.on('getsharefile', (hasfile) => {
                     <div>( ${getFileSize(hasfile.size)} )</div>
                 </div>
                 <div class="sharebtnbox">
-                    <button type="button" class="btn btn-outline-secondary secondbtn" data-bs-dismiss="modal"
-                        id="yesgetshare">下载</button>
-                    <button type="button" class="btn btn-outline-secondary secondbtn"
-                        id="closesharemodal">取消</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn mx-1" data-bs-dismiss="modal"
+                        id="yesgetshare">&nbsp;下载&nbsp;</button>
+                    <button type="button" class="btn btn-outline-secondary secondbtn mx-1"
+                        id="closesharemodal">&nbsp;取消&nbsp;</button>
                 </div>
             `
         } else {
@@ -139,22 +91,19 @@ socket.on('getsharefile', (hasfile) => {
         const yesgetshare = document.getElementById("yesgetshare")
         yesgetshare.addEventListener('click', function () {
             getshareinput.value = ''
-            let parentid = 0
-            if (dirlist.length > 0) {
-                parentid = dirlist[dirlist.length - 1]
-            }
-            let toSend = {
-                file: hasfile,
-                userid: token.id,
-                parentid: parentid
-            }
-            // console.log(parentid)
-            socket.emit('yesgetsharefile', JSON.stringify(toSend))
+            downLoadFile(hasfile.url)
+            toastbody.textContent = hasfile.name
+            downloadfilesizetip.textContent = getFileSize(hasfile.size)
+            downloadfilenametip.textContent = '即将开始下载'
+            liveToastBtn.click()
         })
     }
     const closesharemodal = document.getElementById("closesharemodal")
     closesharemodal.addEventListener('click', function () {
         getshareinput.value = ''
-        resetShareList()
+        while (getsharefiledatabody.firstChild) {
+            getsharefiledatabody.removeChild(getsharefiledatabody.firstChild)
+        }
+        getsharefiledatabody.innerHTML += `<h1 class="modal-title fs-5" id="sharefiletitle">获取分享</h1>`
     })
 })

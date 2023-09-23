@@ -12,14 +12,18 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <div class="borderbox">
-        <div class="modal-content" id="sharefilemodal">
+        <div class="modal-content">
             <div class="modal-body">
-                        <tbody class="getsharefiledatabody">
-                        </tbody>
+                <div class="getsharefiledatabody">
+                    <h1 class="modal-title fs-5" id="sharefiletitle">获取分享</h1>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="getshareinputboxboder">
@@ -54,6 +58,21 @@
             <a href="https://hitokoto.cn/" class="yqlj" target="_blank">Hitokoto-一言</a>
         </div>
     </div>
+    <button type="button" id="liveToastBtn" style="display: none">Show live toast</button>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../login/icon/cloud_four.png" class="rounded me-2" width="20px">
+                <strong class="me-auto" id="downloadfilenametip">Godxu云盘</strong>
+                <small id="downloadfilesizetip"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                即将开始下载:
+            </div>
+        </div>
+    </div>
+    <div style="display: none" id="iframe_box"></div>
     <script src="script.js"></script>
 </body>
 
