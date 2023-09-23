@@ -41,6 +41,13 @@ const getshareinput = document.getElementsByClassName("getshareinput ")[0]
 const downloadfilesizetip = document.getElementById("downloadfilesizetip")
 const downloadfilenametip = document.getElementById("downloadfilenametip")
 
+let currenturl = window.location.href
+let code = currenturl.split('=')[1]
+if (code != undefined && code != '') {
+    getshareinput.value = code
+    getShareFile(code)
+}
+
 function getShareFile(shareid) {
     // console.log(fileid)
     let toSend = {
