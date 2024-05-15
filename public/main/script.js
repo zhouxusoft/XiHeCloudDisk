@@ -773,8 +773,10 @@ let globalfilelist
 
 // 客户端连接成功时触发
 socket.on('connect', () => {
-    socket.emit('login', JSON.stringify(token))
-    socket.emit('sharelist', JSON.stringify(token))
+    if (token) {
+        socket.emit('login', JSON.stringify(token))
+        socket.emit('sharelist', JSON.stringify(token))
+    }
 })
 
 // 首次加载文件列表页面时触发
